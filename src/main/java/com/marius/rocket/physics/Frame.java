@@ -70,4 +70,8 @@ public class Frame {
     public double[] transform(double[] u) {
         return LA.cross(u,angular_velocity);
     }
+    
+    public void setRef(Frame ref) {
+        this.ref = ref;
+    }
 }
