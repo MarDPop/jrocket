@@ -12,7 +12,7 @@ package com.marius.rocket.physics;
 public class Planet extends Body {
     
     public final double MU;
-    private Atmosphere atm;
+    protected Atmosphere atm;
     
     public Planet(double MU){
         super(MU/Physics.G);

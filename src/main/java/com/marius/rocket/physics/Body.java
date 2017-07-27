@@ -11,13 +11,12 @@ package com.marius.rocket.physics;
  */
 public class Body extends Frame{
     
-    private double mass; 
-    private double[] orientation; // unit vector in langrange frame
-    private double[][] rotation; // pitch, heading, roll and rates and accel
-    private double[] forces;
-    private double[] moments;
-    private double[][] Inertia; //normalized inertia
-    private Shape shape;
+    protected double mass; 
+    protected double[][] rotation; // pitch, heading, roll and rates and accel
+    protected double[] forces;
+    protected double[] moments;
+    protected double[][] Inertia; //normalized inertia
+    protected Shape shape;
     
     public Body(double mass) {
         this.mass = mass;
@@ -33,14 +32,6 @@ public class Body extends Frame{
     
     public void changeMass(double dx) {
         this.mass += dx;
-    }
-    
-    public double[] getOrientation(){
-        return orientation;
-    }
-    
-    public void setOrientation(double[] orientation) {
-        this.orientation = orientation;
     }
     
     public double[] getForces(){
@@ -65,6 +56,7 @@ public class Body extends Frame{
     
     public void setRotation(double[][] rotation) {
         this.rotation = rotation;
+        this.angular_velocity = rotation[1];
     }
     
     public double[][] getInertia(){

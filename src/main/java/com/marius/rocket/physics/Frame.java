@@ -11,12 +11,12 @@ import com.marius.rocket.Math.LA;
  */
 public class Frame {
     private Frame ref;
-    double[][] state; // in x y z (x points to vega, theta is measured from x)
-    double[][] spherical_state; // in r theta phi (aka radius, angle from vega [xz plane], angle from ecliptic plane [xy plane] ) see http://mathworld.wolfram.com/SphericalCoordinates.html
-    double[] angular_velocity; // unit vector in langrange frame
-    double[][] rotation_matrix;
-    double[] lagrange_velocity;
-    double[] lagrange_acceleration;
+    protected double[][] state; // in x y z (x points to vega, theta is measured from x)
+    protected double[][] spherical_state; // in r theta phi (aka radius, angle from vega [xz plane], angle from ecliptic plane [xy plane] ) see http://mathworld.wolfram.com/SphericalCoordinates.html
+    protected double[] angular_velocity; // unit vector in langrange frame
+    //double[][] rotation_matrix;
+    protected double[] orientation; // unit vector in langrange frame (direction of x-axis)
+    protected double[] lagrange_velocity; //current velocity of frame within reference frame
     
     public Frame() {
     }
@@ -73,5 +73,19 @@ public class Frame {
     
     public void setRef(Frame ref) {
         this.ref = ref;
+    }
+    
+    public double[] getOrientation(){
+        return orientation;
+    }
+    
+    public void setOrientation(double[] orientation) {
+        this.orientation = orientation;
+    }
+    
+    public void changeOrientation(double[] dx) {
+        this.orientation[0] += dx[0];
+        this.orientation[1] += dx[1];
+        this.orientation[2] += dx[2];
     }
 }
