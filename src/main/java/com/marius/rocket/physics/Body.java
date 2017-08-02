@@ -71,4 +71,12 @@ public class Body extends Frame{
         this.shape = shape;
     }
     
+    public Shape getShape(){
+        return shape;
+    }
+    
+    public void update() {
+        
+    }
+    
 }

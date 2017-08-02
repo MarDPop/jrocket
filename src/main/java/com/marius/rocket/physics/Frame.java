@@ -63,7 +63,7 @@ public class Frame {
         state[0][2] = spherical_state[0][0]*Math.cos(spherical_state[0][2]); 
     }
     
-    public void update() {
+    public void move() {
         
     }
     

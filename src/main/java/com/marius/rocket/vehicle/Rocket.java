@@ -5,17 +5,13 @@
  */
 package com.marius.rocket.vehicle;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author n5823a
  */
-public class Subsystem {
+public class Rocket extends Vehicle {
     
-    protected ArrayList<Component> components = new ArrayList<>();
-    
-    public Subsystem() {
+    public Rocket() {
         
     }
 }

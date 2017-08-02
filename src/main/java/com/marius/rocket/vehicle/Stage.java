@@ -5,17 +5,10 @@
  */
 package com.marius.rocket.vehicle;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author n5823a
  */
-public class Subsystem {
+public class Stage {
     
-    protected ArrayList<Component> components = new ArrayList<>();
-    
-    public Subsystem() {
-        
-    }
 }
