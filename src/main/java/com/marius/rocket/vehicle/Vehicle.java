@@ -30,4 +30,8 @@ public class Vehicle extends Body {
         subsystems.remove(in);
     }
     
+    public void calcResources() {
+        
+    }
+    
 }

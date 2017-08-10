@@ -3,21 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.marius.rocket2;
+package com.marius.rocket;
 
 import static com.marius.rocket.Math.LA.*;
 import java.util.Arrays;
+import com.marius.rocket.physics.*;
+
 /**
  *
  * @author n5823a
  */
-public class Rocket {
+public class Sim {
  
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         test();
+    }
+    
+    private static void test2(){
+        Frame ECI = new Frame();
     }
     
     private static void test() {
