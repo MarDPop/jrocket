@@ -3,19 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.marius.rocket.vehicle;
+package com.marius.rocket.Math;
 
 /**
  *
  * @author n5823a
  */
-public class Connection {
-    
-    private Resource resource;
-    private Component input;
-    private Component ouput;
-    
-    public Connection() {
-        
-    }
+public abstract class Function {
+    public abstract double calc(double[] args);
 }

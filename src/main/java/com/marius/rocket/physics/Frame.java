@@ -10,12 +10,12 @@ import com.marius.rocket.Math.LA;
  * @author n5823a
  */
 public class Frame {
-    private Frame ref;
+    protected Frame ref;
     protected double[][] state; // in x y z (x points to vega, theta is measured from x)
     protected double[][] spherical_state; // in r theta phi (aka radius, angle from vega [xz plane], angle from ecliptic plane [xy plane] ) see http://mathworld.wolfram.com/SphericalCoordinates.html
-    protected double[] angular_velocity; // unit vector in langrange frame
+    protected double[] angular_velocity; // unit vector in langrange frame MUST HAVE SAME ORIGIN 
     //double[][] rotation_matrix;
-    protected double[] orientation; // unit vector in langrange frame (direction of x-axis)
+    protected double[][] orientation; // unit vector in langrange frame (direction of x y z-axis)
     protected double[] lagrange_velocity; //current velocity of frame within reference frame
     
     public Frame() {
@@ -63,6 +63,14 @@ public class Frame {
         state[0][2] = spherical_state[0][0]*Math.cos(spherical_state[0][2]); 
     }
     
+    public double[] getAngularVelocity() {
+        return this.angular_velocity;
+    }
+    
+    public void setAngularVelocity(double[] axis, double rate) {
+        this.angular_velocity = LA.multiply(axis, rate);
+    }
+    
     public void move() {
         
     }
@@ -71,21 +79,27 @@ public class Frame {
         return LA.cross(u,angular_velocity);
     }
     
+    public void setMotion() {
+        
+    }
+    
     public void setRef(Frame ref) {
         this.ref = ref;
     }
     
-    public double[] getOrientation(){
+    public double[][] getOrientation(){
         return orientation;
     }
     
-    public void setOrientation(double[] orientation) {
+    public void setOrientation(double[][] orientation) {
         this.orientation = orientation;
     }
     
-    public void changeOrientation(double[] dx) {
-        this.orientation[0] += dx[0];
-        this.orientation[1] += dx[1];
-        this.orientation[2] += dx[2];
+    public void changeOrientation(double[] axis, double angle) {
+        this.orientation[0] = LA.RotateAxis(this.orientation[0], axis, angle);
+        this.orientation[1] = LA.RotateAxis(this.orientation[1], axis, angle);
+        this.orientation[2] = LA.RotateAxis(this.orientation[2], axis, angle);
     }
+    
+    
 }

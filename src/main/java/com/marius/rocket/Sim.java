@@ -8,6 +8,7 @@ package com.marius.rocket;
 import static com.marius.rocket.Math.LA.*;
 import java.util.Arrays;
 import com.marius.rocket.physics.*;
+import com.marius.rocket.vehicle.*;
 
 /**
  *
@@ -19,11 +20,14 @@ public class Sim {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        test();
+        test2();
     }
     
     private static void test2(){
-        Frame ECI = new Frame();
+        Frame ECRF = new Frame();
+        ECRF.setAngularVelocity(new double[]{0,0,1}, (2*Math.PI/3600/24));
+        Rocket rocket_1 = new Rocket();
+        
     }
     
     private static void test() {
