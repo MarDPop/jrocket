@@ -5,6 +5,9 @@
  */
 package com.marius.rocket.vehicle;
 
+import com.marius.rocket.vehicle.resources.Resource;
+import com.marius.rocket.vehicle.subsystems.Subsystem;
+import com.marius.rocket.vehicle.components.Component;
 import com.marius.rocket.physics.Body;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +19,8 @@ public class Vehicle extends Body {
     
     protected ArrayList<Subsystem> subsystems = new ArrayList<>();
     protected ArrayList<Resource> totalResources = new ArrayList<>();
-    protected HashMap ComponentList = new HashMap();
+    HashMap<Integer, Component> ComponentList = new HashMap<>();
+
     
     public Vehicle() {
         super(0);

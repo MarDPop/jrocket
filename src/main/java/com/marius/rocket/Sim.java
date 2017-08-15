@@ -24,9 +24,11 @@ public class Sim {
     }
     
     private static void test2(){
-        Frame ECRF = new Frame();
+        Earth ECRF = new Earth();
         ECRF.setAngularVelocity(new double[]{0,0,1}, (2*Math.PI/3600/24));
         Rocket rocket_1 = new Rocket();
+        rocket_1.setRef(ECRF);
+        
         
     }
     

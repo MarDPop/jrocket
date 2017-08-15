@@ -3,18 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.marius.rocket.vehicle;
+package com.marius.rocket.vehicle.components;
 
 /**
  *
  * @author n5823a
  */
-public class Resource {
-    
-    public double amount;
-    
-    public Resource(double amount) {
-        this.amount = amount;
-    }
+public class Thruster extends Component {
     
 }

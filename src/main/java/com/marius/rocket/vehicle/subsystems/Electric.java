@@ -3,18 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.marius.rocket.vehicle;
+package com.marius.rocket.vehicle.subsystems;
 
 /**
  *
  * @author n5823a
  */
-public class Part {
+public class Electric {
     
-    private double temp;
-    private double mass;
-    
-    public Part(){
-        
-    }
 }

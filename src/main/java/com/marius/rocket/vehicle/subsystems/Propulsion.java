@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.marius.rocket.vehicle;
+package com.marius.rocket.vehicle.subsystems;
 
 /**
  *
  * @author n5823a
  */
-public class Tank extends Component{
-    
-    public Tank() {
-        
-    }
+public class Propulsion extends Subsystem {
     
 }

@@ -14,7 +14,15 @@ import java.util.ArrayList;
  * @author n5823a
  */
 public class Simulation {
-    ArrayList<Frame> frames = new ArrayList<>();
-    ArrayList<Body> bodies = new ArrayList<>();
+    public ArrayList<Frame> frames = new ArrayList<>();
+    public ArrayList<Body> bodies = new ArrayList<>();
+    
+    public Simulation() {
+        
+    }
+    
+    public void Run() {
+        
+    }
     
 }
