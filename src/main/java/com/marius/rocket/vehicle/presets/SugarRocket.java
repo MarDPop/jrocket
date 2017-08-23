@@ -6,7 +6,7 @@
 package com.marius.rocket.vehicle.presets;
 
 import com.marius.rocket.vehicle.resources.Resource;
-import com.marius.rocket.vehicle.components.Component;
+import com.marius.rocket.vehicle.components.Thruster;
 import com.marius.rocket.vehicle.*;
 
 /**
@@ -18,7 +18,7 @@ public class SugarRocket extends Rocket {
     public SugarRocket() {
         super();
         Resource sugarfuel = new Resource(2);
-        Component sugarthruster = new Component();
+        Thruster sugarthruster = new Thruster();
     }
     
 }

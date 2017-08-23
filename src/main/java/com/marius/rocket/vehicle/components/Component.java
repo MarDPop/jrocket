@@ -13,11 +13,44 @@ import com.marius.rocket.vehicle.resources.Resource;
  */
 public class Component {
     
-    private Part[] parts;
-    private Connection[] connections;
-    private Resource[] resources;
-    private double mass;
+    protected Part[] parts;
+    protected Connection[] connections;
+    protected Resource[] resources;
+    protected double mass;
     
     public Component() {
     }
+    
+    public void setMass(double mass){
+        this.mass = mass;
+    }
+    
+    public double getMass(){
+        return mass;
+    }
+    
+    public void setConnections(Connection[] connections){
+        this.connections = connections;
+    }
+    
+    public Connection[] getConnections(){
+        return connections;
+    }
+    
+    public void setResources(Resource[] resources){
+        this.resources = resources;
+    }
+    
+    public Resource[] getResources(){
+        return resources;
+    }
+    
+    public void setParts(Part[] parts){
+        this.parts = parts;
+    }
+    
+    public Part[] getParts(){
+        return parts;
+    }
+    
 }
