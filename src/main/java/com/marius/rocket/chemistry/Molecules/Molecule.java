@@ -29,6 +29,8 @@ public abstract class Molecule {
     private double Entropy; // J/mol
     private double Gibbs; // J/mol
     private double InternalEnergy; // J/mol
+    private double CP; // J/mol/K
+    private double CV; // J/mol/K
     
     public Molecule(Atom[] atoms, int[] quantity, double heat_formation, double heat_vaporization, double heat_fusion, double boiling_point, double melting_point){
         double s = 0;

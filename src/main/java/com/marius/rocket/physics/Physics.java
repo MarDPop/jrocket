@@ -36,4 +36,5 @@ public class Physics {
     public static double[] getGravity(double Mu, double[] r){
         return LA.multiply(r, -Mu/Math.pow(LA.dot(r,r), 1.5));
     }
+    
 }

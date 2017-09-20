@@ -12,11 +12,13 @@ package com.marius.rocket.physics;
 public class Planet extends Body {
     
     public final double MU;
+    public final double RADIUS;
     protected Atmosphere atm;
     
-    public Planet(double MU){
+    public Planet(double MU, double Radius){
         super(MU/Physics.G);
         this.MU = MU;
+        this.RADIUS = Radius;
     }
     
     public void setAtm(Atmosphere atm) {
@@ -25,6 +27,10 @@ public class Planet extends Body {
     
     public Atmosphere getAtm() {
         return this.atm;
+    }
+    
+    public double calcGeopotentialAltitude(double altitude) {
+        return this.RADIUS*altitude/(this.RADIUS*altitude);
     }
     
 }

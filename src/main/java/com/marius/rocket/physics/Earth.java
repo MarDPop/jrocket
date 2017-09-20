@@ -12,7 +12,7 @@ package com.marius.rocket.physics;
 public class Earth extends Planet {
 
     public Earth(){
-        super(3.986004418e14);
+        super(3.986004418e14, 6371000);
         setAtm(new StandardATM());
     }
     
