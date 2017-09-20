@@ -112,8 +112,7 @@ public class StandardATM extends Atmosphere{
                             pressures[i] = pressures[i-1]*lapsePresRatio(lapses[i], temperatures[i], temperatures[i-1]);
                         }
                     }
-                }
-                
+                }               
             } 
             if(assumeIdeal) {
                 if(i == 1) {
