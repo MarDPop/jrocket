@@ -18,16 +18,8 @@ public class Thruster extends Component {
     protected double isp; // s
     protected Resource[] requirements;
     protected double throttle;
-    private short massflowMethod = 0;
     
     public Thruster() {     
-    }
-    
-    public Thruster(double thrust, double isp, double mass) {
-        this.thrust = thrust;
-        this.isp = isp;
-        this.mass = mass;
-        massflowMethod = 1;
     }
     
     public void setRequirements(Resource[] requirements){
@@ -43,7 +35,6 @@ public class Thruster extends Component {
     }
     
     public double getMassFlow() {
-        calcMassFlow();
         return massflow;
     }
     
@@ -51,16 +42,8 @@ public class Thruster extends Component {
         this.throttle = throttle;
     }
     
-    private void calcMassFlow() {
-        if(massflowMethod == 0) {
-            double sum = 0;
-            for(Resource fuel : requirements) {
-                sum += fuel.getAmount();
-            }
-            this.massflow = sum;
-        } else if (massflowMethod == 1) {
-            this.massflow = thrust/(9.806*isp);
-        }
+    public double getThrottle() {
+        return this.throttle;
     }
-    
+
 }

@@ -37,4 +37,12 @@ public class Physics {
         return LA.multiply(r, -Mu/Math.pow(LA.dot(r,r), 1.5));
     }
     
+    public static double[] getElectricField(double q, double[] r) {
+        return LA.multiply(r, q/Math.pow(LA.dot(r,r), 1.5));
+    }
+    
+    public static double getESPotential(double q, double[] r) {
+        return q/LA.mag(r);
+    }
+    
 }

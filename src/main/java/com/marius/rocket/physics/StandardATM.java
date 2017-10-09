@@ -128,11 +128,11 @@ public class StandardATM extends Atmosphere{
         }
     }
     
-    private double isoPresRatio(double hf, double h1, double Temp) {
+    public double isoPresRatio(double hf, double h1, double Temp) {
         return Math.exp(-G0/(R_air*Temp)*(hf-h1));
     }
     
-    private double lapsePresRatio(double lapse, double Tf, double T1) {
+    public double lapsePresRatio(double lapse, double Tf, double T1) {
         return (Tf/T1)*Math.exp(-G0/(R_air*lapse));
     }
     

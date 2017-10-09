@@ -12,11 +12,14 @@ package com.marius.rocket.physics;
 public class Body extends Frame{
     
     protected double mass; 
+    protected double netcharge;
     protected double[][] rotation; // pitch, heading, roll and rates and accel
-    protected double[] forces;
-    protected double[] moments;
+    protected double[] netforces;
+    protected Force[] forces;
+    protected double[] netmoments;
     protected double[][] Inertia; //normalized inertia
     protected Shape shape;
+    public boolean onrails = false;
     
     public Body(double mass) {
         this.mass = mass;
@@ -34,20 +37,28 @@ public class Body extends Frame{
         this.mass += dx;
     }
     
-    public double[] getForces(){
-        return forces;
+    public double getCharge(){
+        return netcharge;
     }
     
-    public void setForces(double[] forces) {
-        this.forces = forces;
+    public void setCharge(double netcharge){
+        this.netcharge = netcharge;
+    }
+    
+    public double[] getForces(){
+        return netforces;
+    }
+    
+    public void setForces(double[] netforces) {
+        this.netforces = netforces;
     }
     
     public double[] getMoments(){
-        return moments;
+        return netmoments;
     }
     
-    public void setMoments(double[] moments) {
-        this.moments = moments;
+    public void setMoments(double[] netmoments) {
+        this.netmoments = netmoments;
     }
     
     public double[][] getRotation(){

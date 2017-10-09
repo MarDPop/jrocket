@@ -11,8 +11,8 @@ import com.marius.rocket.Math.LA;
  */
 public class Frame {
     protected Frame ref;
-    protected double[][] state; // in x y z (x points to vega, theta is measured from x)
-    protected double[][] spherical_state; // in r theta phi (aka radius, angle from vega [xz plane], angle from ecliptic plane [xy plane] ) see http://mathworld.wolfram.com/SphericalCoordinates.html
+    protected double[][] xyz; // in x y z (x points to vega, theta is measured from x)
+    protected double[][] spherical; // in r theta phi (aka radius, angle from vega [xz plane], angle from ecliptic plane [xy plane] ) see http://mathworld.wolfram.com/SphericalCoordinates.html
     protected double[] angular_velocity; // unit vector in langrange frame MUST HAVE SAME ORIGIN 
     //double[][] rotation_matrix;
     protected double[][] orientation; // unit vector in langrange frame (direction of x y z-axis)
@@ -21,46 +21,46 @@ public class Frame {
     public Frame() {
     }
     
-    public void setState(double[][] state) {
-        this.state = state;
+    public void setXYZ(double[][] xyz) {
+        this.xyz = xyz;
     }
     
-    public double[][] getState() {
-        return state;
+    public double[][] getXYZ() {
+        return xyz;
     }
     
-    public double[][] changeState(double[][] dx) {
+    public double[][] changeXYZ(double[][] dx) {
         for(int i = 0; i < 3; i++) {
-            System.arraycopy(dx[i], 0, this.state[i], 0, 3);
+            System.arraycopy(dx[i], 0, this.xyz[i], 0, 3);
         }
-        return this.state;
+        return this.xyz;
     }
     
-    public void setSphericalState(double[][] spherical_state) {
-        this.spherical_state = spherical_state;
+    public void setSpherical(double[][] spherical) {
+        this.spherical = spherical;
     }
     
     public double[][] getSphericalState() {
-        return spherical_state;
+        return spherical;
     }
     
     public double[][] changeSphericalState(double[][] dx) {
         for(int i = 0; i < 3; i++) {
-            System.arraycopy(dx[i], 0, this.spherical_state[i], 0, 3);
+            System.arraycopy(dx[i], 0, this.spherical[i], 0, 3);
         }
-        return this.spherical_state;
+        return this.spherical;
     }
     
     public void calcSpherical() {
-        spherical_state[0][0] = LA.mag(state[0]);
-        spherical_state[0][1] = Math.atan2(state[0][1], state[0][0]);
-        spherical_state[0][2] = Math.cos(state[0][2]/spherical_state[0][0]);
+        spherical[0][0] = LA.mag(xyz[0]);
+        spherical[0][1] = Math.atan2(xyz[0][1], xyz[0][0]);
+        spherical[0][2] = Math.cos(xyz[0][2]/spherical[0][0]);
     }
     
     public void calcXYZ() {
-        state[0][0] = spherical_state[0][0]*Math.cos(spherical_state[0][1])*Math.sin(spherical_state[0][2]); 
-        state[0][1] = spherical_state[0][0]*Math.sin(spherical_state[0][1])*Math.sin(spherical_state[0][2]); 
-        state[0][2] = spherical_state[0][0]*Math.cos(spherical_state[0][2]); 
+        xyz[0][0] = spherical[0][0]*Math.cos(spherical[0][1])*Math.sin(spherical[0][2]); 
+        xyz[0][1] = spherical[0][0]*Math.sin(spherical[0][1])*Math.sin(spherical[0][2]); 
+        xyz[0][2] = spherical[0][0]*Math.cos(spherical[0][2]); 
     }
     
     public double[] getAngularVelocity() {
@@ -71,7 +71,7 @@ public class Frame {
         this.angular_velocity = LA.multiply(axis, rate);
     }
     
-    public void move() {
+    public void propagate() {
         
     }
     

@@ -6,12 +6,16 @@
 package com.marius.rocket.vehicle.components;
 
 import com.marius.rocket.vehicle.components.Component;
+import com.marius.rocket.vehicle.resources.Resource;
 
 /**
  *
  * @author n5823a
  */
 public class Tank extends Component{
+    
+    protected Resource fuel;
+    protected double emptymass;
     
     public Tank() {
         

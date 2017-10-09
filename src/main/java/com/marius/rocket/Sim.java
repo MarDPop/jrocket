@@ -5,10 +5,11 @@
  */
 package com.marius.rocket;
 
+import com.marius.rocket.Math.Euler;
 import static com.marius.rocket.Math.LA.*;
 import java.util.Arrays;
 import com.marius.rocket.physics.*;
-import com.marius.rocket.vehicle.*;
+import com.marius.rocket.vehicle.presets.SimpleRocket;
 
 /**
  *
@@ -24,10 +25,16 @@ public class Sim {
     }
     
     private static void test2(){
-        Earth ECRF = new Earth();
+        /*
+        Planet ECRF = new Planet(3.986004418e14, 6371000);
         ECRF.setAngularVelocity(new double[]{0,0,1}, (2*Math.PI/3600/24));
-        Rocket rocket_1 = new Rocket();
-        rocket_1.setRef(ECRF);
+        */
+        
+        SimpleATM atm = new SimpleATM();
+        SimpleRocket rocket_1 = new SimpleRocket();
+        Euler ode = new Euler(0.1);
+        
+        //rocket_1.setRef(ECRF);
         
         
     }
