@@ -17,6 +17,7 @@ public class Component {
     protected Connection[] connections;
     protected Resource[] resources;
     protected double mass;
+    protected double[] location; //in referance to vehicle frame
     
     public Component() {
     }

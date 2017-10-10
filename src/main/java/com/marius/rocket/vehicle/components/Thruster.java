@@ -18,6 +18,7 @@ public class Thruster extends Component {
     protected double isp; // s
     protected Resource[] requirements;
     protected double throttle;
+    protected boolean active;
     
     public Thruster() {     
     }

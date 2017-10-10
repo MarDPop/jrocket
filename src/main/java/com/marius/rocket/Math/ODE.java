@@ -14,8 +14,8 @@ import java.util.HashMap;
  * @author n5823a
  */
 public abstract class ODE {    
-    private double[] x;
-    private double[] dx;
+    public double[] x;
+    public double[] dx;
     protected double dt;
     protected ArrayList times;
     ArrayList points;
@@ -27,15 +27,7 @@ public abstract class ODE {
     
     public void setOptions(HashMap<String,String> Options) {
         this.Options = Options;       
-    }
-    
-    public void setState(double[] x) {
-        this.x=x;
-    }
-    
-    public double[] getState() {
-        return x;
-    }
+    }   
     
     public void setTimestep(double dt) {
         this.dt=dt;
@@ -43,14 +35,6 @@ public abstract class ODE {
     
     public double getTimestep() {
         return dt;
-    }
-    
-    public void setRates(double[] dx) {
-        this.dx=dx;
-    }
-    
-    public double[] getRates() {
-        return dx;
     }
     
     public double[][] exportState(int[][] statemap) {

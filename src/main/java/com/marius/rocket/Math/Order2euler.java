@@ -9,25 +9,25 @@ package com.marius.rocket.Math;
  *
  * @author n5823a
  */
-public class Euler extends ODE {    
+public class Order2euler extends ODE{
     
-    public Euler(double dt) {
+    public Order2euler(double dt) {
         this.dt = dt;
     }
     
-    public static double step(double x, double dx, double dt) {
-        return x+=dx*dt;
+    public static double step(double x, double dx, double a, double dt) {
+        return x+=dx*dt + 0.5*a*dt*dt;
     }
     
-    public static void step(double[] x, double[] dx, double dt) {
+    public static void step(double[] x, double[] dx, double[] a, double dt) {
         for(int i = 0; i < x.length; i++) {
-            x[i] += dx[i]*dt;
+            x[i] += dx[i]*dt + 0.5*a[i]*dt*dt;
+            dx[i] += a[i]*dt;
         }
     }
     
     @Override
     public void step() {
         
-    }  
-    
+    }
 }

@@ -20,6 +20,8 @@ public class Body extends Frame{
     protected double[][] Inertia; //normalized inertia
     protected Shape shape;
     public boolean onrails = false;
+    public double massRate;
+    public double chargeRate;
     
     public Body(double mass) {
         this.mass = mass;
@@ -87,6 +89,14 @@ public class Body extends Frame{
     }
     
     public void update() {
+        
+    }
+    
+    public double[] getState() {
+        return this.xyz[0];
+    }
+    
+    public void setState(double[] in) {
         
     }
     

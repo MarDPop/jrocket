@@ -7,6 +7,7 @@ package com.marius.rocket;
 
 import com.marius.rocket.Math.Euler;
 import static com.marius.rocket.Math.LA.*;
+import com.marius.rocket.Utils.Recorder;
 import java.util.Arrays;
 import com.marius.rocket.physics.*;
 import com.marius.rocket.vehicle.presets.SimpleRocket;
@@ -21,7 +22,7 @@ public class Sim {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        test2();
+       test2();
     }
     
     private static void test2(){
@@ -29,10 +30,39 @@ public class Sim {
         Planet ECRF = new Planet(3.986004418e14, 6371000);
         ECRF.setAngularVelocity(new double[]{0,0,1}, (2*Math.PI/3600/24));
         */
-        
+        /*
+        SimpleRocket rocket_1 = new SimpleRocket();
+        rocket_1.setXYZ(new double[][] {{0,0,0},{0,0,0},{0,0,0}});
+        double[][] a = rocket_1.getXYZ();
+        a[0][1] = 1;
+        double[][] b = rocket_1.getXYZ();
+        System.out.print(b[0][0]);
+        */
         SimpleATM atm = new SimpleATM();
         SimpleRocket rocket_1 = new SimpleRocket();
-        Euler ode = new Euler(0.1);
+        double dt = 0.1;
+        double time = 0;
+        double finish = 10;
+        Euler ode = new Euler(dt);
+        ode.x = new double[2];
+        ode.dx = new double[2];
+        try {
+            Recorder rec = new Recorder("record.csv");
+            rocket_1.start();
+            while(time < finish) {
+                double[][] xyz = rocket_1.getXYZ();
+                ode.x[0]= xyz[0][2];
+                ode.x[1]= xyz[1][2];
+                ode.dx[0]= xyz[1][2];
+                ode.dx[1]= xyz[2][2];
+                rec.record(time,xyz[0]);
+                ode.step();
+                
+                time += dt;
+            }
+        } catch(Exception e) {
+            
+        }
         
         //rocket_1.setRef(ECRF);
         

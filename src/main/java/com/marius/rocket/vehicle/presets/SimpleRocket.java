@@ -14,12 +14,17 @@ import com.marius.rocket.vehicle.*;
 public class SimpleRocket extends Rocket {
     
     private final double emptymass = 2;
-    private double mass;
+    public double mass;
+    public SimpleThruster engine;
     
     public SimpleRocket() {
         super();
         this.mass = 6;
-        SimpleThruster engine = new SimpleThruster(100,100,1);
+        engine = new SimpleThruster(100,100,1);
+    }
+    
+    public void start() {
+        this.engine.run();
     }
     
     
