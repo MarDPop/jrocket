@@ -22,14 +22,16 @@ public class Recorder {
     
     public void record(double time, double[] state) throws IOException {
         sb.append(time);
+        sb.append(",");
          for (double el : state) {
             sb.append(el);
             sb.append(",");
         }
-        writer.write(sb.toString());
+        sb.append("\r\n");
     }
     
     public void finish() throws IOException {
+        writer.write(sb.toString());
         writer.flush();
         writer.close();
     }

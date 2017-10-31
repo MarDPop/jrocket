@@ -10,6 +10,7 @@ package com.marius.rocket.Math;
  * @author n5823a
  */
 public class Order2euler extends ODE{
+    public double[] a; // a must be same length as x
     
     public Order2euler(double dt) {
         this.dt = dt;
@@ -27,7 +28,11 @@ public class Order2euler extends ODE{
     }
     
     @Override
-    public void step() {
-        
+    public double step() {
+        for(int i = 0; i < x.length; i++) {
+            x[i] += dx[i]*dt + 0.5*a[i]*dt*dt;
+            dx[i] += a[i]*dt;
+        }
+        return super.step();
     }
 }

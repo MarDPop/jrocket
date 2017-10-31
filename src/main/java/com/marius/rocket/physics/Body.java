@@ -5,6 +5,9 @@
  */
 package com.marius.rocket.physics;
 
+import com.marius.rocket.physics.forces.Force;
+import java.util.ArrayList;
+
 /**
  *
  * @author n5823a
@@ -13,9 +16,8 @@ public class Body extends Frame{
     
     protected double mass; 
     protected double netcharge;
-    protected double[][] rotation; // pitch, heading, roll and rates and accel
     protected double[] netforces;
-    protected Force[] forces;
+    public ArrayList<Force> forces;
     protected double[] netmoments;
     protected double[][] Inertia; //normalized inertia
     protected Shape shape;
@@ -47,13 +49,13 @@ public class Body extends Frame{
         this.netcharge = netcharge;
     }
     
-    public double[] getForces(){
+    public double[] getNetForces(){
         return netforces;
     }
     
-    public void setForces(double[] netforces) {
+    public void setNetForces(double[] netforces) {
         this.netforces = netforces;
-    }
+    }   
     
     public double[] getMoments(){
         return netmoments;
@@ -61,15 +63,6 @@ public class Body extends Frame{
     
     public void setMoments(double[] netmoments) {
         this.netmoments = netmoments;
-    }
-    
-    public double[][] getRotation(){
-        return rotation;
-    }
-    
-    public void setRotation(double[][] rotation) {
-        this.rotation = rotation;
-        this.angular_velocity = rotation[1];
     }
     
     public double[][] getInertia(){

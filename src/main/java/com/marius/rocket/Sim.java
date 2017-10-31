@@ -26,40 +26,21 @@ public class Sim {
     }
     
     private static void test2(){
-        /*
-        Planet ECRF = new Planet(3.986004418e14, 6371000);
-        ECRF.setAngularVelocity(new double[]{0,0,1}, (2*Math.PI/3600/24));
-        */
-        /*
+        Earth earth = new Earth();
+        double[][] ksc = earth.KSCXYZ();
         SimpleRocket rocket_1 = new SimpleRocket();
-        rocket_1.setXYZ(new double[][] {{0,0,0},{0,0,0},{0,0,0}});
-        double[][] a = rocket_1.getXYZ();
-        a[0][1] = 1;
-        double[][] b = rocket_1.getXYZ();
-        System.out.print(b[0][0]);
-        */
-        SimpleATM atm = new SimpleATM();
-        SimpleRocket rocket_1 = new SimpleRocket();
-        double dt = 0.1;
-        double time = 0;
-        double finish = 10;
+        rocket_1.setXYZ(ksc);
+        final double dt = 0.1;
         Euler ode = new Euler(dt);
-        ode.x = new double[2];
-        ode.dx = new double[2];
+        ode.bodies = new Body[]{rocket_1};
+        ode.setEndTime(40);
         try {
             Recorder rec = new Recorder("record.csv");
             rocket_1.start();
-            while(time < finish) {
-                double[][] xyz = rocket_1.getXYZ();
-                ode.x[0]= xyz[0][2];
-                ode.x[1]= xyz[1][2];
-                ode.dx[0]= xyz[1][2];
-                ode.dx[1]= xyz[2][2];
-                rec.record(time,xyz[0]);
+            while(ode.getTime() < 40){
                 ode.step();
-                
-                time += dt;
             }
+            rec.finish();
         } catch(Exception e) {
             
         }

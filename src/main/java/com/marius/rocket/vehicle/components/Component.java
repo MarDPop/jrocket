@@ -5,14 +5,16 @@
  */
 package com.marius.rocket.vehicle.components;
 
+import com.marius.rocket.physics.forces.Force;
 import com.marius.rocket.vehicle.resources.Resource;
+import java.util.ArrayList;
 
 /**
  *
  * @author n5823a
  */
 public class Component {
-    
+    protected ArrayList<Force> forces;
     protected Part[] parts;
     protected Connection[] connections;
     protected Resource[] resources;

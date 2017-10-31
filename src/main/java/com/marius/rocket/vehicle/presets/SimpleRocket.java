@@ -13,7 +13,7 @@ import com.marius.rocket.vehicle.*;
  */
 public class SimpleRocket extends Rocket {
     
-    private final double emptymass = 2;
+    public final double emptymass = 2;
     public double mass;
     public SimpleThruster engine;
     

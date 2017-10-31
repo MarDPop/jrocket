@@ -17,17 +17,55 @@ public abstract class ODE {
     public double[] x;
     public double[] dx;
     protected double dt;
+    protected double time;
+    protected double start_time = 0;
+    protected double end_time;
     protected ArrayList times;
     ArrayList points;
     public Body[] bodies;
     
     protected HashMap<String,String> Options;
     
-    public abstract void step();
+    public double step() {
+        time += dt;
+        times.add(time);
+        return time;
+    }
+    
+    public void run() {
+        time = start_time;
+        while(step() < end_time) {
+            
+        }
+    }
     
     public void setOptions(HashMap<String,String> Options) {
         this.Options = Options;       
-    }   
+    } 
+    
+    public void setStartTime(double start) {
+        this.start_time = start;
+    }
+    
+    public double getStartTime() {
+        return start_time;
+    }
+    
+    public void setEndTime(double end_time) {
+        this.end_time = end_time;
+    }
+    
+    public double getEndTime() {
+        return end_time;
+    }
+    
+    public void setTime(double time) {
+        this.time = time;
+    }
+    
+    public double getTime() {
+        return time;
+    }
     
     public void setTimestep(double dt) {
         this.dt=dt;

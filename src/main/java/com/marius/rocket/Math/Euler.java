@@ -26,8 +26,9 @@ public class Euler extends ODE {
     }
     
     @Override
-    public void step() {
+    public double step() {
         
+        return super.step();
     }  
     
 }
