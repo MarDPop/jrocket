@@ -222,7 +222,7 @@ public class LA {
             sum += u[i]*v[i];
         }
         return sum;
-    }
+    }  
     
     public static double[] cross(double[] u, double[] v) {
         double[] x = {0,0,0};
@@ -237,6 +237,14 @@ public class LA {
         for (int i = 0; i < u.length; i++)
             sum += u[i]*u[i];
         return sqrt(sum);
+    }
+    
+    public static double angle(double[] a, double[] b) {
+        return Math.acos(dot(a,b)/Math.sqrt(dot(a,a)*dot(b,b)));
+    }
+    
+    public static double project(double[] a, double[] b) {
+        return dot(a,b)/mag(b);
     }
     
     public static double norm(double[] u, double p) {

@@ -72,17 +72,82 @@ public class Frame {
         return spherical_unit_vectors;
     }
     
-    public void calcSpherical() {
+    public double[] xyz2spherical(double[] xyz) {
+        //calcSphericalUnitVectors() needs to be called prior for this to work
+        double[] r  = new double[] {0,0,0};
+        r[0] = LA.dot(xyz, spherical_unit_vectors[0]);
+        r[1] = LA.dot(xyz, spherical_unit_vectors[1]);
+        r[2] = LA.dot(xyz, spherical_unit_vectors[2]);
+        return r;
+    }
+    
+    public double[] spherical2xyz(double[] vec) {
+        //calcSphericalUnitVectors() needs to be called prior for this to work
+        double[][] vecinxyz = new double[3][3];
+        vecinxyz[0] = LA.multiply(spherical_unit_vectors[0], vec[0]);
+        vecinxyz[1] = LA.multiply(spherical_unit_vectors[0], vec[0]);
+        vecinxyz[2] = LA.multiply(spherical_unit_vectors[0], vec[0]);
+        double[] r = new double[3];
+        r[0] = vecinxyz[0][0]+vecinxyz[1][0]+vecinxyz[2][0];
+        r[1] = vecinxyz[0][1]+vecinxyz[1][1]+vecinxyz[2][1];
+        r[2] = vecinxyz[0][2]+vecinxyz[1][2]+vecinxyz[2][2];
+        return r;
+    }
+    
+    public void calcSphericalFromCartesian() {
         spherical[0][0] = LA.mag(xyz[0]);
         spherical[0][1] = Math.atan2(xyz[0][1], xyz[0][0]);
         spherical[0][2] = Math.cos(xyz[0][2]/spherical[0][0]);
+        calcSphericalUnitVectors();
+        spherical_velocity = xyz2spherical(xyz[1]);
+        spherical_acceleration = xyz2spherical(xyz[2]);
+        calcAngularRatesFromSpherical();
     }
     
-    public void calcXYZ() {
-        xyz[0][0] = spherical[0][0]*Math.cos(spherical[0][1])*Math.sin(spherical[0][2]); 
-        xyz[0][1] = spherical[0][0]*Math.sin(spherical[0][1])*Math.sin(spherical[0][2]); 
-        xyz[0][2] = spherical[0][0]*Math.cos(spherical[0][2]); 
-        
+    public void calcAngularRatesFromSpherical() {
+        //assume spherical_velocity and spherical_accleration is calculated
+        double s = Math.sin(spherical[0][2]);
+        double c = Math.cos(spherical[0][2]);
+        spherical[1][0] = spherical_velocity[0];
+        spherical[1][1] = spherical_velocity[1]/spherical[0][0]*s;
+        spherical[1][2] = spherical_velocity[2]/spherical[0][0];
+        spherical[2][0] = spherical_acceleration[0] + spherical_velocity[2]*spherical[1][2]+spherical_velocity[1]*spherical_velocity[1]/spherical[0][0];
+        spherical[2][1] = (spherical_acceleration[1]-2*(s*spherical[1][1]*spherical[1][0] + spherical[0][0]*c*spherical[1][1]*spherical[1][2]))/(spherical[0][0]*s);
+        spherical[2][2] = (spherical_acceleration[2]-2*spherical[1][0]*spherical[1][2]+spherical_velocity[1]*c*spherical[1][1])/spherical[0][0];
+    }
+    
+    public double[] calcSphericalVelocity() {
+        spherical_velocity[0] = spherical[1][0];
+        spherical_velocity[1] = spherical[0][0]*Math.sin(spherical[0][2])*spherical[1][1];
+        spherical_velocity[2] = spherical[0][0]*spherical[1][2];
+        return spherical_velocity;
+    }
+    
+    public double[] calcSphericalAcceleration() { 
+        double s = Math.sin(spherical[0][2]);
+        double c = Math.cos(spherical[0][2]);
+        spherical_acceleration[0] = spherical[2][0]-spherical[0][0]*(spherical[1][2]*spherical[1][2]+s*s*spherical[1][1]);
+        spherical_acceleration[1] = 2*(s*spherical[1][1]*spherical[1][0] + spherical[0][0]*c*spherical[1][1]*spherical[1][2]) + spherical[0][0]*s*spherical[2][1];
+        spherical_acceleration[2] = 2*spherical[1][0]*spherical[1][2]+spherical[0][0]*(spherical[2][2]-s*c*spherical[1][1]*spherical[1][1]);
+        return spherical_acceleration;
+    }
+    
+    public void calcCartesianFromSpherical() {
+        //should be the same as dot product
+        double ct = Math.cos(spherical[0][1]);
+        double st = Math.sin(spherical[0][1]);
+        double cp = Math.cos(spherical[0][2]);
+        double sp = Math.sin(spherical[0][2]);
+        double r = spherical[0][0];
+        xyz[0][0] = r*ct*sp; 
+        xyz[0][1] = r*st*sp; 
+        xyz[0][2] = r*cp; 
+        xyz[1][0] = spherical[1][0]*ct*sp-r*st*sp*spherical[1][1]+r*ct*cp*spherical[1][2]; 
+        xyz[1][1] = spherical[1][0]*st*sp+r*ct*sp*spherical[1][1]+r*st*cp*spherical[1][2]; 
+        xyz[1][2] = cp*spherical[1][1]-r*sp*spherical[1][2]; 
+        xyz[2][0] = 2*(spherical[1][0]*spherical[1][1]); 
+        xyz[2][1] = ; 
+        xyz[2][2] = ; 
     }
     
     public double[] getAngularVelocity() {
