@@ -19,43 +19,43 @@ public class Frame {
     protected double[][] rotation = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}}; //(rotation about x, y, z from reference frame)
     protected double[][] rotation_spherical = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}}; // pitch, heading, roll ( and rates and accel) langrange frame MUST HAVE SAME ORIGIN 
     protected double[][] rotation_matrix = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}}; // using rotation[0] orientation is based of rotation matrix
-    protected double[][] orientation = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}}; // unit vector in euler frame (direction of x y z-axis) 
+    protected double[][] orientation = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}}; // unit vectors in euler frame (direction of local x y z-axis) 
     //protected double[] lagrange_velocity; //current velocity of frame within reference frame
     
     public Frame() {
     }
     
-    public void setXYZ(double[][] xyz) {
+    public final void setXYZ(double[][] xyz) {
         this.xyz = xyz;
     }
     
-    public double[][] getXYZ() {
+    public final double[][] getXYZ() {
         return xyz;
     }
     
-    public double[][] changeXYZ(double[][] dx) {
+    public final double[][] changeXYZ(double[][] dx) {
         for(int i = 0; i < 3; i++) {
             System.arraycopy(dx[i], 0, this.xyz[i], 0, 3);
         }
         return this.xyz;
     }
     
-    public void setSpherical(double[][] spherical) {
+    public final void setSpherical(double[][] spherical) {
         this.spherical = spherical;
     }
     
-    public double[][] getSphericalState() {
+    public final double[][] getSphericalState() {
         return spherical;
     }
     
-    public double[][] changeSphericalState(double[][] dx) {
+    public final double[][] changeSphericalState(double[][] dx) {
         for(int i = 0; i < 3; i++) {
             System.arraycopy(dx[i], 0, this.spherical[i], 0, 3);
         }
         return this.spherical;
     }
     
-    public double[][] calcSphericalUnitVectors() {
+    public final double[][] calcSphericalUnitVectors() {
         double ct = Math.cos(spherical[0][1]);
         double st = Math.sin(spherical[0][1]);
         double cp = Math.cos(spherical[0][2]);
@@ -72,7 +72,8 @@ public class Frame {
         return spherical_unit_vectors;
     }
     
-    public double[] xyz2spherical(double[] xyz) {
+    
+    public final double[] xyz2spherical(double[] xyz) {
         //calcSphericalUnitVectors() needs to be called prior for this to work
         double[] r  = new double[] {0,0,0};
         r[0] = LA.dot(xyz, spherical_unit_vectors[0]);
@@ -81,12 +82,13 @@ public class Frame {
         return r;
     }
     
-    public double[] spherical2xyz(double[] vec) {
+    
+    public final double[] spherical2xyz(double[] vec) {
         //calcSphericalUnitVectors() needs to be called prior for this to work
         double[][] vecinxyz = new double[3][3];
         vecinxyz[0] = LA.multiply(spherical_unit_vectors[0], vec[0]);
-        vecinxyz[1] = LA.multiply(spherical_unit_vectors[0], vec[0]);
-        vecinxyz[2] = LA.multiply(spherical_unit_vectors[0], vec[0]);
+        vecinxyz[1] = LA.multiply(spherical_unit_vectors[1], vec[1]);
+        vecinxyz[2] = LA.multiply(spherical_unit_vectors[2], vec[2]);
         double[] r = new double[3];
         r[0] = vecinxyz[0][0]+vecinxyz[1][0]+vecinxyz[2][0];
         r[1] = vecinxyz[0][1]+vecinxyz[1][1]+vecinxyz[2][1];
@@ -94,7 +96,15 @@ public class Frame {
         return r;
     }
     
-    public void calcSphericalFromCartesian() {
+    public final static double[] Spherical2CartesianLocation(double[] location) {
+        double[] out = new double[3];
+        out[0] = location[0]*Math.cos(location[1])*Math.sin(location[2]);
+        out[1] = location[0]*Math.sin(location[1])*Math.sin(location[2]);
+        out[2] = location[0]*Math.cos(location[2]);
+        return out;
+    }
+    
+    public final void calcSphericalFromCartesian() {
         spherical[0][0] = LA.mag(xyz[0]);
         spherical[0][1] = Math.atan2(xyz[0][1], xyz[0][0]);
         spherical[0][2] = Math.cos(xyz[0][2]/spherical[0][0]);
@@ -104,7 +114,7 @@ public class Frame {
         calcAngularRatesFromSpherical();
     }
     
-    public void calcAngularRatesFromSpherical() {
+    public final void calcAngularRatesFromSpherical() {
         //assume spherical_velocity and spherical_accleration is calculated
         double s = Math.sin(spherical[0][2]);
         double c = Math.cos(spherical[0][2]);
@@ -116,14 +126,14 @@ public class Frame {
         spherical[2][2] = (spherical_acceleration[2]-2*spherical[1][0]*spherical[1][2]+spherical_velocity[1]*c*spherical[1][1])/spherical[0][0];
     }
     
-    public double[] calcSphericalVelocity() {
+    public final double[] calcSphericalVelocity() {
         spherical_velocity[0] = spherical[1][0];
         spherical_velocity[1] = spherical[0][0]*Math.sin(spherical[0][2])*spherical[1][1];
         spherical_velocity[2] = spherical[0][0]*spherical[1][2];
         return spherical_velocity;
     }
     
-    public double[] calcSphericalAcceleration() { 
+    public final double[] calcSphericalAcceleration() { 
         double s = Math.sin(spherical[0][2]);
         double c = Math.cos(spherical[0][2]);
         spherical_acceleration[0] = spherical[2][0]-spherical[0][0]*(spherical[1][2]*spherical[1][2]+s*s*spherical[1][1]);
@@ -132,8 +142,8 @@ public class Frame {
         return spherical_acceleration;
     }
     
-    public void calcCartesianFromSpherical() {
-        //should be the same as dot product
+    public final void calcCartesianFromSpherical() {
+        //should be the same as dot product spherical2xyz(spherical_velocity);
         double ct = Math.cos(spherical[0][1]);
         double st = Math.sin(spherical[0][1]);
         double cp = Math.cos(spherical[0][2]);
@@ -145,16 +155,21 @@ public class Frame {
         xyz[1][0] = spherical[1][0]*ct*sp-r*st*sp*spherical[1][1]+r*ct*cp*spherical[1][2]; 
         xyz[1][1] = spherical[1][0]*st*sp+r*ct*sp*spherical[1][1]+r*st*cp*spherical[1][2]; 
         xyz[1][2] = cp*spherical[1][1]-r*sp*spherical[1][2]; 
-        xyz[2][0] = 2*(spherical[1][0]*spherical[1][1]); 
-        xyz[2][1] = ; 
-        xyz[2][2] = ; 
+        xyz[2][0] = 2*(ct*cp*spherical[1][0]*spherical[1][2]-st*sp*spherical[1][0]*spherical[1][1]-r*st*cp*spherical[1][1]*spherical[1][2]) + ct*sp*spherical[2][0] -r*st*sp*spherical[2][1] +r*ct*cp*spherical[2][2] - r*ct*sp*(spherical[1][1]*spherical[1][1]+spherical[1][2]*spherical[1][2]); 
+        xyz[2][1] = 2*(ct*sp*spherical[1][0]*spherical[1][1]+st*cp*spherical[1][0]*spherical[1][2]-r*ct*cp*spherical[1][1]*spherical[1][2]) + st*sp*spherical[2][0] +r*ct*sp*spherical[2][1] +r*st*cp*spherical[2][2] - r*st*sp*(spherical[1][1]*spherical[1][1]+spherical[1][2]*spherical[1][2]);  
+        xyz[2][2] = cp*spherical[2][0]- 2*sp*spherical[1][0]*spherical[1][2] -r*(sp*spherical[2][2] + cp*spherical[1][2]*spherical[1][2]);
     }
     
-    public double[] getAngularVelocity() {
+    public final double[] getAngularVelocity() {
         return this.rotation[1];
     }
     
-    public void setAngularVelocity(double[] axis, double rate) {
+    public final void setAngularVelocity(double[] vel) {
+        this.rotation[1] = vel;
+    }
+    
+    public final void setAngularVelocity(double[] axis, double rate) {
+        axis = LA.multiply(axis, 1/LA.mag(axis)); // normalize
         this.rotation[1] = LA.multiply(axis, rate);
     }
     
@@ -162,19 +177,19 @@ public class Frame {
         
     }
     
-    public double[][] getRotation(){
+    public final double[][] getRotation(){
         return rotation;
     }
     
-    public void setRotation(double[][] rotation) {
+    public final void setRotation(double[][] rotation) {
         this.rotation = rotation;
     }
     
-    public double[][] getRotationSpherical(){
+    public final double[][] getRotationSpherical(){
         return rotation;
     }
     
-    public void setRotationSpherical(double[][] rotation) {
+    public final void setRotationSpherical(double[][] rotation) {
         this.rotation = rotation;
     }
     
@@ -186,19 +201,19 @@ public class Frame {
         
     }
     
-    public void setRef(Frame ref) {
+    public final void setRef(Frame ref) {
         this.ref = ref;
     }
     
-    public double[][] getOrientation(){
+    public final double[][] getOrientation(){
         return orientation;
     }
     
-    public void setOrientation(double[][] orientation) {
+    public final void setOrientation(double[][] orientation) {
         this.orientation = orientation;
     }
     
-    public void changeOrientation(double[] axis, double angle) {
+    public final void changeOrientation(double[] axis, double angle) {
         this.orientation[0] = LA.RotateAxis(this.orientation[0], axis, angle);
         this.orientation[1] = LA.RotateAxis(this.orientation[1], axis, angle);
         this.orientation[2] = LA.RotateAxis(this.orientation[2], axis, angle);

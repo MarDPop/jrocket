@@ -16,6 +16,7 @@ public class Planet extends Body {
     protected Atmosphere atm;    
     protected double minorRadius;
     protected double majorRadius;
+    protected double rotationalSpeed;
     
     public Planet(double MU, double Radius){
         super(MU/Physics.G);
@@ -23,11 +24,11 @@ public class Planet extends Body {
         this.AVGRADIUS = Radius;
     }
     
-    public void setAtm(Atmosphere atm) {
+    public final void setAtm(Atmosphere atm) {
         this.atm = atm;
     }
     
-    public Atmosphere getAtm() {
+    public final Atmosphere getAtm() {
         return this.atm;
     }
     
@@ -40,9 +41,9 @@ public class Planet extends Body {
         this.minorRadius = minor;
     }
     
-    public double getRadiusFromLon(double lon) {
-        double c = majorRadius*Math.cos(lon);
-        double d = minorRadius*Math.sin(lon);
+    public double getRadiusFromLatitude(double lat) {
+        double c = majorRadius*Math.cos(lat);
+        double d = minorRadius*Math.sin(lat);
         double a = majorRadius*c;
         double b = minorRadius*d;
         a*=a;
@@ -50,11 +51,11 @@ public class Planet extends Body {
         c*=c;
         d*=d;
         return Math.sqrt((a+b)/(c+d));
-    }
+    } 
     
-    public double getMeridionalROC(double lon) {
-        double c = majorRadius*Math.cos(lon);
-        double d = minorRadius*Math.sin(lon);
+    public double getMeridionalROC(double lat) {
+        double c = majorRadius*Math.cos(lat);
+        double d = minorRadius*Math.sin(lat);
         c*=c;
         d*=d;
         double a = majorRadius*minorRadius;
@@ -62,12 +63,22 @@ public class Planet extends Body {
         return a/Math.pow((c+d),1.5);
     }
     
-    public double getPrimeVerticalROC(double lon) {
-        double c = majorRadius*Math.cos(lon);
-        double d = minorRadius*Math.sin(lon);
+    public double getPrimeVerticalROC(double lat) {
+        double c = majorRadius*Math.cos(lat);
+        double d = minorRadius*Math.sin(lat);
         c*=c;
         d*=d;
         return majorRadius*majorRadius/Math.sqrt(c+d);
+    }
+    
+    public final void setRotationalSpeed(double speed) {
+        this.rotationalSpeed = speed;
+    }
+    
+    public double getRotationalSpeedFromLatitude(double lat) {
+        // assumes rotation is always in 
+        double R = getRadiusFromLatitude(lat);
+        return R*Math.cos(lat)*rotationalSpeed;
     }
     
 }

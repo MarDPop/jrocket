@@ -20,7 +20,8 @@ public class Earth extends Planet {
     public Earth(){
         super(3.986004418e14, 6371000);
         setAtm(new StandardATM());
-        setAngularVelocity(new double[]{0,0,1}, 2*Math.PI/sidereal );
+        this.rotationalSpeed = 2*Math.PI/sidereal;
+        setAngularVelocity(new double[]{0,0,1}, this.rotationalSpeed );
         this.minorRadius = 6356752.3;
         this.majorRadius =  6378137;
     }
@@ -31,14 +32,15 @@ public class Earth extends Planet {
         double theta = getRotationFromUTC(Globals.time.getTime());
         double psi = Math.PI - Globals.Deg2Rad(28,31,26.61);
         theta = theta-Globals.Deg2Rad(80,39,3.06);
-        return new double[]{0,0,0};
+        return new double[]{getRadiusFromLatitude(psi),theta,psi};
     }
     
     public double[][] KSCXYZ() {
-        
-        double[][] xyz = new double[3][3];
-        
-        return xyz;
+        double[] loc = KSC();
+        double[][] vec = new double[3][3];
+        vec[0] = Spherical2CartesianLocation(loc);
+        vec[1] = transform(vec[0]);
+        return vec;
     }
     
     public double getRotationFromUTC(Long utc) {
