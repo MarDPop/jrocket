@@ -21,13 +21,14 @@ public abstract class ODE {
     protected double start_time = 0;
     protected double end_time;
     protected ArrayList times;
-    ArrayList points;
+    public ArrayList points;
     public Body[] bodies;
     
     protected HashMap<String,String> Options;
     
     public double step() {
         time += dt;
+        points.add(x);
         times.add(time);
         return time;
     }
@@ -98,6 +99,12 @@ public abstract class ODE {
             }  
         }
         return out;
+    }
+    
+    public void updateForces(){
+        for(Body body : bodies) {
+            body.update();
+        }
     }
     
 }

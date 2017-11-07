@@ -14,6 +14,9 @@ public class Resource {
     private double amount;
     private double density;
     
+    public Resource() {
+    }
+    
     public Resource(double amount) {
         this.amount = amount;
     }

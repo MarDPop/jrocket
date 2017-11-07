@@ -14,12 +14,13 @@ import java.util.ArrayList;
  * @author n5823a
  */
 public class Component {
-    protected ArrayList<Force> forces;
+    public ArrayList<Force> forces;
     protected Part[] parts;
-    protected Connection[] connections;
-    protected Resource[] resources;
+    public ArrayList<Connection> connections;
+    public ArrayList<Resource> resources;
     protected double mass;
-    protected double[] location; //in referance to vehicle frame
+    public double[][] Inertia;
+    protected double[] COG; //in referance to vehicle frame (shouldn't be final as could move)
     
     public Component() {
     }
@@ -32,20 +33,12 @@ public class Component {
         return mass;
     }
     
-    public void setConnections(Connection[] connections){
-        this.connections = connections;
+    public void setCOG(double[] COG){
+        this.COG = COG;
     }
     
-    public Connection[] getConnections(){
-        return connections;
-    }
-    
-    public void setResources(Resource[] resources){
-        this.resources = resources;
-    }
-    
-    public Resource[] getResources(){
-        return resources;
+    public double[] getCOG(){
+        return COG;
     }
     
     public void setParts(Part[] parts){

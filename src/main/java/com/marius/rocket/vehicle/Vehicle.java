@@ -5,12 +5,15 @@
  */
 package com.marius.rocket.vehicle;
 
+import com.marius.rocket.Math.LA;
 import com.marius.rocket.vehicle.resources.Resource;
 import com.marius.rocket.vehicle.subsystems.Subsystem;
 import com.marius.rocket.vehicle.components.Component;
 import com.marius.rocket.physics.Body;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author n5823a
@@ -18,10 +21,9 @@ import java.util.HashMap;
 public class Vehicle extends Body {
     
     protected ArrayList<Subsystem> subsystems = new ArrayList<>();
-    protected ArrayList<Resource> totalResources = new ArrayList<>();
-    HashMap<Integer, Component> ComponentList = new HashMap<>();
+    public HashMap<Resource,HashMap<Integer,Integer>> totalResources = new HashMap<>();
+    public HashMap<Integer, Component> ComponentList = new HashMap<>();
 
-    
     public Vehicle() {
         super(0);
     }
@@ -34,8 +36,70 @@ public class Vehicle extends Body {
         subsystems.remove(in);
     }
     
-    public void calcResources() {
-        
+    public void collectComponents() {  
+        this.mass = 0;
+        ComponentList.entrySet().forEach((pair) -> {
+            Component c = pair.getValue();
+            c.forces.forEach(this.forces::add);
+            //mass
+            this.mass += c.getMass();
+            //Inertia
+            
+            //Resources
+            int k  = pair.getKey();
+            for(int i = 0; i < c.resources.size(); i++) {
+                Resource resource =  c.resources.get(i);
+                boolean found = false;
+                for(Resource key : totalResources.keySet()) {
+                    if(resource.getClass().equals( key.getClass())) {
+                        totalResources.get(key).put(k,i);
+                        key.changeAmount(resource.getAmount());
+                        found = true;
+                    }
+                }
+                if(!found) {
+                    HashMap<Integer,Integer> v = new HashMap<>();
+                    v.put(k,i);
+                    try {
+                        Resource r = resource.getClass().newInstance();
+                        r.setAmount(resource.getAmount());
+                        totalResources.put(r , v);
+                    } catch (InstantiationException | IllegalAccessException ex) {
+                        Logger.getLogger(Vehicle.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+            }
+        });
+    }
+    
+    public void recalcMass() {
+        this.mass = 0;
+        this.Inertia = new double[3][3];
+        ComponentList.values().forEach((c) -> {
+            this.mass+=c.getMass();
+            double[] x = c.getCOG();
+            double R2 = LA.dot(x,x);
+            for(int i = 0; i < 2; i++) {
+                for(int j = 0; j < 2; j++) {
+                    if (i == j) {
+                        this.Inertia[i][j] += R2;
+                    }
+                    this.Inertia[i][j] -= x[i]*x[j];
+                }
+            }
+            LA.add(this.Inertia, c.Inertia);
+        });
+    }
+    
+    public void recalcResources() {
+        totalResources.entrySet().forEach((pair)->{
+            double sum = 0;
+            for(HashMap.Entry<Integer,Integer> k : pair.getValue().entrySet()) {
+                sum += ComponentList.get(k.getKey()).resources.get(k.getValue()).getAmount();
+            }
+            pair.getKey().setAmount(sum);
+        });
     }
     
 }

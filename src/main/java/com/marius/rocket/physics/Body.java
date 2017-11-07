@@ -19,7 +19,7 @@ public class Body extends Frame{
     protected double[] netforces;
     public ArrayList<Force> forces;
     protected double[] netmoments;
-    protected double[][] Inertia; //normalized inertia
+    protected double[][] Inertia; //normalized inertia in BODY frame
     protected Shape shape;
     public boolean onrails = false;
     public double massRate;
@@ -81,8 +81,14 @@ public class Body extends Frame{
         return shape;
     }
     
-    public void update() {
+    public void fullupdate(){
         
+    }
+    
+    public void update() {
+        forces.forEach((force) -> {
+            force.update();
+        });
     }
     
     public double[] getState() {

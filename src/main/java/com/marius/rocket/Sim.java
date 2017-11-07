@@ -25,6 +25,12 @@ public class Sim {
        test2();
     }
     
+    private static void test3(){ 
+        SimpleRocket rocket_1 = new SimpleRocket();
+        rocket_1.getXYZ()[0][0] = 1;
+        System.out.println(rocket_1.getXYZ()[0][0]);
+    }
+    
     private static void test2(){
         Earth earth = new Earth();
         double[][] ksc = earth.KSCXYZ();
@@ -39,15 +45,12 @@ public class Sim {
             rocket_1.start();
             while(ode.getTime() < 40){
                 ode.step();
+                rec.record(ode.getTime(), ode.x);
             }
             rec.finish();
         } catch(Exception e) {
             
         }
-        
-        //rocket_1.setRef(ECRF);
-        
-        
     }
     
     private static void test() {
