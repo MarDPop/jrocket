@@ -5,6 +5,7 @@
  */
 package com.marius.rocket.vehicle.components;
 
+import com.marius.rocket.physics.forces.Thrust;
 import com.marius.rocket.vehicle.resources.Resource;
 
 /**
@@ -12,15 +13,16 @@ import com.marius.rocket.vehicle.resources.Resource;
  * @author n5823a
  */
 public class Thruster extends Component {
-    
-    protected double thrust; // in newtons
+    public final Thrust thrust;
+    protected double currentThrust; // in newtons
     protected double massflow; //kg/s
     protected double isp; // s
     protected Resource[] requirements;
     protected double throttle;
     protected boolean active;
     
-    public Thruster() {     
+    public Thruster() { 
+        this.thrust = new Thrust();
     }
     
     public void setRequirements(Resource[] requirements){
@@ -31,7 +33,7 @@ public class Thruster extends Component {
         return this.requirements;
     }
     
-    public double getThrust() {
+    public Thrust getThrust() {
         return thrust;
     }
     

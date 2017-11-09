@@ -7,6 +7,7 @@ package com.marius.rocket.vehicle.presets;
 
 import com.marius.rocket.vehicle.components.SimpleThruster;
 import com.marius.rocket.vehicle.*;
+import com.marius.rocket.vehicle.components.Component;
 /**
  *
  * @author n5823a
@@ -19,12 +20,10 @@ public class SimpleRocket extends Rocket {
     
     public SimpleRocket() {
         super();
-        this.mass = 6;
-        engine = new SimpleThruster(100,100,1);
-    }
-    
-    public void start() {
-        this.engine.run();
+        this.ComponentList.add(new SimpleThruster(100,100,1));
+        Component shell = new Component();
+        shell.setMass(1);
+        this.ComponentList.add(shell);
     }
     
     

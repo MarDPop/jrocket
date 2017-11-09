@@ -5,19 +5,13 @@
  */
 package com.marius.rocket.vehicle.components;
 
-import com.marius.rocket.vehicle.resources.Resource;
-
 /**
  *
  * @author n5823a
  */
-public class Connection {
-    protected Data data;
-    protected Resource resource;
-    protected Component input;
-    protected Component ouput;
+public class Data {
     
-    public Connection() {
+    public Data() {
         
     }
 }

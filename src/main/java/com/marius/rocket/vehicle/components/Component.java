@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class Component {
     public ArrayList<Force> forces;
     protected Part[] parts;
+    public ArrayList<Controller> controllers;
     public ArrayList<Connection> connections;
     public ArrayList<Resource> resources;
     protected double mass;
@@ -23,6 +24,9 @@ public class Component {
     protected double[] COG; //in referance to vehicle frame (shouldn't be final as could move)
     
     public Component() {
+        this.mass= 0;
+        this.Inertia = new double[3][3];
+        this.COG = new double[3];
     }
     
     public void setMass(double mass){
@@ -47,6 +51,10 @@ public class Component {
     
     public Part[] getParts(){
         return parts;
+    }
+    
+    public void update(double time, double dt) {
+        
     }
     
 }

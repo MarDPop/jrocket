@@ -18,6 +18,11 @@ public class Thrust extends Force{
         
     }
     
+    public Thrust(double newtons, double isp) {
+        this.mag = newtons;
+        this.isp = isp;
+    }
+    
     public void setISP(double isp){
         this.isp = isp;
         this.massflow = this.magnitude()/(9.806*isp);

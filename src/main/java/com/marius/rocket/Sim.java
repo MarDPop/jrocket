@@ -1,8 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+// PLEASE CHECK MEMORY LEAKS!!!!
+// --------------------------
 package com.marius.rocket;
 
 import com.marius.rocket.Math.Euler;
@@ -36,13 +33,15 @@ public class Sim {
         double[][] ksc = earth.KSCXYZ();
         SimpleRocket rocket_1 = new SimpleRocket();
         rocket_1.setXYZ(ksc);
+        rocket_1.collectComponents();
+        rocket_1.recalcMass();
+        
         final double dt = 0.1;
         Euler ode = new Euler(dt);
         ode.bodies = new Body[]{rocket_1};
         ode.setEndTime(40);
         try {
             Recorder rec = new Recorder("record.csv");
-            rocket_1.start();
             while(ode.getTime() < 40){
                 ode.step();
                 rec.record(ode.getTime(), ode.x);

@@ -22,7 +22,7 @@ public class Vehicle extends Body {
     
     protected ArrayList<Subsystem> subsystems = new ArrayList<>();
     public HashMap<Resource,HashMap<Integer,Integer>> totalResources = new HashMap<>();
-    public HashMap<Integer, Component> ComponentList = new HashMap<>();
+    public ArrayList<Component> ComponentList = new ArrayList<>();
 
     public Vehicle() {
         super(0);
@@ -36,17 +36,13 @@ public class Vehicle extends Body {
         subsystems.remove(in);
     }
     
-    public void collectComponents() {  
-        this.mass = 0;
-        ComponentList.entrySet().forEach((pair) -> {
-            Component c = pair.getValue();
+    public void collectComponents() { 
+        ComponentList.clear();
+        totalResources.clear();
+        for(int k = 0; k < ComponentList.size(); k++){
+            Component c = ComponentList.get(k);
             c.forces.forEach(this.forces::add);
-            //mass
-            this.mass += c.getMass();
-            //Inertia
-            
             //Resources
-            int k  = pair.getKey();
             for(int i = 0; i < c.resources.size(); i++) {
                 Resource resource =  c.resources.get(i);
                 boolean found = false;
@@ -70,13 +66,13 @@ public class Vehicle extends Body {
 
                 }
             }
-        });
+        }
     }
     
     public void recalcMass() {
         this.mass = 0;
         this.Inertia = new double[3][3];
-        ComponentList.values().forEach((c) -> {
+        ComponentList.forEach((c) -> {
             this.mass+=c.getMass();
             double[] x = c.getCOG();
             double R2 = LA.dot(x,x);
