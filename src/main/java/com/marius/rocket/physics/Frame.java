@@ -169,7 +169,7 @@ public class Frame {
     }
     
     public final void setAngularVelocity(double[] axis, double rate) {
-        axis = LA.multiply(axis, 1/LA.mag(axis)); // normalize
+        LA.multiply(axis, 1/LA.mag(axis)); // normalize
         this.rotation[1] = LA.multiply(axis, rate);
     }
     
@@ -194,7 +194,7 @@ public class Frame {
     }
     
     public double[] transform(double[] u) {
-        return LA.cross(u,this.rotation[1]);
+        return LA.cross(this.rotation[1],u); // components of angular velocity in x y and z axis
     }
     
     public void setMotion() {

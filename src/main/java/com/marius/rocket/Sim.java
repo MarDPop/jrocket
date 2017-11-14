@@ -36,7 +36,6 @@ public class Sim {
         SimpleRocket rocket_1 = new SimpleRocket();
         rocket_1.setXYZ(ksc);    
         rocket_1.recalcMass();
-        System.out.println(Arrays.toString(earth.KSC())); // this is wrong
         rocket_1.initUp();
         
         final double dt = 0.1;

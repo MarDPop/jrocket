@@ -6,7 +6,9 @@
 package com.marius.rocket.physics;
 
 import com.marius.rocket.Globals;
+import com.marius.rocket.Math.LA;
 import java.time.Instant;
+import java.util.Arrays;
 
 /**
  *
@@ -38,7 +40,7 @@ public class Earth extends Planet {
         double[] loc = KSC();
         double[][] vec = new double[3][3];
         vec[0] = Spherical2CartesianLocation(loc);
-        vec[1] = transform(vec[0]);
+        vec[1] = LA.cross(rotation[1], vec[0]);
         return vec;
     }
     

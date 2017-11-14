@@ -8,6 +8,7 @@ package com.marius.rocket.physics;
 import com.marius.rocket.physics.forces.Force;
 import com.marius.rocket.Math.LA;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -93,6 +94,7 @@ public class Body extends Frame{
             LA.add(sum,force.get());
         });
         LA.multiply(sum, 1/this.mass);
+        System.out.println(Arrays.toString(sum));
         this.xyz[2][0] = this.orientation[0][0]*sum[0]+this.orientation[1][0]*sum[1]+this.orientation[2][0]*sum[2];
         this.xyz[2][1] = this.orientation[0][1]*sum[0]+this.orientation[1][1]*sum[1]+this.orientation[2][1]*sum[2];
         this.xyz[2][2] = this.orientation[0][2]*sum[0]+this.orientation[1][2]*sum[1]+this.orientation[2][2]*sum[2];
