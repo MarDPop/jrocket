@@ -12,19 +12,30 @@ import com.marius.rocket.physics.forces.Thrust;
  * @author n5823a
  */
 public class SimpleThruster extends Thruster {
-    double availablethrust;
+    public double availablethrust;
+    private final double emptymass;
     
-    public SimpleThruster(double thrust, double isp, double mass) {
+    public SimpleThruster(double thrust, double isp, double mass, double emptymass) {
         super();
         this.availablethrust = thrust;
         this.isp = isp;
         this.mass = mass;
+        this.emptymass = emptymass;
+        this.thrust.set(new double[]{thrust,0,0});
         this.thrust.setISP(isp);
-        this.thrust.overrideMag(thrust);
+        setMassflowByISP();
     }
     
+    @Override
+    public void update(double time, double dt) {
+        if (this.mass > emptymass) {
+            this.mass -= this.massflow*dt;
+        } else {
+            availablethrust = 0;
+        }
+    }
     
-    public double setMassflowByISP() {
+    public final double setMassflowByISP() {
         this.massflow = currentThrust/(9.806*isp);
         return massflow;
     }

@@ -5,6 +5,8 @@
  */
 package com.marius.rocket.Math;
 
+import java.util.Arrays;
+
 /**
  *
  * @author n5823a
@@ -15,13 +17,13 @@ public class Euler extends ODE {
         this.dt = dt;
     }
     
-    public static double step(double x, double dx, double dt) {
-        return x+=dx*dt;
+    public static double step(double x, double dx, double _dt) {
+        return x+=dx*_dt;
     }
     
-    public static void step(double[] x, double[] dx, double dt) {
-        for(int i = 0; i < x.length; i++) {
-            x[i] += dx[i]*dt;
+    public static void step(double[] _x, double[] _dx, double _dt) {
+        for(int i = 0; i < _x.length; i++) {
+            _x[i] += _dx[i]*_dt;
         }
     }
     
@@ -55,13 +57,14 @@ public class Euler extends ODE {
             bodies[i].getXYZ()[1][0] = x[6*i+3];
             bodies[i].getXYZ()[1][1] = x[6*i+4];
             bodies[i].getXYZ()[1][2] = x[6*i+5];
-            bodies[i].update();
+            bodies[i].update(time,dt);
         }
     }
     
     @Override
     public double step() {
         stateFromBodies();
+        System.out.println(Arrays.toString(x));
         step(x,dx,dt);
         stateToBodies();
         return super.step();

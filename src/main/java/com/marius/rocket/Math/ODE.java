@@ -27,10 +27,10 @@ public abstract class ODE {
     protected HashMap<String,String> Options;
     
     public double step() {
-        time += dt;
-        points.add(x);
-        times.add(time);
-        return time;
+        this.time += dt;
+        this.points.add(x);
+        this.times.add(time);
+        return this.time;
     }
     
     public void run() {
@@ -103,7 +103,7 @@ public abstract class ODE {
     
     public void updateForces(){
         for(Body body : bodies) {
-            body.update();
+            body.update(time,dt);
         }
     }
     

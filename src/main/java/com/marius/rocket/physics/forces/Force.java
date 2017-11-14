@@ -54,6 +54,6 @@ public class Force {
         return center;
     }
     
-    public void update(){}
+    public void update(double time, double dt){}
     
 }

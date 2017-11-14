@@ -26,11 +26,10 @@ public class Earth extends Planet {
         this.majorRadius =  6378137;
     }
     
-    private double[] KSC() {
+    public double[] KSC() {
         // 28 31 26.61 N 80 39 3.06 W
-        
         double theta = getRotationFromUTC(Globals.time.getTime());
-        double psi = Math.PI - Globals.Deg2Rad(28,31,26.61);
+        double psi = Math.PI/2 - Globals.Deg2Rad(28,31,26.61);
         theta = theta-Globals.Deg2Rad(80,39,3.06);
         return new double[]{getRadiusFromLatitude(psi),theta,psi};
     }
@@ -44,7 +43,8 @@ public class Earth extends Planet {
     }
     
     public double getRotationFromUTC(Long utc) {
-        return rotation[1][2];
+        return Globals.Deg2Rad(80,39,3.06);
+        //return rotation[1][2];
     }
     
 }

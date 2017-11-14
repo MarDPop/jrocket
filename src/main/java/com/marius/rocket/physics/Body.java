@@ -6,6 +6,7 @@
 package com.marius.rocket.physics;
 
 import com.marius.rocket.physics.forces.Force;
+import com.marius.rocket.Math.LA;
 import java.util.ArrayList;
 
 /**
@@ -17,7 +18,7 @@ public class Body extends Frame{
     protected double mass; 
     protected double netcharge;
     protected double[] netforces;
-    public ArrayList<Force> forces;
+    public ArrayList<Force> forces = new ArrayList<>();;
     protected double[] netmoments;
     protected double[][] Inertia; //normalized inertia in BODY frame
     protected Shape shape;
@@ -85,10 +86,20 @@ public class Body extends Frame{
         
     }
     
-    public void update() {
+    public void update(double time, double dt) {
+        double[] sum = new double[3];
         forces.forEach((force) -> {
-            force.update();
+            force.update(time,dt);
+            LA.add(sum,force.get());
         });
+        LA.multiply(sum, 1/this.mass);
+        this.xyz[2][0] = this.orientation[0][0]*sum[0]+this.orientation[1][0]*sum[1]+this.orientation[2][0]*sum[2];
+        this.xyz[2][1] = this.orientation[0][1]*sum[0]+this.orientation[1][1]*sum[1]+this.orientation[2][1]*sum[2];
+        this.xyz[2][2] = this.orientation[0][2]*sum[0]+this.orientation[1][2]*sum[1]+this.orientation[2][2]*sum[2];
+    }
+    
+    public void getAccelerationFromForces() {
+        
     }
     
     public double[] getState() {

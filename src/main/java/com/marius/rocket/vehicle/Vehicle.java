@@ -36,8 +36,8 @@ public class Vehicle extends Body {
         subsystems.remove(in);
     }
     
-    public void collectComponents() { 
-        ComponentList.clear();
+    public final void collectComponents() { 
+        forces.clear();
         totalResources.clear();
         for(int k = 0; k < ComponentList.size(); k++){
             Component c = ComponentList.get(k);
@@ -69,7 +69,7 @@ public class Vehicle extends Body {
         }
     }
     
-    public void recalcMass() {
+    public final void recalcMass() {
         this.mass = 0;
         this.Inertia = new double[3][3];
         ComponentList.forEach((c) -> {
@@ -88,7 +88,7 @@ public class Vehicle extends Body {
         });
     }
     
-    public void recalcResources() {
+    public final void recalcResources() {
         totalResources.entrySet().forEach((pair)->{
             double sum = 0;
             for(HashMap.Entry<Integer,Integer> k : pair.getValue().entrySet()) {
@@ -96,6 +96,13 @@ public class Vehicle extends Body {
             }
             pair.getKey().setAmount(sum);
         });
+    }
+    
+    @Override
+    public void update(double time, double dt) {
+        this.ComponentList.forEach((c)->c.update(time,dt));
+        recalcMass();
+        super.update(time,dt);
     }
     
 }

@@ -16,8 +16,8 @@ import java.util.Properties;
  */
 public class StandardATM extends Atmosphere{
     
-    protected double[] altitudes = {0,11000,20000,32000,47000,53000,79000,90000}; //breakpoints
-    protected double[] temperatures = {288.16,216.66,216.66,282.66,282.66,165.66,165.66};
+    protected double[] altitudes = {0,11000,20000,32000,47000,51000,71000,84852,90000,105000}; //breakpoints
+    protected double[] temperatures = {288.15,216.65,216.65,228.65,270.65,270.65,214.65,186.95,186.95, 246.95};
     protected double[] pressures = null;
     protected double[] densities = null;
     protected double[] lapses = null;
@@ -99,8 +99,10 @@ public class StandardATM extends Atmosphere{
         }
         
         for(int i = 0; i < altitudes.length; i++) {
-            double deltaH = altitudes[i+1]-altitudes[i];
-            lapses[i] = (temperatures[i+1]-temperatures[i])/deltaH;
+            if((i+1) < n) {
+                double deltaH = altitudes[i+1]-altitudes[i];
+                lapses[i] = (temperatures[i+1]-temperatures[i])/deltaH;
+            }
             if(calcPressures) {
                 if(i == 1) {
                     pressures[i] =  sealevelpress;

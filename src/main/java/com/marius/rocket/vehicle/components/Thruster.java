@@ -20,9 +20,11 @@ public class Thruster extends Component {
     protected Resource[] requirements;
     protected double throttle;
     protected boolean active;
+    //protected double[] bodyOrientation; // of the  body frame
     
     public Thruster() { 
         this.thrust = new Thrust();
+        this.forces.add(this.thrust);
     }
     
     public void setRequirements(Resource[] requirements){

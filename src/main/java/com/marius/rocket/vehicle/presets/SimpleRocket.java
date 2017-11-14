@@ -14,17 +14,17 @@ import com.marius.rocket.vehicle.components.Component;
  */
 public class SimpleRocket extends Rocket {
     
-    public final double emptymass = 2;
-    public double mass;
-    public SimpleThruster engine;
-    
     public SimpleRocket() {
         super();
-        this.ComponentList.add(new SimpleThruster(100,100,1));
+        this.ComponentList.add(new SimpleThruster(100,150,2,1));
         Component shell = new Component();
         shell.setMass(1);
         this.ComponentList.add(shell);
+        this.collectComponents();
     }
     
+    public void initUp() {
+        this.orientation = this.spherical_unit_vectors;
+    }
     
 }

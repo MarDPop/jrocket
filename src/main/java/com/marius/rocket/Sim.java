@@ -8,6 +8,7 @@ import com.marius.rocket.Utils.Recorder;
 import java.util.Arrays;
 import com.marius.rocket.physics.*;
 import com.marius.rocket.vehicle.presets.SimpleRocket;
+import java.util.Date;
 
 /**
  *
@@ -29,26 +30,34 @@ public class Sim {
     }
     
     private static void test2(){
+        Globals.time = new Date();
         Earth earth = new Earth();
         double[][] ksc = earth.KSCXYZ();
         SimpleRocket rocket_1 = new SimpleRocket();
-        rocket_1.setXYZ(ksc);
-        rocket_1.collectComponents();
+        rocket_1.setXYZ(ksc);    
         rocket_1.recalcMass();
+        System.out.println(Arrays.toString(earth.KSC())); // this is wrong
+        rocket_1.initUp();
         
         final double dt = 0.1;
+        rocket_1.update(0,dt);
+        System.out.println(Arrays.toString(rocket_1.getXYZ()[2]));
+        
         Euler ode = new Euler(dt);
         ode.bodies = new Body[]{rocket_1};
         ode.setEndTime(40);
+        System.out.println(ode.getTime());
+        
         try {
             Recorder rec = new Recorder("record.csv");
             while(ode.getTime() < 40){
                 ode.step();
+                System.out.println(ode.getTime());
                 rec.record(ode.getTime(), ode.x);
             }
             rec.finish();
         } catch(Exception e) {
-            
+            System.out.println(e.getMessage());
         }
     }
     

@@ -226,9 +226,9 @@ public class LA {
     
     public static double[] cross(double[] u, double[] v) {
         double[] x = {0,0,0};
-        x[1] = u[2]*v[3] - v[3]*u[2];
-        x[2] = u[3]*v[1] - v[1]*u[3];
-        x[3] = u[1]*v[2] - v[2]*u[1];
+        x[0] = u[1]*v[2] - v[2]*u[1];
+        x[1] = u[2]*v[0] - v[0]*u[2];
+        x[2] = u[0]*v[1] - v[1]*u[0];
         return x;
     }
     

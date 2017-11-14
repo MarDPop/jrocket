@@ -219,6 +219,12 @@ public class Frame {
         this.orientation[2] = LA.RotateAxis(this.orientation[2], axis, angle);
     }
     
-    
+    public final double[] body2xyz(double[] vec) {
+        double[] out = new double[3];
+        out[0] = this.orientation[0][0]*vec[0]+this.orientation[1][0]*vec[1]+this.orientation[2][0]*vec[2];
+        out[1] = this.orientation[0][1]*vec[0]+this.orientation[1][1]*vec[1]+this.orientation[2][1]*vec[2];
+        out[2] = this.orientation[0][2]*vec[0]+this.orientation[1][2]*vec[1]+this.orientation[2][2]*vec[2];
+        return out;
+    }
     
 }

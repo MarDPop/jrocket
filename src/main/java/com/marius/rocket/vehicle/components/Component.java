@@ -14,11 +14,11 @@ import java.util.ArrayList;
  * @author n5823a
  */
 public class Component {
-    public ArrayList<Force> forces;
     protected Part[] parts;
-    public ArrayList<Controller> controllers;
-    public ArrayList<Connection> connections;
-    public ArrayList<Resource> resources;
+    public ArrayList<Force> forces = new ArrayList<>();
+    public ArrayList<Controller> controllers = new ArrayList<>();
+    public ArrayList<Connection> connections = new ArrayList<>();
+    public ArrayList<Resource> resources = new ArrayList<>();
     protected double mass;
     public double[][] Inertia;
     protected double[] COG; //in referance to vehicle frame (shouldn't be final as could move)
