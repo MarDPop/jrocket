@@ -21,7 +21,7 @@ public class SimpleThruster extends Thruster {
         this.isp = isp;
         this.mass = mass;
         this.emptymass = emptymass;
-        this.thrust.set(new double[]{thrust,0,0});
+        this.thrust.set(new double[]{0,0,0});
         this.thrust.setISP(isp);
         setMassflowByISP();
     }
@@ -31,12 +31,12 @@ public class SimpleThruster extends Thruster {
         if (this.mass > emptymass) {
             this.mass -= this.massflow*dt;
         } else {
-            availablethrust = 0;
+            thrust.set(new double[]{0,0,0});
         }
     }
     
     public final double setMassflowByISP() {
-        this.massflow = currentThrust/(9.806*isp);
+        this.massflow = availablethrust/(9.806*isp);
         return massflow;
     }
 }

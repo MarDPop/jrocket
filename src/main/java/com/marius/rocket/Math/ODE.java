@@ -6,6 +6,7 @@
 package com.marius.rocket.Math;
 
 import com.marius.rocket.physics.Body;
+import com.marius.rocket.physics.forces.Gravity;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,15 +14,15 @@ import java.util.HashMap;
  *
  * @author n5823a
  */
-public abstract class ODE {    
+public class ODE {    
     public double[] x;
     public double[] dx;
     protected double dt;
     protected double time;
     protected double start_time = 0;
     protected double end_time;
-    protected ArrayList times;
-    public ArrayList points;
+    protected ArrayList<Double> times = new ArrayList<>();
+    public ArrayList points = new ArrayList<>();
     public Body[] bodies;
     
     protected HashMap<String,String> Options;
@@ -38,6 +39,12 @@ public abstract class ODE {
         while(step() < end_time) {
             
         }
+    }
+    
+    public void init() {
+        Gravity g = new Gravity(bodies[0], bodies);
+        x = new double[6*this.bodies.length];
+        dx = new double[6*this.bodies.length];
     }
     
     public void setOptions(HashMap<String,String> Options) {

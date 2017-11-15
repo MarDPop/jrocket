@@ -15,11 +15,9 @@ import com.marius.rocket.physics.*;
 public class Force {
     //NOTE THIS IS A DISCRETE FORCE (point), NEED TO ADD SURFACE AND BODY FORCE
     protected Frame ref;
-    protected double[] vec; //vector in ref frame
+    protected double[] vec = new double[3]; //vector in ref frame
     protected double mag;
-    protected double[] center; //point at which sum of force passes through
-    
-    public Force(){}
+    protected double[] center = new double[3];; //point at which sum of force passes through
     
     public void setFrame(Frame ref) {
         this.ref = ref;

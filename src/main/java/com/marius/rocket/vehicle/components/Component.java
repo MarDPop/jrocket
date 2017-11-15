@@ -19,15 +19,9 @@ public class Component {
     public ArrayList<Controller> controllers = new ArrayList<>();
     public ArrayList<Connection> connections = new ArrayList<>();
     public ArrayList<Resource> resources = new ArrayList<>();
-    protected double mass;
-    public double[][] Inertia;
-    protected double[] COG; //in referance to vehicle frame (shouldn't be final as could move)
-    
-    public Component() {
-        this.mass= 0;
-        this.Inertia = new double[3][3];
-        this.COG = new double[3];
-    }
+    protected double mass = 0;
+    public double[][] Inertia = new double[3][3];
+    protected double[] COG = new double[3]; //in referance to vehicle frame (shouldn't be final as could move)
     
     public void setMass(double mass){
         this.mass = mass;

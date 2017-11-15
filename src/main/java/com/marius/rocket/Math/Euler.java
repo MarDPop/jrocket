@@ -27,11 +27,6 @@ public class Euler extends ODE {
         }
     }
     
-    public void init() {
-        x = new double[6*this.bodies.length];
-        dx = new double[6*this.bodies.length];
-    }
-    
     public void stateFromBodies() {
         for(int i = 0; i < this.bodies.length; i++){
             x[6*i] = bodies[i].getXYZ()[0][0];
@@ -64,7 +59,6 @@ public class Euler extends ODE {
     @Override
     public double step() {
         stateFromBodies();
-        System.out.println(Arrays.toString(x));
         step(x,dx,dt);
         stateToBodies();
         return super.step();

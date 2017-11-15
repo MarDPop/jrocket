@@ -24,6 +24,8 @@ public class SimpleRocket extends Rocket {
     }
     
     public void initUp() {
+        this.calcSphericalFromCartesian();
+        this.calcSphericalUnitVectors();
         this.orientation = this.spherical_unit_vectors;
     }
     

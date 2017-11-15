@@ -13,17 +13,14 @@ public class Frame {
     protected Frame ref;
     protected double[][] xyz = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}}; // in x y z (x points to vega, theta is measured from x)
     protected double[][] spherical = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}}; // in r theta phi (aka radius, angle from vega [xz plane], angle from ecliptic plane [xy plane] ) see http://mathworld.wolfram.com/SphericalCoordinates.html 
-    protected double[][] spherical_unit_vectors = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}};
+    public double[][] spherical_unit_vectors = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}};
     protected double[] spherical_velocity = {0.0,0.0,0.0}; //velocity in the spherical coordinate system
     protected double[] spherical_acceleration = {0.0,0.0,0.0}; //acceleration in the spherical coordinate system
     protected double[][] rotation = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}}; //(rotation about x, y, z from reference frame)
     protected double[][] rotation_spherical = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}}; // pitch, heading, roll ( and rates and accel) langrange frame MUST HAVE SAME ORIGIN 
     protected double[][] rotation_matrix = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}}; // using rotation[0] orientation is based of rotation matrix
-    protected double[][] orientation = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}}; // unit vectors in euler frame (direction of local x y z-axis) 
+    protected double[][] orientation = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}}; // unit vectors of body frame (direction of local x y z-axis) 
     //protected double[] lagrange_velocity; //current velocity of frame within reference frame
-    
-    public Frame() {
-    }
     
     public final void setXYZ(double[][] xyz) {
         this.xyz = xyz;

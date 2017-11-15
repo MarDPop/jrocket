@@ -14,9 +14,7 @@ public class Thrust extends Force{
     private double massflow;
     private double exitV; //NOTE: exitV =/= isp*g !! isp accounts for losses and pressure
     
-    public Thrust() {
-        
-    }
+    public Thrust() {}
     
     public Thrust(double newtons, double isp) {
         this.mag = newtons;

@@ -7,6 +7,7 @@ import static com.marius.rocket.Math.LA.*;
 import com.marius.rocket.Utils.Recorder;
 import java.util.Arrays;
 import com.marius.rocket.physics.*;
+import com.marius.rocket.physics.forces.Gravity;
 import com.marius.rocket.vehicle.presets.SimpleRocket;
 import java.util.Date;
 
@@ -37,22 +38,25 @@ public class Sim {
         rocket_1.setXYZ(ksc);    
         rocket_1.recalcMass();
         rocket_1.initUp();
-        
+        Gravity g = new Gravity(rocket_1,new Body[]{earth});
+        rocket_1.forces.add(g);
         final double dt = 0.1;
         rocket_1.update(0,dt);
-        System.out.println(Arrays.toString(rocket_1.getXYZ()[2]));
-        
+        /*
+        System.out.println("location "+Arrays.toString(rocket_1.getXYZ()[0]));
+        System.out.println("radial "+Arrays.toString(rocket_1.spherical_unit_vectors[0]));
+        System.out.println("accel "+Arrays.toString(rocket_1.getXYZ()[2]));
+        */
         Euler ode = new Euler(dt);
         ode.bodies = new Body[]{rocket_1};
-        ode.setEndTime(40);
-        System.out.println(ode.getTime());
-        
+        ode.setEndTime(60);
+        ode.init();
         try {
             Recorder rec = new Recorder("record.csv");
             while(ode.getTime() < 40){
                 ode.step();
-                System.out.println(ode.getTime());
                 rec.record(ode.getTime(), ode.x);
+                System.out.println("mass "+rocket_1.getMass());
             }
             rec.finish();
         } catch(Exception e) {
