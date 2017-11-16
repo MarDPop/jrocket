@@ -104,7 +104,7 @@ public class Frame {
     public final void calcSphericalFromCartesian() {
         spherical[0][0] = LA.mag(xyz[0]);
         spherical[0][1] = Math.atan2(xyz[0][1], xyz[0][0]);
-        spherical[0][2] = Math.cos(xyz[0][2]/spherical[0][0]);
+        spherical[0][2] = Math.acos(xyz[0][2]/spherical[0][0]);
         calcSphericalUnitVectors();
         spherical_velocity = xyz2spherical(xyz[1]);
         spherical_acceleration = xyz2spherical(xyz[2]);
@@ -222,6 +222,10 @@ public class Frame {
         out[1] = this.orientation[0][1]*vec[0]+this.orientation[1][1]*vec[1]+this.orientation[2][1]*vec[2];
         out[2] = this.orientation[0][2]*vec[0]+this.orientation[1][2]*vec[1]+this.orientation[2][2]*vec[2];
         return out;
+    }
+    
+    public final void updateAll() {
+        
     }
     
 }

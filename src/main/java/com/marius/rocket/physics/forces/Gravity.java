@@ -28,10 +28,7 @@ public class Gravity extends Force {
     
     public double[] calc() {
         this.mu = main.getMass()*Physics.G;
-        //check if references
         double[] pos = Arrays.copyOf(main.getXYZ()[0],3);
-        System.out.println("position of rocket");
-        System.out.println(Arrays.toString(pos));
         vec = new double[3];
         for(Body body : list) {
             double[] R = Arrays.copyOf(body.getXYZ()[0],3);
@@ -39,8 +36,6 @@ public class Gravity extends Force {
             double cons = mu*body.getMass()/(Math.pow(LA.mag(R),3));
             LA.add(vec,LA.multiply(R,cons));
         }
-        System.out.println("grav");
-        System.out.println(Arrays.toString(vec));
         return vec;
     }
     

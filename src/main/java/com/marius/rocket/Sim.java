@@ -24,22 +24,15 @@ public class Sim {
        test2();
     }
     
-    private static void test3(){ 
-        SimpleRocket rocket_1 = new SimpleRocket();
-        rocket_1.getXYZ()[0][0] = 1;
-        System.out.println(rocket_1.getXYZ()[0][0]);
-    }
-    
     private static void test2(){
         Globals.time = new Date();
         Earth earth = new Earth();
         double[][] ksc = earth.KSCXYZ();
-        SimpleRocket rocket_1 = new SimpleRocket();
+        SimpleRocket rocket_1 = new SimpleRocket(earth.getAtm());
         rocket_1.setXYZ(ksc);    
         rocket_1.recalcMass();
         rocket_1.initUp();
-        Gravity g = new Gravity(rocket_1,new Body[]{earth});
-        rocket_1.forces.add(g);
+        rocket_1.g = new Gravity(rocket_1,new Body[]{earth});
         final double dt = 0.1;
         rocket_1.update(0,dt);
         /*
@@ -54,6 +47,7 @@ public class Sim {
         try {
             Recorder rec = new Recorder("record.csv");
             while(ode.getTime() < 40){
+                rocket_1.calcSphericalFromCartesian();
                 ode.step();
                 rec.record(ode.getTime(), ode.x);
                 System.out.println("mass "+rocket_1.getMass());
