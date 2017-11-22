@@ -21,7 +21,7 @@ public class Earth extends Planet {
 
     public Earth(){
         super(3.986004418e14, 6371000);
-        setAtm(new StandardATM());
+        this.atm = new StandardATM(this);
         this.rotationalSpeed = 2*Math.PI/sidereal;
         setAngularVelocity(new double[]{0,0,1}, this.rotationalSpeed );
         this.minorRadius = 6356752.3;

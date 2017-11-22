@@ -11,7 +11,4 @@ package com.marius.rocket.vehicle.components;
  */
 public class Data {
     
-    public Data() {
-        
-    }
 }

@@ -10,6 +10,7 @@ import com.marius.rocket.vehicle.resources.Resource;
 import com.marius.rocket.vehicle.subsystems.Subsystem;
 import com.marius.rocket.vehicle.components.Component;
 import com.marius.rocket.physics.Body;
+import com.marius.rocket.physics.Environment;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -23,6 +24,7 @@ public class Vehicle extends Body {
     protected ArrayList<Subsystem> subsystems = new ArrayList<>();
     public HashMap<Resource,HashMap<Integer,Integer>> totalResources = new HashMap<>();
     public ArrayList<Component> ComponentList = new ArrayList<>();
+    public Environment environment = new Environment();
 
     public Vehicle() {
         super(0);
@@ -100,6 +102,8 @@ public class Vehicle extends Body {
     
     @Override
     public void update(double time, double dt) {
+        this.calcSphericalFromCartesian();
+        this.environment.calc();
         this.ComponentList.forEach((c)->c.update(time,dt));
         recalcMass();
         super.update(time,dt);

@@ -3,6 +3,7 @@
 package com.marius.rocket;
 
 import com.marius.rocket.Math.Euler;
+import com.marius.rocket.Math.LA;
 import static com.marius.rocket.Math.LA.*;
 import com.marius.rocket.Utils.Recorder;
 import java.util.Arrays;
@@ -26,27 +27,32 @@ public class Sim {
     
     private static void test2(){
         Globals.time = new Date();
+        
         Earth earth = new Earth();
         double[][] ksc = earth.KSCXYZ();
-        SimpleRocket rocket_1 = new SimpleRocket(earth.getAtm());
-        rocket_1.setXYZ(ksc);    
+        
+        Environment env = new Environment();
+        env.setAtm(earth.getAtm());
+        if(earth.getAtm() != null) {
+            System.out.println("not null");
+        }
+        SimpleRocket rocket_1 = new SimpleRocket(env);
+        rocket_1.setXYZ(ksc); 
         rocket_1.recalcMass();
         rocket_1.initUp();
         rocket_1.g = new Gravity(rocket_1,new Body[]{earth});
+        
         final double dt = 0.1;
+        rocket_1.calcSphericalFromCartesian();
         rocket_1.update(0,dt);
-        /*
-        System.out.println("location "+Arrays.toString(rocket_1.getXYZ()[0]));
-        System.out.println("radial "+Arrays.toString(rocket_1.spherical_unit_vectors[0]));
-        System.out.println("accel "+Arrays.toString(rocket_1.getXYZ()[2]));
-        */
         Euler ode = new Euler(dt);
         ode.bodies = new Body[]{rocket_1};
-        ode.setEndTime(60);
+        ode.setEndTime(120);
         ode.init();
+        
         try {
             Recorder rec = new Recorder("record.csv");
-            while(ode.getTime() < 40){
+            while(ode.getTime() < ode.getEndTime()){
                 rocket_1.calcSphericalFromCartesian();
                 ode.step();
                 rec.record(ode.getTime(), ode.x);

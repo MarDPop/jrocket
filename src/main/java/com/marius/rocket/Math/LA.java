@@ -254,6 +254,10 @@ public class LA {
         return pow(sum,1/p);
     }
     
+    public static double[] normalize(double [] u){
+        return multiply(u,1/mag(u));
+    }
+    
     public static double max(double[] u) {
         double src = 0;
         for (int i = 0; i < u.length; i++) 

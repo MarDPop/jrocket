@@ -29,16 +29,17 @@ public class StandardATM extends Atmosphere{
     private double tempOffset = 0;
     private boolean assumeIdeal = true; 
     
-    public StandardATM() {
+    public StandardATM(Earth earth) {
+        this.planet = earth;
         this.Radius = 6371000;
         this.G0 = 9.809;
         this.MM = 0.02897; //kg/mol
         this.gamma = 1.4;
-        this.R_air = Physics.R/this.MM;
+        this.R_air = Physics.R/this.MM;      
         precalc();
     }
     
-    public StandardATM(String filename) {
+    public StandardATM(String filename, Earth earth) {
         /*
         Notes on file standard
         ----------------------
@@ -63,6 +64,7 @@ public class StandardATM extends Atmosphere{
             - Density
             - Lapses
         */
+        this.planet = earth;
         Properties cfg = new Properties();
         try {
             cfg.load(new FileInputStream(filename));

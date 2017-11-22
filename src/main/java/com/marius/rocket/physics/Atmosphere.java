@@ -26,9 +26,18 @@ public abstract class Atmosphere {
     protected double humidity;
     protected double viscosity;
     protected double dynamic_viscosity;
+    protected double thermal_conductivity;
+    protected double thermal_diffusivity;
+    protected double cp;
+    protected double cv;
+    protected Planet planet;
     protected Molecule[] species;
     
     abstract void calc();
+    
+    public Planet getPlanet() {
+        return planet;
+    }
     
     public double getTemp() {
         return this.temp;
@@ -78,7 +87,7 @@ public abstract class Atmosphere {
         return this.altitude;
     }
     
-    public void setAltitute(double altitude) {
+    public void setAltitude(double altitude) {
         this.altitude = altitude;
         this.geoaltitude = Radius*altitude/(Radius+altitude);
         calc();
@@ -86,6 +95,10 @@ public abstract class Atmosphere {
     
     public double getGeoAltitude() {
         return this.geoaltitude;
+    }
+    
+    public double getRadius(){
+        return Radius;
     }
     
 }

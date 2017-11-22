@@ -5,7 +5,8 @@
  */
 package com.marius.rocket.physics.forces;
 
-import com.marius.rocket.physics.Atmosphere;
+import com.marius.rocket.Math.LA;
+import com.marius.rocket.physics.Environment;
 import java.util.Arrays;
 
 /**
@@ -14,17 +15,19 @@ import java.util.Arrays;
  */
 public class SimpleDrag extends Force{
     public final double CD;
-    private Atmosphere atm;
-    private double[] v;
+    public double A;
+    private Environment env;
     
-    public SimpleDrag(double CD, Atmosphere atm, double[] v) {
+    public SimpleDrag(double CD, double A, Environment env) {
         this.CD = CD;
-        this.v = v;
+        this.A = A;
+        this.env = env;
     }
     
     @Override
     public void update(double time, double dt) {
-        double[] temp = Arrays.copyOf(v,3);
+        double[] v = Arrays.copyOf(env.freestream_velocity, 3);
+        this.vec = LA.multiply(v,-CD*env.Q*A/LA.mag(v));
     }
     
 }
