@@ -50,11 +50,17 @@ public class Environment {
         this.body = body;
     }
     
+    public boolean testBody(){
+        return body != null;
+    }
+    
     public void calc() {
-        atm.setAltitude(body.spherical[0][0]-atm.getRadius());
-        freestream_velocity = LA.cross(atm.getPlanet().getAngularVelocity(), body.getXYZ()[1]); 
+        atm.setAltitude(body.spherical[0][0]-atm.getPlanet().getRadiusFromLatitude(body.spherical[0][2]));
+        freestream_velocity = LA.cross(atm.getPlanet().getAngularVelocity(), body.getXYZ()[0]); 
         freestream_velocity = LA.add(LA.multiply(freestream_velocity,-1), body.getXYZ()[1]);
         Q = 0.5*atm.getDens()*LA.dot(freestream_velocity,freestream_velocity);
+        System.out.println("Geoaltitude: "+atm.getGeoAltitude() + "m");
+        System.out.println("Freestream: "+ LA.mag(freestream_velocity)+"m/s");
     }
     
 }

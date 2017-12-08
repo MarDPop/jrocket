@@ -6,6 +6,7 @@
 package com.marius.rocket.Math;
 
 import com.marius.rocket.physics.Body;
+import com.marius.rocket.physics.Planet;
 import com.marius.rocket.physics.forces.Gravity;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +43,6 @@ public class ODE {
     }
     
     public void init() {
-        Gravity g = new Gravity(bodies[0], bodies);
         x = new double[6*this.bodies.length];
         dx = new double[6*this.bodies.length];
     }

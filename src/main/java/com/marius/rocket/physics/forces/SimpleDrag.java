@@ -22,12 +22,24 @@ public class SimpleDrag extends Force{
         this.CD = CD;
         this.A = A;
         this.env = env;
+        this.internal = false;
+    }
+    
+    public void setEnv(Environment env) {
+        this.env = env;
     }
     
     @Override
     public void update(double time, double dt) {
         double[] v = Arrays.copyOf(env.freestream_velocity, 3);
-        this.vec = LA.multiply(v,-CD*env.Q*A/LA.mag(v));
+        double v_ = LA.mag(v);
+        this.vec = (v_ > 0) ? LA.multiply(v,-CD*env.Q*A/v_) : v;
+        System.out.println("---------- Drag -----------");
+        System.out.println("Speed " + Arrays.toString(env.freestream_velocity));
+        System.out.println("Drag in Newtons " + Arrays.toString(vec));
+        System.out.println("Dynamic Pressure " + env.Q + "Pa");
+        System.out.println("---------------------------");
+        
     }
     
 }

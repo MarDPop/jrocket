@@ -33,34 +33,38 @@ public class Sim {
         
         Environment env = new Environment();
         env.setAtm(earth.getAtm());
-        if(earth.getAtm() != null) {
-            System.out.println("not null");
-        }
+        
         SimpleRocket rocket_1 = new SimpleRocket(env);
         rocket_1.setXYZ(ksc); 
         rocket_1.recalcMass();
         rocket_1.initUp();
-        rocket_1.g = new Gravity(rocket_1,new Body[]{earth});
+        rocket_1.g = new Gravity(rocket_1,new Planet[]{earth});
+        rocket_1.forces.add(rocket_1.g);
         
-        final double dt = 0.1;
+        final double dt = 1;
         rocket_1.calcSphericalFromCartesian();
         rocket_1.update(0,dt);
         Euler ode = new Euler(dt);
         ode.bodies = new Body[]{rocket_1};
-        ode.setEndTime(120);
+        ode.setEndTime(133);
         ode.init();
         
         try {
             Recorder rec = new Recorder("record.csv");
             while(ode.getTime() < ode.getEndTime()){
                 rocket_1.calcSphericalFromCartesian();
+                System.out.println("TIME: "+ ode.getTime());
+                System.out.println("------------Rocket------------");
+                System.out.println("Position: " + Arrays.toString(rocket_1.getXYZ()[0]));
+                System.out.println("Speed: " + Arrays.toString(rocket_1.getXYZ()[1]));
+                System.out.println("Acceleration: " + Arrays.toString(rocket_1.getXYZ()[2]));
                 ode.step();
                 rec.record(ode.getTime(), ode.x);
-                System.out.println("mass "+rocket_1.getMass());
             }
             rec.finish();
         } catch(Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error");
+            e.printStackTrace();
         }
     }
     

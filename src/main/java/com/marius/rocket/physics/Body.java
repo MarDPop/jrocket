@@ -20,7 +20,7 @@ public class Body extends Frame{
     protected double mass; 
     protected double netcharge;
     protected double[] netforces;
-    public Gravity g; //!!! should perhaps seperate between internal and external forces instead of hard coding
+    public Gravity g; 
     public ArrayList<Force> forces = new ArrayList<>();
     protected double[] netmoments;
     protected double[][] Inertia; //normalized inertia in BODY frame
@@ -93,14 +93,17 @@ public class Body extends Frame{
         double[] sum = new double[3];
         forces.forEach((force) -> {
             force.update(time,dt);
-            LA.add(sum,force.get());
+            if(force.internal){
+                LA.add(sum,force.get()); 
+            } else {
+                LA.add(this.xyz[2], force.get()); //ACCELERATION OF DRAG is having issues
+            }
         });
-        LA.multiply(sum, 1/this.mass);
-        this.xyz[2][0] = this.orientation[0][0]*sum[0]+this.orientation[1][0]*sum[1]+this.orientation[2][0]*sum[2];
-        this.xyz[2][1] = this.orientation[0][1]*sum[0]+this.orientation[1][1]*sum[1]+this.orientation[2][1]*sum[2];
-        this.xyz[2][2] = this.orientation[0][2]*sum[0]+this.orientation[1][2]*sum[1]+this.orientation[2][2]*sum[2];
-        g.update(time,dt);
-        LA.add(this.xyz[2], g.get());
+        this.xyz[2][0] += this.orientation[0][0]*sum[0]+this.orientation[1][0]*sum[1]+this.orientation[2][0]*sum[2];
+        this.xyz[2][1] += this.orientation[0][1]*sum[0]+this.orientation[1][1]*sum[1]+this.orientation[2][1]*sum[2];
+        this.xyz[2][2] += this.orientation[0][2]*sum[0]+this.orientation[1][2]*sum[1]+this.orientation[2][2]*sum[2];
+        System.out.println("Orientation of forward: " +Arrays.toString(this.orientation[0]));
+        LA.multiply(this.xyz[2], 1/this.mass);
     }
     
     public void getAccelerationFromForces() {

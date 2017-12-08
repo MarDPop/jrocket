@@ -8,6 +8,7 @@ package com.marius.rocket.physics.forces;
 import com.marius.rocket.Math.LA;
 import com.marius.rocket.physics.Body;
 import com.marius.rocket.physics.Physics;
+import com.marius.rocket.physics.Planet;
 import java.util.Arrays;
 
 /**
@@ -15,28 +16,31 @@ import java.util.Arrays;
  * @author n5823a
  */
 public class Gravity extends Force {
-    private double mu;
+    private final double mu;
+    private final double m;
     public final Body main;
-    public final Body[] list;
+    public final Planet[] list; // was formerly body, please note
     
-    public Gravity(Body main, Body[] list) {
+    public Gravity(Body main, Planet[] list) {
             this.ref = main;
             this.main = main;
-            this.list = list;           
+            this.mu = main.getMass()*Physics.G;
+            this.m = main.getMass();
+            this.list = list; 
+            this.internal = false;
             calc();
     }
     
     public double[] calc() {
-        this.mu = main.getMass()*Physics.G;
         double[] pos = Arrays.copyOf(main.getXYZ()[0],3);
-        vec = new double[3];
-        for(Body body : list) {
+        this.vec = new double[3];
+        for(Planet body : list) {
             double[] R = Arrays.copyOf(body.getXYZ()[0],3);
             LA.subtract(R,pos);
-            double cons = mu*body.getMass()/(Math.pow(LA.mag(R),3));
-            LA.add(vec,LA.multiply(R,cons));
+            double cons = body.MU/(Math.pow(LA.mag(R),3)); //most accurate to use MU
+            LA.add(this.vec,LA.multiply(R,cons));
         }
-        return vec;
+        return LA.multiply(this.vec, m);
     }
     
     @Override 

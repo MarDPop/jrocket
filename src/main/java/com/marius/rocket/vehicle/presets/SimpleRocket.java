@@ -19,10 +19,11 @@ public class SimpleRocket extends Rocket {
     public SimpleRocket(Environment env) {
         super();
         env.setBody(this);
+        this.environment = env;
         this.ComponentList.add(new SimpleThruster(100,250,2,0.1));
         Component shell = new Component();
         shell.setMass(1);
-        SimpleDrag d = new SimpleDrag(0.2, 0.2, env);
+        SimpleDrag d = new SimpleDrag(0.5, 0.2, env);
         shell.forces.add(d);
         this.ComponentList.add(shell);
         this.collectComponents();

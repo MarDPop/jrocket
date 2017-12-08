@@ -16,18 +16,19 @@ import java.util.Properties;
  */
 public class StandardATM extends Atmosphere{
     
-    protected double[] altitudes = {0,11000,20000,32000,47000,51000,71000,84852,90000,105000}; //breakpoints
-    protected double[] temperatures = {288.15,216.65,216.65,228.65,270.65,270.65,214.65,186.95,186.95, 246.95};
+    protected double[] altitudes = {0,11000,20000,32000,47000,51000,71000,84852,90000,105000,1000000}; //breakpoints
+    protected double[] temperatures = {288.15,216.65,216.65,228.65,270.65,270.65,214.65,186.95,186.95, 246.95,3.95};
     protected double[] pressures = null;
     protected double[] densities = null;
     protected double[] lapses = null;
     protected double[] MMs = null;
     protected double[] gammas = null;
-    private double atmLimit = 600000;
+    private double atmLimit = 1000000;
     private double spaceTemp = 298;
     private double sealevelpress = 101325;
     private double tempOffset = 0;
     private boolean assumeIdeal = true; 
+    private int h;
     
     public StandardATM(Earth earth) {
         this.planet = earth;
@@ -87,13 +88,13 @@ public class StandardATM extends Atmosphere{
     
     private void precalc() {
         int n = altitudes.length;
+        h = 0;
         lapses = new double[n];
         densities = new double[n];
         boolean calcPressures = true;
         if(pressures == null) {
             pressures = new double[n];
-        }
-        if(pressures != null && pressures.length < n){
+        } else if(pressures.length < n) {
             System.out.println("Pressures given is not long enough to fit data. Number of pressure points must match altitude points");
             pressures = new double[n];
         } else {
@@ -106,14 +107,14 @@ public class StandardATM extends Atmosphere{
                 lapses[i] = (temperatures[i+1]-temperatures[i])/deltaH;
             }
             if(calcPressures) {
-                if(i == 1) {
+                if(i == 0) {
                     pressures[i] =  sealevelpress;
                 } else {
                     if(assumeIdeal) {
-                        if(lapses[i] == 0) {
+                        if(lapses[i-1] == 0) {
                             pressures[i] = pressures[i-1]*isoPresRatio(altitudes[i], altitudes[i-1], temperatures[i]);
                         } else {
-                            pressures[i] = pressures[i-1]*lapsePresRatio(lapses[i], temperatures[i], temperatures[i-1]);
+                            pressures[i] = pressures[i-1]*lapsePresRatio(lapses[i-1], temperatures[i], temperatures[i-1]);
                         }
                     }
                 }               
@@ -137,36 +138,42 @@ public class StandardATM extends Atmosphere{
     }
     
     public double lapsePresRatio(double lapse, double Tf, double T1) {
-        return (Tf/T1)*Math.exp(-G0/(R_air*lapse));
+        return Math.pow((Tf/T1),-G0/(R_air*lapse));
     }
     
     @Override
     void calc() {   
-        if(this.altitude > atmLimit) {
+        if(this.geoaltitude >= atmLimit) {
             this.temp = spaceTemp;
             this.pres = 0;
             this.dens = 0;
             return;
         }   
-        //note calculations are made on GEOPOTENTIAL ALTITUDE
-        int i = 0;
-        while(this.geoaltitude < altitudes[i]){i++;}
-        double dh = this.geoaltitude - altitudes[i];
-        double hratio = dh/(altitudes[i+1]-altitudes[i]);
-        this.temp = lapses[i]*dh+temperatures[i];
-        if(lapses[i] == 0) {
-            this.pres = pressures[i]*isoPresRatio(this.geoaltitude, altitudes[i], temperatures[i]); //temperature offset here? 
+        if (this.geoaltitude < altitudes[h]) {
+            while(this.geoaltitude < altitudes[h] ){
+                if(h-- < 0){h = 0; break;}
+            }
+        } else if(this.geoaltitude > altitudes[h+1]) {
+            while(this.geoaltitude > altitudes[h+1] ){
+                if(h++ >= altitudes.length){h--; break;}
+            }
+        }
+        double dh = this.geoaltitude - altitudes[h];
+        double hratio = dh/(altitudes[h+1]-altitudes[h]);
+        this.temp = lapses[h]*dh+temperatures[h];
+        if(lapses[h] == 0) {
+            this.pres = pressures[h]*isoPresRatio(this.geoaltitude, altitudes[h], temperatures[h]); //temperature offset here? 
         } else {
-            this.pres = pressures[i]*lapsePresRatio(lapses[i], this.temp, temperatures[i]);
+            this.pres = pressures[h]*lapsePresRatio(lapses[h], this.temp, temperatures[h]);
         }
         this.temp += tempOffset;
         if(MMs != null && MMs.length > altitudes.length) {
-            this.MM = (MMs[i+1]-MMs[i])*hratio+MMs[i];
+            this.MM = (MMs[h+1]-MMs[h])*hratio+MMs[h];
             this.R_air = Physics.R/this.MM;
-        }
-        this.dens = this.pres/(this.R_air*this.temp);
+        }       
+        this.dens = this.pres/(this.R_air*this.temp); 
         if(gammas != null && gammas.length > altitudes.length) {
-            this.gamma = (gammas[i+1]-gammas[i])*hratio+gammas[i];
+            this.gamma = (gammas[h+1]-gammas[h])*hratio+gammas[h];
         }
     }
     

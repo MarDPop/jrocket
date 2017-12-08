@@ -18,6 +18,7 @@ public class Force {
     protected double[] vec = new double[3]; //vector in ref frame
     protected double mag;
     protected double[] center = new double[3]; //point at which sum of force passes through
+    public boolean internal = true; // not necessary if frame is in body
     
     public void setFrame(Frame ref) {
         this.ref = ref;
