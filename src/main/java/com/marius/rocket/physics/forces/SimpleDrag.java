@@ -5,6 +5,7 @@
  */
 package com.marius.rocket.physics.forces;
 
+import com.marius.rocket.Globals;
 import com.marius.rocket.Math.LA;
 import com.marius.rocket.physics.Environment;
 import java.util.Arrays;
@@ -34,11 +35,11 @@ public class SimpleDrag extends Force{
         double[] v = Arrays.copyOf(env.freestream_velocity, 3);
         double v_ = LA.mag(v);
         this.vec = (v_ > 0) ? LA.multiply(v,-CD*env.Q*A/v_) : v;
-        System.out.println("---------- Drag -----------");
-        System.out.println("Speed " + Arrays.toString(env.freestream_velocity));
-        System.out.println("Drag in Newtons " + Arrays.toString(vec));
-        System.out.println("Dynamic Pressure " + env.Q + "Pa");
-        System.out.println("---------------------------");
+        if(Globals.outputtoscreen) {
+            System.out.println("---------- Drag -----------");
+            System.out.println("Drag in Newtons " + Arrays.toString(vec));
+            System.out.println("Dynamic Pressure " + env.Q + "Pa");
+        }
         
     }
     

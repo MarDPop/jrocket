@@ -104,8 +104,8 @@ public class Vehicle extends Body {
     public void update(double time, double dt) {
         this.calcSphericalFromCartesian();
         this.environment.calc();
-        this.ComponentList.forEach((c)->c.update(time,dt));
         recalcMass();
+        this.ComponentList.forEach((c)->c.update(time,dt));
         super.update(time,dt);
     }
     

@@ -14,6 +14,8 @@ import java.util.Date;
  */
 public class Globals {
     public static Date time;
+    
+    public static boolean outputtoscreen;
       
     public static double Deg2Rad(double deg, double min, double sec) {
         return Math.signum(deg)*(Math.abs(deg) + min/60 + sec/3600)*Math.PI/180;

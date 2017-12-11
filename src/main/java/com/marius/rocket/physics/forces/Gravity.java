@@ -5,6 +5,7 @@
  */
 package com.marius.rocket.physics.forces;
 
+import com.marius.rocket.Globals;
 import com.marius.rocket.Math.LA;
 import com.marius.rocket.physics.Body;
 import com.marius.rocket.physics.Physics;
@@ -17,7 +18,7 @@ import java.util.Arrays;
  */
 public class Gravity extends Force {
     private final double mu;
-    private final double m;
+    private double m;
     public final Body main;
     public final Planet[] list; // was formerly body, please note
     
@@ -45,7 +46,13 @@ public class Gravity extends Force {
     
     @Override 
     public void update(double time, double dt){
+        this.m = main.getMass();
         calc();
+        if(Globals.outputtoscreen) {
+            System.out.println("---------- Gravity -----------");
+            System.out.println("Gravity in Newtons: " + Arrays.toString(vec));
+            System.out.println("Accel to grav: " + LA.mag(vec)/m);
+        }
     }
     
 }

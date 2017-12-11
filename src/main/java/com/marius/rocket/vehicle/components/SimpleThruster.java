@@ -6,6 +6,7 @@
 package com.marius.rocket.vehicle.components;
 
 import com.marius.rocket.physics.forces.Thrust;
+import java.util.Arrays;
 
 /**
  *

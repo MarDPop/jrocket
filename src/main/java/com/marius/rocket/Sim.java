@@ -5,6 +5,7 @@ package com.marius.rocket;
 import com.marius.rocket.Math.Euler;
 import com.marius.rocket.Math.LA;
 import static com.marius.rocket.Math.LA.*;
+import com.marius.rocket.Math.Order2euler;
 import com.marius.rocket.Utils.Recorder;
 import java.util.Arrays;
 import com.marius.rocket.physics.*;
@@ -27,6 +28,7 @@ public class Sim {
     
     private static void test2(){
         Globals.time = new Date();
+        Globals.outputtoscreen = false;
         
         Earth earth = new Earth();
         double[][] ksc = earth.KSCXYZ();
@@ -41,23 +43,26 @@ public class Sim {
         rocket_1.g = new Gravity(rocket_1,new Planet[]{earth});
         rocket_1.forces.add(rocket_1.g);
         
-        final double dt = 1;
+        final double dt = 0.05;
         rocket_1.calcSphericalFromCartesian();
         rocket_1.update(0,dt);
-        Euler ode = new Euler(dt);
+        Order2euler ode = new Order2euler(dt);
         ode.bodies = new Body[]{rocket_1};
-        ode.setEndTime(133);
+        ode.setEndTime(80);
         ode.init();
         
         try {
             Recorder rec = new Recorder("record.csv");
             while(ode.getTime() < ode.getEndTime()){
                 rocket_1.calcSphericalFromCartesian();
-                System.out.println("TIME: "+ ode.getTime());
-                System.out.println("------------Rocket------------");
-                System.out.println("Position: " + Arrays.toString(rocket_1.getXYZ()[0]));
-                System.out.println("Speed: " + Arrays.toString(rocket_1.getXYZ()[1]));
-                System.out.println("Acceleration: " + Arrays.toString(rocket_1.getXYZ()[2]));
+                if(Globals.outputtoscreen) {
+                    System.out.println("TIME: "+ ode.getTime());
+                    System.out.println("------------Rocket------------");
+                    System.out.println("Position: " + Arrays.toString(rocket_1.getXYZ()[0]));
+                    System.out.println("Speed: " + Arrays.toString(rocket_1.getXYZ()[1]));
+                    System.out.println("Acceleration: " + Arrays.toString(rocket_1.getXYZ()[2]));
+                    //System.out.println("Mass: " + rocket_1.getMass());
+                }
                 ode.step();
                 rec.record(ode.getTime(), ode.x);
             }
