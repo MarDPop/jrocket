@@ -151,7 +151,8 @@ public class StandardATM extends Atmosphere{
         }   
         if (this.geoaltitude < altitudes[h]) {
             while(this.geoaltitude < altitudes[h] ){
-                if(h-- < 0){h = 0; break;}
+                h--;
+                if(h < 0){h = 0; break;} //for some reason the short hand didn't seem to work
             }
         } else if(this.geoaltitude > altitudes[h+1]) {
             while(this.geoaltitude > altitudes[h+1] ){

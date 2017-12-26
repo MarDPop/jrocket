@@ -6,6 +6,7 @@ import com.marius.rocket.Math.Euler;
 import com.marius.rocket.Math.LA;
 import static com.marius.rocket.Math.LA.*;
 import com.marius.rocket.Math.Order2euler;
+import com.marius.rocket.Math.RK2;
 import com.marius.rocket.Utils.Recorder;
 import java.util.Arrays;
 import com.marius.rocket.physics.*;
@@ -28,7 +29,7 @@ public class Sim {
     
     private static void test2(){
         Globals.time = new Date();
-        Globals.outputtoscreen = false;
+        Globals.outputtoscreen = true;
         
         Earth earth = new Earth();
         double[][] ksc = earth.KSCXYZ();
@@ -46,7 +47,7 @@ public class Sim {
         final double dt = 0.05;
         rocket_1.calcSphericalFromCartesian();
         rocket_1.update(0,dt);
-        Order2euler ode = new Order2euler(dt);
+        RK2 ode = new RK2(dt);
         ode.bodies = new Body[]{rocket_1};
         ode.setEndTime(80);
         ode.init();
@@ -64,7 +65,7 @@ public class Sim {
                     //System.out.println("Mass: " + rocket_1.getMass());
                 }
                 ode.step();
-                rec.record(ode.getTime(), ode.x);
+                rec.record(ode.getTime(), ode.old[0]);
             }
             rec.finish();
         } catch(Exception e) {

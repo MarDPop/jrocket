@@ -85,10 +85,6 @@ public class Body extends Frame{
         return shape;
     }
     
-    public void fullupdate(){
-        
-    }
-    
     public void update(double time, double dt) {
         double[] sum = new double[3];
         forces.forEach((force) -> {
@@ -103,18 +99,6 @@ public class Body extends Frame{
         this.xyz[2][1] += this.orientation[0][1]*sum[0]+this.orientation[1][1]*sum[1]+this.orientation[2][1]*sum[2];
         this.xyz[2][2] += this.orientation[0][2]*sum[0]+this.orientation[1][2]*sum[1]+this.orientation[2][2]*sum[2];
         LA.multiply(this.xyz[2], 1/this.mass);
-    }
-    
-    public void getAccelerationFromForces() {
-        
-    }
-    
-    public double[] getState() {
-        return this.xyz[0];
-    }
-    
-    public void setState(double[] in) {
-        
     }
     
 }

@@ -6,8 +6,6 @@
 package com.marius.rocket.Math;
 
 import com.marius.rocket.physics.Body;
-import com.marius.rocket.physics.Planet;
-import com.marius.rocket.physics.forces.Gravity;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,6 +23,7 @@ public class ODE {
     protected ArrayList<Double> times = new ArrayList<>();
     public ArrayList points = new ArrayList<>();
     public Body[] bodies;
+    public int[] vehicles;
     
     protected HashMap<String,String> Options;
     
