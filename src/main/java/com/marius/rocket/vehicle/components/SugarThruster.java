@@ -9,30 +9,31 @@ package com.marius.rocket.vehicle.components;
  *
  * @author n5823a
  */
-public class SimpleThruster extends Thruster {
+public class SugarThruster extends Thruster{
     public double availablethrust;
-    private final double emptymass;
+    private Tank fuel;
     
-    public SimpleThruster(double thrust, double isp, double mass, double emptymass) {
+    public SugarThruster(double thrust, double isp, double mass) {
         super();
         this.availablethrust = thrust;
         this.isp = isp;
         this.mass = mass;
-        this.emptymass = emptymass;
         this.thrust.set(new double[]{thrust,0,0});
         this.thrust.setISP(isp);
         setMassflowByISP();
     }
     
+    public void setTank(Tank fuel) {
+        this.fuel = fuel;
+    }
+    
     @Override
     public void update(double time, double dt) {
         if(this.active) {
-            if (this.mass > emptymass) {
-                this.mass -= this.massflow*dt;
-                return;
-            } 
+            thrust.set(new double[]{availablethrust,0,0});
+        } else {
+            thrust.set(new double[]{0,0,0});
         }
-        thrust.set(new double[]{0,0,0});
     }
     
     public final double setMassflowByISP() {

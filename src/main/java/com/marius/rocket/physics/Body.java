@@ -23,6 +23,7 @@ public class Body extends Frame{
     public Gravity g; 
     public ArrayList<Force> forces = new ArrayList<>();
     protected double[] netmoments;
+    protected double[] COG;
     protected double[][] Inertia; //normalized inertia in BODY frame
     protected Shape shape;
     public boolean onrails = false;

@@ -13,6 +13,7 @@ import com.marius.rocket.physics.Body;
 import com.marius.rocket.physics.Environment;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -24,6 +25,7 @@ public class Vehicle extends Body {
     protected ArrayList<Subsystem> subsystems = new ArrayList<>();
     public HashMap<Resource,HashMap<Integer,Integer>> totalResources = new HashMap<>();
     public ArrayList<Component> ComponentList = new ArrayList<>();
+    protected ArrayList<Stage> Stages = new ArrayList<>();
     public Environment environment = new Environment();
 
     public Vehicle() {
@@ -36,6 +38,21 @@ public class Vehicle extends Body {
     
     public void removeSubsystem(Subsystem in) {
         subsystems.remove(in);
+    }
+    
+    public void addStage(Stage stage) {
+        Stages.add(stage);
+        stage.list.forEach((c) -> {
+            ComponentList.add(c);
+        });
+    }
+    
+    public void removeStage(int i) {
+        Stage stage = Stages.get(i);
+        stage.list.forEach((c) -> {
+            ComponentList.remove(c);
+        });
+        Stages.remove(i);
     }
     
     public final void collectComponents() { 
@@ -73,21 +90,24 @@ public class Vehicle extends Body {
     
     public final void recalcMass() {
         this.mass = 0;
+        this.COG = new double[3];
         this.Inertia = new double[3][3];
         ComponentList.forEach((c) -> {
             this.mass+=c.getMass();
             double[] x = c.getCOG();
-            double R2 = LA.dot(x,x);
+            double mR2 = c.getMass()*LA.dot(x,x);
             for(int i = 0; i < 2; i++) {
                 for(int j = 0; j < 2; j++) {
                     if (i == j) {
-                        this.Inertia[i][j] += R2;
+                        this.Inertia[i][j] += mR2;
                     }
-                    this.Inertia[i][j] -= x[i]*x[j];
+                    this.Inertia[i][j] -= c.getMass()*x[i]*x[j]; //probably not the most efficient way of doing this
                 }
             }
             LA.add(this.Inertia, c.Inertia);
+            LA.add(this.COG,LA.multiply(x, mass));
         });
+        LA.multiply(this.COG,1/this.mass);
     }
     
     public final void recalcResources() {

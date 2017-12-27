@@ -12,13 +12,23 @@ import com.marius.rocket.vehicle.resources.Resource;
  *
  * @author n5823a
  */
-public class Tank extends Component{
+public class Tank extends Component {
     
-    protected Resource fuel;
+    protected Resource liquid;
     protected double emptymass;
     
-    public Tank() {
-        
+    public Tank(double emptymass) {
+        this.emptymass = emptymass;
     }
+    
+    public void setResource(Resource in) {
+        this.liquid = in;
+    }
+    
+    public Resource getResource() {
+        return liquid;
+    }
+    
+    
     
 }

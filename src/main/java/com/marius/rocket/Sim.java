@@ -24,12 +24,12 @@ public class Sim {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       test2();
+       test();
     }
     
-    private static void test2(){
+    private static void test(){
         Globals.time = new Date();
-        Globals.outputtoscreen = true;
+        Globals.outputtoscreen = false;
         
         Earth earth = new Earth();
         double[][] ksc = earth.KSCXYZ();
@@ -74,7 +74,7 @@ public class Sim {
         }
     }
     
-    private static void test() {
+    private static void test2() {
 //1,3,3,4
 //2,2,8,2
 //0,3,7,1

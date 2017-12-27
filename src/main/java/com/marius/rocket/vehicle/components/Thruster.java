@@ -19,7 +19,7 @@ public class Thruster extends Component {
     protected double isp; // s
     protected Resource[] requirements;
     protected double throttle;
-    protected boolean active;
+    public boolean active;
     //protected double[] bodyOrientation; // of the  body frame
     
     public Thruster() { 
