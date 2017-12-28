@@ -12,6 +12,7 @@ import java.util.Arrays;
 import com.marius.rocket.physics.*;
 import com.marius.rocket.physics.forces.Gravity;
 import com.marius.rocket.vehicle.presets.SimpleRocket;
+import com.marius.rocket.vehicle.presets.SugarRocket;
 import java.util.Date;
 
 /**
@@ -46,10 +47,10 @@ public class Sim {
         
         final double dt = 0.05;
         rocket_1.calcSphericalFromCartesian();
-        rocket_1.update(0,dt);
+        rocket_1.update(0,0);
         RK2 ode = new RK2(dt);
         ode.bodies = new Body[]{rocket_1};
-        ode.setEndTime(80);
+        ode.setEndTime(120);
         ode.init();
         
         try {

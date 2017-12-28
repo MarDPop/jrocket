@@ -72,8 +72,4 @@ public class SugarRocket extends Rocket {
         super.update(time,dt);
     }
     
-    public void Stage() {
-        
-    }
-    
 }
