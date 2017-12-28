@@ -17,6 +17,10 @@ public class Environment {
     
     public double[] freestream_velocity;
     
+    public double angle_of_attack;
+    
+    public double sideslip_angle;
+    
     public double local_T;
     
     public double total_T;

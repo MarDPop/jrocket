@@ -5,13 +5,35 @@
  */
 package com.marius.rocket.vehicle;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author n5823a
  */
 public class Rocket extends Vehicle {
     
-    public Rocket() {
-        
+    protected ArrayList<Stage> Stages = new ArrayList<>();
+    
+    public void addStage(Stage stage) {
+        Stages.add(stage);
+        stage.list.forEach((c) -> {
+            ComponentList.add(c);
+        });
     }
+    
+    public void removeStage(int i) {
+        Stage stage = Stages.get(i);
+        stage.list.forEach((c) -> {
+            ComponentList.remove(c);
+        });
+        Stages.remove(i);
+    }
+    
+    public void initUp() {
+        this.calcSphericalFromCartesian();
+        this.calcSphericalUnitVectors();
+        this.orientation = this.spherical_unit_vectors;
+    }
+    
 }

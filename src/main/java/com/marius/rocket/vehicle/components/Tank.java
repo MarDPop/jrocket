@@ -5,7 +5,6 @@
  */
 package com.marius.rocket.vehicle.components;
 
-import com.marius.rocket.vehicle.components.Component;
 import com.marius.rocket.vehicle.resources.Resource;
 
 /**
@@ -14,21 +13,38 @@ import com.marius.rocket.vehicle.resources.Resource;
  */
 public class Tank extends Component {
     
-    protected Resource liquid;
+    protected Resource fluid;
     protected double emptymass;
+    protected double flowrate;
     
     public Tank(double emptymass) {
         this.emptymass = emptymass;
     }
     
     public void setResource(Resource in) {
-        this.liquid = in;
+        this.fluid = in;
     }
     
     public Resource getResource() {
-        return liquid;
+        return fluid;
     }
     
+    public boolean isNotEmpty() {
+        return fluid.getAmount() > 0;
+    }
     
+    public void setFlowrate(double x) {
+        this.flowrate = x;
+    }
+    
+    @Override
+    public double getMass() {
+        return emptymass+fluid.getMass();
+    }
+    
+    @Override
+    public void update(double time, double dt) {
+        this.fluid.changeAmount(-flowrate*dt);
+    }
     
 }

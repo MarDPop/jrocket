@@ -8,10 +8,8 @@ package com.marius.rocket.vehicle.presets;
 import com.marius.rocket.physics.Environment;
 import com.marius.rocket.physics.forces.SimpleDrag;
 import com.marius.rocket.vehicle.resources.Resource;
-import com.marius.rocket.vehicle.components.Thruster;
 import com.marius.rocket.vehicle.*;
 import com.marius.rocket.vehicle.components.Component;
-import com.marius.rocket.vehicle.components.SimpleThruster;
 import com.marius.rocket.vehicle.components.SugarThruster;
 import com.marius.rocket.vehicle.components.Tank;
 
@@ -20,6 +18,8 @@ import com.marius.rocket.vehicle.components.Tank;
  * @author n5823a
  */
 public class SugarRocket extends Rocket {
+    private int currentStage = 1;
+    private SugarThruster currentThruster;
     
     public SugarRocket(Environment env) {
         super();
@@ -34,7 +34,9 @@ public class SugarRocket extends Rocket {
         upperstage.list.add(vacTank);
         // Thruster
         SugarThruster vacThruster = new SugarThruster(100,200,0.5);
+        vacThruster.setTank(vacTank);
         upperstage.list.add(vacThruster);
+        upperstage.thrusteridx = 1;
         // Shell
         Component shell = new Component();
         shell.setMass(2);
@@ -50,12 +52,28 @@ public class SugarRocket extends Rocket {
         lowerstage.list.add(slTank);
         // Thruster
         SugarThruster slThruster = new SugarThruster(100,150,0.5);
+        slThruster.setTank(slTank);
         lowerstage.list.add(slThruster);
+        currentThruster = slThruster;
       
         //collect components
         Stages.add(upperstage);
         Stages.add(lowerstage);
         this.collectComponents();
+    }
+    
+    @Override 
+    public void update(double time, double dt) {
+        if(currentThruster.isSpent() && currentStage > 0) {
+            removeStage(currentStage);
+            currentStage--;
+            currentThruster = (SugarThruster) Stages.get(currentStage).list.get(Stages.get(currentStage).thrusteridx);
+        }
+        super.update(time,dt);
+    }
+    
+    public void Stage() {
+        
     }
     
 }

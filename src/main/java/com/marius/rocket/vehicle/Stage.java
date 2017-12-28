@@ -17,4 +17,5 @@ import java.util.ArrayList;
 public class Stage {
     public ArrayList<Component> list = new ArrayList<>();
     public int id;
+    public int thrusteridx;
 }

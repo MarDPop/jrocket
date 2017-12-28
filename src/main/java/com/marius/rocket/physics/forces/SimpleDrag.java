@@ -15,7 +15,7 @@ import java.util.Arrays;
  * @author n5823a
  */
 public class SimpleDrag extends Force{
-    public final double CD;
+    public double CD;
     public double A;
     private Environment env;
     
@@ -28,6 +28,14 @@ public class SimpleDrag extends Force{
     
     public void setEnv(Environment env) {
         this.env = env;
+    }
+    
+    public void setCD(double CD){
+        this.CD = CD;
+    }
+    
+    public void setArea(double A){
+        this.A = A;
     }
     
     @Override

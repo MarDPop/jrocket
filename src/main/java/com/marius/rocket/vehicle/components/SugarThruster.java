@@ -12,6 +12,7 @@ package com.marius.rocket.vehicle.components;
 public class SugarThruster extends Thruster{
     public double availablethrust;
     private Tank fuel;
+    private boolean steady;
     
     public SugarThruster(double thrust, double isp, double mass) {
         super();
@@ -20,6 +21,7 @@ public class SugarThruster extends Thruster{
         this.mass = mass;
         this.thrust.set(new double[]{thrust,0,0});
         this.thrust.setISP(isp);
+        this.steady = false;
         setMassflowByISP();
     }
     
@@ -29,11 +31,19 @@ public class SugarThruster extends Thruster{
     
     @Override
     public void update(double time, double dt) {
-        if(this.active) {
-            thrust.set(new double[]{availablethrust,0,0});
-        } else {
-            thrust.set(new double[]{0,0,0});
-        }
+        if(this.active && fuel.isNotEmpty()) {
+            if(!this.steady) {
+                thrust.set(new double[]{availablethrust,0,0});
+                fuel.setFlowrate(massflow); //THIS MEANS THAT TANK SHOULD BE UPDATED AFTER ENGINE
+                this.steady = true;
+            }
+            return;
+        } 
+        thrust.set(new double[]{0,0,0});
+    }
+    
+    public boolean isSpent() {
+        return !fuel.isNotEmpty();
     }
     
     public final double setMassflowByISP() {
