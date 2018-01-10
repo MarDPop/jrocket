@@ -36,7 +36,7 @@ public class StandardATM extends Atmosphere{
         this.G0 = 9.809;
         this.MM = 0.02897; //kg/mol
         this.gamma = 1.4;
-        this.R_air = Physics.R/this.MM;      
+        this.R_air = Fluid.R/this.MM;      
         precalc();
     }
     
@@ -124,7 +124,7 @@ public class StandardATM extends Atmosphere{
                     densities[i] = pressures[i]/(R_air*temperatures[i]);
                 } else {
                     if(MMs != null && MMs.length > altitudes.length){
-                        densities[i] = pressures[i]/((2*Physics.R/(MMs[i]+MMs[i-1]))*temperatures[i]);
+                        densities[i] = pressures[i]/((2*Fluid.R/(MMs[i]+MMs[i-1]))*temperatures[i]);
                     } else {
                         densities[i] = pressures[i]/(R_air*temperatures[i]);
                     }
@@ -170,7 +170,7 @@ public class StandardATM extends Atmosphere{
         this.temp += tempOffset;
         if(MMs != null && MMs.length > altitudes.length) {
             this.MM = (MMs[h+1]-MMs[h])*hratio+MMs[h];
-            this.R_air = Physics.R/this.MM;
+            this.R_air = Fluid.R/this.MM;
         }       
         this.dens = this.pres/(this.R_air*this.temp); 
         if(gammas != null && gammas.length > altitudes.length) {

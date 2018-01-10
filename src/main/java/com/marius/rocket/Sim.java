@@ -42,6 +42,7 @@ public class Sim {
         rocket_1.setXYZ(ksc); 
         rocket_1.recalcMass();
         rocket_1.initUp();
+        System.out.println(rocket_1.forces.size());
         rocket_1.g = new Gravity(rocket_1,new Planet[]{earth});
         rocket_1.forces.add(rocket_1.g);
         
@@ -53,6 +54,7 @@ public class Sim {
         ode.setEndTime(120);
         ode.init();
         
+        System.out.println(rocket_1.forces.size());
         try {
             Recorder rec = new Recorder("record.csv");
             while(ode.getTime() < ode.getEndTime()){

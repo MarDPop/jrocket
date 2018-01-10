@@ -16,18 +16,18 @@ public class Rocket extends Vehicle {
     protected ArrayList<Stage> Stages = new ArrayList<>();
     
     public void addStage(Stage stage) {
-        Stages.add(stage);
+        this.Stages.add(stage);
         stage.list.forEach((c) -> {
             ComponentList.add(c);
         });
     }
     
     public void removeStage(int i) {
-        Stage stage = Stages.get(i);
+        Stage stage = this.Stages.get(i);
         stage.list.forEach((c) -> {
             ComponentList.remove(c);
         });
-        Stages.remove(i);
+        this.Stages.remove(i);
     }
     
     public void initUp() {

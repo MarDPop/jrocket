@@ -26,7 +26,6 @@ public class Physics {
     public final static double h = 6.626070040e-34; //Planck Constant j s 
     public final static double SB = 5.670373e-8; // Stefen Boltzmann W/ m2 k4
     public final static double avo = 6.022140857e23; // Avogadros Number
-    public final static double R = 8.3144598; // Gas Constant kg m2 / s2 K mol
     public final static double kB = 1.38064852e-23; //Boltzmann Constant J/K
     
     public static double lorentz(double v) {

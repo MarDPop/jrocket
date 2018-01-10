@@ -7,7 +7,7 @@ package com.marius.rocket.vehicle.presets;
 
 import com.marius.rocket.physics.Environment;
 import com.marius.rocket.physics.forces.SimpleDrag;
-import com.marius.rocket.vehicle.components.SimpleThruster;
+import com.marius.rocket.vehicle.components.thrusters.SimpleThruster;
 import com.marius.rocket.vehicle.*;
 import com.marius.rocket.vehicle.components.Component;
 /**

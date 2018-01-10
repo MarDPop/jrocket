@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.marius.rocket.physics;
+package com.marius.rocket.vehicle.components.thrusters;
 
 /**
  *
  * @author n5823a
  */
-public class Aero {
+public class IsentropicThruster extends Thruster {
+    private CombustionChamber chamber;
     
 }

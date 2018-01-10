@@ -10,7 +10,7 @@ import com.marius.rocket.physics.forces.SimpleDrag;
 import com.marius.rocket.vehicle.resources.Resource;
 import com.marius.rocket.vehicle.*;
 import com.marius.rocket.vehicle.components.Component;
-import com.marius.rocket.vehicle.components.SugarThruster;
+import com.marius.rocket.vehicle.components.thrusters.SugarThruster;
 import com.marius.rocket.vehicle.components.Tank;
 
 /**
@@ -33,7 +33,7 @@ public class SugarRocket extends Rocket {
         vacTank.setResource(sugarfuel);
         upperstage.list.add(vacTank);
         // Thruster
-        SugarThruster vacThruster = new SugarThruster(100,200,0.5);
+        SugarThruster vacThruster = new SugarThruster(400,200,0.5);
         vacThruster.setTank(vacTank);
         upperstage.list.add(vacThruster);
         upperstage.thrusteridx = 1;
@@ -51,14 +51,15 @@ public class SugarRocket extends Rocket {
         slTank.setResource(sugarfuel2);
         lowerstage.list.add(slTank);
         // Thruster
-        SugarThruster slThruster = new SugarThruster(100,150,0.5);
+        SugarThruster slThruster = new SugarThruster(1000,150,0.5);
         slThruster.setTank(slTank);
         lowerstage.list.add(slThruster);
+        lowerstage.thrusteridx = 1;
         currentThruster = slThruster;
       
         //collect components
-        Stages.add(upperstage);
-        Stages.add(lowerstage);
+        super.addStage(upperstage);
+        super.addStage(lowerstage);
         this.collectComponents();
     }
     

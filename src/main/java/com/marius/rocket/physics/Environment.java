@@ -21,25 +21,11 @@ public class Environment {
     
     public double sideslip_angle;
     
-    public double local_T;
-    
-    public double total_T;
-
-    public double local_P;
-    
     public double Q;
     
-    public double enthalpy;
-    
-    public double Mach;
+    public Fluid aero;
     
     public double downstream_location;
-    
-    public double Reynolds;
-    
-    public double Lewis;
-    
-    public double Prandtl;
     
     private Atmosphere atm; 
     
