@@ -11,5 +11,6 @@ package com.marius.rocket.vehicle.components.thrusters;
  */
 public class IsentropicThruster extends Thruster {
     private CombustionChamber chamber;
+    private IdealNozzle nozzle;
     
 }

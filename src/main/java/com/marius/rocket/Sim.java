@@ -25,7 +25,13 @@ public class Sim {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       test();
+       test3();
+    }
+    
+    private static void test3(){
+        CompressibleFlow flow = new CompressibleFlow();
+        flow.init(1.4,3);
+        System.out.println("");
     }
     
     private static void test(){
