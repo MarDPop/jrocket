@@ -220,5 +220,10 @@ public class CompressibleFlow extends Flow {
         return Math.sqrt((-1+Math.sqrt(1-2*a*c))/a);
     }
     
+    public static double getShockArea(double k, double throat_to_exit_area, double chamber_to_exit_pressure) {
+        double mach = getMachExitShockInNozzle(k, throat_to_exit_area, chamber_to_exit_pressure);
+        double p_ratio = Math.pow(beta(k,mach),(k/(k-1)));
+    }
+    
     
 }
