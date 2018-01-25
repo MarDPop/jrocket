@@ -12,6 +12,7 @@ package com.marius.rocket.physics;
 public class Flow extends Fluid {
     protected double speed;
     protected double area;
+    protected double massFlow;
     
     protected double Reynolds; 
     protected double Lewis;  

@@ -11,6 +11,7 @@ import com.marius.rocket.Utils.Recorder;
 import java.util.Arrays;
 import com.marius.rocket.physics.*;
 import com.marius.rocket.physics.forces.Gravity;
+import com.marius.rocket.vehicle.components.thrusters.IdealNozzle;
 import com.marius.rocket.vehicle.presets.SimpleRocket;
 import com.marius.rocket.vehicle.presets.SugarRocket;
 import java.util.Date;
@@ -29,9 +30,7 @@ public class Sim {
     }
     
     private static void test3(){
-        CompressibleFlow flow = new CompressibleFlow();
-        flow.init(1.4,3);
-        System.out.println("");
+        System.out.println(IdealNozzle.getNozzleShockMach(1.4, 1/2.494, 1/0.6));
     }
     
     private static void test(){

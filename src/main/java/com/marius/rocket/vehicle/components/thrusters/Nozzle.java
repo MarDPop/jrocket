@@ -23,6 +23,7 @@ public class Nozzle {
     protected double massFlow;
     protected double ambientPressure;
     protected double exit_v;
+    public double thrust; //READ ONLY
     
     public void setThroatArea(double A_t) {
         this.A_t = A_t;

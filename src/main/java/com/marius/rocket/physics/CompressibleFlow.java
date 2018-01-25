@@ -21,6 +21,7 @@ public class CompressibleFlow extends Flow {
     private double T_0;
     private double P_0;
     private double A_star_ratio;
+    private double A_star;
     
     public void setStagnationTempAndPres(double T_0, double P_0) {
         this.T_0 = T_0;
@@ -35,13 +36,14 @@ public class CompressibleFlow extends Flow {
         return P_0;
     }
     
-    public void init(double Gam, double M) {
-        setSpecificHeatRatio(Gam);
-        setMach(M);
-        calcBeta();
+    public void chokedFlow(double area) {
+        setMach(1);
+        this.area = area;
+        this.A_star = area;
+        this.massFlow = area*chokedRate();
     }
     
-    private void setSpecificHeatRatio(double Gam) {
+    public void setSpecificHeatRatio(double Gam) {
         setGamma(Gam);
         this.A = (Gam+1)/2;
         this.B = 1/(Gam-1);
@@ -70,7 +72,7 @@ public class CompressibleFlow extends Flow {
         return this.D;
     }
     
-    private void setMach(double M) {
+    public void setMach(double M) {
         this.M = M;
         this.M_2 = M*M;
         calcBeta();
@@ -109,8 +111,8 @@ public class CompressibleFlow extends Flow {
         return A_star_ratio = E*M*Math.pow(getBeta(),-C);
     }
     
-    public double Astar() {
-        return area*A_star_ratio;
+    public double getAstar() {
+        return A_star;
     }
     
     public static double beta(double gam, double M){
@@ -211,19 +213,10 @@ public class CompressibleFlow extends Flow {
         return out;
     }
     
-    public static double getMachExitShockInNozzle(double k, double throat_to_exit_area, double chamber_to_exit_pressure) {
-        double a = (k-1);
-        double X = (k+1)/2;
-        X = Math.pow(X,X/a);
-        double c = throat_to_exit_area*chamber_to_exit_pressure/X;
-        c *= -c;
-        return Math.sqrt((-1+Math.sqrt(1-2*a*c))/a);
+    public double isentropicExpansion(double M_2) {
+        double AreaRatio = M/M_2*Math.pow(beta(Gam,M_2)/Beta,C);
+        area = area*AreaRatio;
+        return AreaRatio;
     }
-    
-    public static double getShockArea(double k, double throat_to_exit_area, double chamber_to_exit_pressure) {
-        double mach = getMachExitShockInNozzle(k, throat_to_exit_area, chamber_to_exit_pressure);
-        double p_ratio = Math.pow(beta(k,mach),(k/(k-1)));
-    }
-    
     
 }

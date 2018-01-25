@@ -84,8 +84,20 @@ public class Fluid {
         }
     }
     
+    public double getCp(){
+        return this.Cp;
+    }
+    
+    public double getCv(){
+        return this.Cv;
+    }
+    
     public double calcSpeedOfSound() {
         return a = Math.sqrt(Gam*R_specific*temp);
+    }
+    
+    public double getGasConstant() {
+        return R_specific;
     }
     
 }

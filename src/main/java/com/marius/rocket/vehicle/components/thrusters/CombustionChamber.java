@@ -45,11 +45,11 @@ public class CombustionChamber {
         this.gamma = gamma;
     }
     
-    public double getMM() {
+    public double getMolarMass() {
         return MolarMass;
     }
     
-    public void setMM(double MolarMass) {
+    public void setMolarMass(double MolarMass) {
         this.MolarMass = MolarMass;
     }
     
