@@ -22,6 +22,7 @@ public class CompressibleFlow extends Flow {
     private double P_0;
     private double A_star_ratio;
     private double A_star;
+    private double PMAngle;
     
     public void setStagnationTempAndPres(double T_0, double P_0) {
         this.T_0 = T_0;
@@ -79,6 +80,7 @@ public class CompressibleFlow extends Flow {
         pres = P_0/calcPressureRatio();
         temp = T_0/Beta;
         calcAstarRatio();
+        PMAngle();
     }
     
     public double getMach() {
@@ -97,18 +99,26 @@ public class CompressibleFlow extends Flow {
         return Math.pow(getBeta(), this.D);
     }
     
-    public double machAngle() {
+    public double getMachAngle() {
         return Math.asin(1/M);
     }
     
-    public double PMAngle() {
+    private double PMAngle() {
         double x = Math.sqrt(M*M-1);
         double y = Math.sqrt((Gam+1)*B);
-        return y*Math.atan(x/y)-Math.atan(x);
+        return PMAngle = y*Math.atan(x/y)-Math.atan(x);
     }
     
-    public double calcAstarRatio() {
+    public double getPMAngle() {
+        return PMAngle;
+    }
+    
+    private double calcAstarRatio() {
         return A_star_ratio = E*M*Math.pow(getBeta(),-C);
+    }
+    
+    public double getAstarRatio() {
+        return A_star_ratio;
     }
     
     public double getAstar() {

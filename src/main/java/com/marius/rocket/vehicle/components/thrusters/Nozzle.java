@@ -22,6 +22,7 @@ public class Nozzle {
     protected double exitAngle;
     protected double massFlow;
     protected double ambientPressure;
+    protected double exit_p;
     protected double exit_v;
     public double thrust; //READ ONLY
     

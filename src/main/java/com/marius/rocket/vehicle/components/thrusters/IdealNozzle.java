@@ -15,8 +15,9 @@ public class IdealNozzle extends Nozzle {
     private CompressibleFlow flow;
     public boolean started = false;
     private double p_max;
+    private double p_ideal;
     private double half_angle;
-    private double other_loss;
+    private double area_reduction;
     
     public void init() {
         this.flow.setMolarMass(chamber.getMolarMass()); //frozen flow
@@ -36,10 +37,12 @@ public class IdealNozzle extends Nozzle {
                 start();
             }
         }
-        this.thrust = other_loss*(exit_v*massFlow*Math.cos(half_angle) + A_e*(exit_p-ambientPressure));
+        this.thrust = exit_v*massFlow*(1+Math.cos(half_angle))/2 + area_reduction*A_e*(exit_p-ambientPressure);
     }
     
     private void start() {
+        half_angle = 0;
+        area_reduction = 1;
         //check if meets min pressure
         p_max = flow.getStagnationPressure()/Math.pow(flow.getA(),flow.getD());
         if(ambientPressure < p_max) {
@@ -47,6 +50,7 @@ public class IdealNozzle extends Nozzle {
             //calc shock at nozzle exit
             flow.intializeMachFromAstarRatio(AreaRatio,true);
             flow.getNewMachFromAstarRatio(AreaRatio);
+            p_ideal = flow.getPressure();
             p_max = flow.getPressure()*flow.normalShockPressureRatio();
             if(ambientPressure > p_max) {
                 double M_exit = getMachExitShockInNozzle(chamber.getGamma(),this.A_t/this.A_e,chamber.getPressure()/ambientPressure);
@@ -71,17 +75,23 @@ public class IdealNozzle extends Nozzle {
     }
     
     private void main() {
-        this.exit_v = Math.sqrt(2*flow.getCp()*chamber.getTemperature()*(1-Math.pow(chamber.getPressure()/ambientPressure,(chamber.getGamma()-1)/chamber.getGamma())));
-        this.exit_p = flow.getPressure();
-        if(ambientPressure > flow.getPressure()*1.1) {
+        area_reduction = 1;
+        if(ambientPressure > p_ideal*1.1) {
             //underexpanded
-            half_angle = -1;
-        } else if (ambientPressure < flow.getPressure()*0.9) {
+            this.exit_v = Math.sqrt(2*flow.getCp()*chamber.getTemperature()*(1-Math.pow(chamber.getPressure()/ambientPressure,(chamber.getGamma()-1)/chamber.getGamma())));
+            flow.setMachFromStaticPressure(ambientPressure);
+            double ratio = ambientPressure-flow.getPressure()/(p_max-flow.getPressure());
+            area_reduction = A_t/flow.getAstarRatio()/A_e;
+            half_angle = ratio*Math.PI/4; //should do the shock diamond calc
+        } else if (ambientPressure < p_ideal*0.9) {
             //overexpanded
-            
-            half_angle = 1;
+            this.exit_v = Math.sqrt(2*flow.getCp()*chamber.getTemperature()*(1-Math.pow(chamber.getPressure()/flow.getPressure(),(chamber.getGamma()-1)/chamber.getGamma())));
+            double ratio = (flow.getPressure()-ambientPressure)/flow.getPressure();
+            this.exit_p = flow.getPressure();
+            half_angle = 0+(exitAngle+flow.getPMAngle())*ratio/2;
         } else {
             //design conditions
+            this.exit_v = Math.sqrt(2*flow.getCp()*chamber.getTemperature()*(1-Math.pow(chamber.getPressure()/ambientPressure,(chamber.getGamma()-1)/chamber.getGamma())));
             exit_p = ambientPressure;
         }
     }
