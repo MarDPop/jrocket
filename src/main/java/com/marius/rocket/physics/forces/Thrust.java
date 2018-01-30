@@ -12,7 +12,7 @@ package com.marius.rocket.physics.forces;
 public class Thrust extends Force{   
     private double isp;
     private double massflow;
-    private double exitV; //NOTE: exitV =/= isp*g !! isp accounts for losses and pressure
+    //private double exitV; //NOTE: exitV =/= isp*g !! isp accounts for losses and pressure
     
     public Thrust() {}
     

@@ -30,7 +30,7 @@ public class Sim {
     }
     
     private static void test3(){
-        System.out.println(IdealNozzle.getNozzleShockMach(1.4, 1/2.494, 1/0.6));
+        System.out.println(180/Math.PI*CompressibleFlow.obliqueShockAngleFromDeflection(12*Math.PI/180, 1.4,4,true, 1e-6));
     }
     
     private static void test(){

@@ -203,6 +203,11 @@ public class CompressibleFlow extends Flow {
         return Math.sqrt(2*Beta/(2*Gam*M_2-(Gam-1)));
     }
     
+    public static double normalShockNewMach(double M, double k) { //T2/T1
+        double M_2 = M*M;
+        return Math.sqrt((2+(k-1)*M_2)/(2*k*M_2-(k-1)));
+    }
+    
     public double normalShockTotalPressureRatio() { //T2/T1
         return Math.pow(normalShockDensityRatio(),D)*Math.pow(normalShockPressureRatio(),-B);
     }
@@ -228,5 +233,43 @@ public class CompressibleFlow extends Flow {
         area = area*AreaRatio;
         return AreaRatio;
     }
+    
+    public static double obliqueShockAngleFromDeflection(double d, double k, double M, boolean weak, double tol) {
+        double s = d*1.1; // shock angle
+        if(!weak)  {
+            s = 85*Math.PI/180;
+        } 
+        double h = Math.tan(d);
+        double M_2 = M*M;
+        double kM = (k+1)*M_2;
+        for(int i = 0; i < 30; i++) {
+            double ss = Math.sin(s);
+            double ss_2 = ss*ss;
+            double x = M_2*ss_2-1;
+            double y = kM-2*x;
+            double z = Math.cos(s);
+            z = M_2*z*z;
+            double F = 2/Math.tan(s)*x/y-h;
+            double s_old = s;
+            double dF = 2/y*(4*z*x/y+2*z-x/ss_2);
+            s = s_old - F/dF;
+            if(Math.abs(s-s_old) < tol){
+                return s;
+            }
+        }
+        return -1;
+    }
+    
+    public static double obliqueDeflectionFromShockAngle(double s, double k, double M) {
+        double ss = Math.sin(s);
+        double x = 2/Math.tan(s)*(M*M*ss*ss-1);
+        double y = M*M*(k+Math.cos(2*s))+2;
+        return Math.atan(x/y);
+    }
+    
+    public static double obliqueMachAfterShock(double s, double d, double k, double M_1) {
+        return normalShockNewMach(M_1*Math.sin(s),k)/Math.sin(s-d);
+    }
+    
     
 }
