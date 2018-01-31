@@ -26,6 +26,7 @@ public class SimpleElectricThruster extends Thruster {
     protected double n_e; //electrical efficiency
     protected double n_t; //thruster efficiency
     protected double n_d; //discharge loss
+    protected double n_g; //grid loss
     
     public void setDefaults() {
         useXenon();
@@ -37,6 +38,10 @@ public class SimpleElectricThruster extends Thruster {
     
     public void setInputPower(double power){
         this.P_in = power;
+    }
+    
+    public void setBeamVoltage(double V_b){
+        this.V_b = V_b;
     }
     
     public void useXenon(){
@@ -83,7 +88,11 @@ public class SimpleElectricThruster extends Thruster {
     }
     
     public void setDischargeLoss(double n_d){
-        this.n_d = n_d;
+        this.n_d = n_d; // eV/ion
+    }
+    
+    public void setGridLoss(double n_g){
+        this.n_g = n_g; // Amps/Amps
     }
     
     public void setThrusterEfficiency(double n_t){
@@ -97,5 +106,15 @@ public class SimpleElectricThruster extends Thruster {
     public void calcThrust() {
         this.currentThrust = gamma*Math.sqrt(2*Ma*V_b/Physics.eV)*J;
     }
+    
+    public void calcElectricalEfficiency() {
+        this.n_e = V_b/(V_b + n_d);
+    }
+    
+    public void calcThrusterEfficiencySimple() {
+        this.n_t = gamma*gamma*n_e*n_m;
+    }
+    
+    
     
 }
