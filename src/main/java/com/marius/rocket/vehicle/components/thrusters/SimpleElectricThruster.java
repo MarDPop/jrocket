@@ -15,6 +15,7 @@ public class SimpleElectricThruster extends Thruster {
     protected double P_in; //supply power
     protected double V_b; //beam voltage
     protected double J; //ion current
+    protected double P_b; // beam Power
     protected double Ma; //ion mass
     protected double doubleIonFraction; // double ion fraction ie I++/I+
     protected double massUtilizationFactor; // double ionized factor
@@ -42,6 +43,10 @@ public class SimpleElectricThruster extends Thruster {
     
     public void setBeamVoltage(double V_b){
         this.V_b = V_b;
+    }
+    
+    public void calcBeamPowerFromThrusterEfficiency() {
+        this.J = P_in*n_t/V_b;
     }
     
     public void useXenon(){

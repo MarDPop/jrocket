@@ -44,4 +44,8 @@ public class Physics {
         return q/LA.mag(r);
     }
     
+    public static double getEnergyOfPhotonFromWavelength(double wl) {
+        return h*c/wl;
+    }
+    
 }
