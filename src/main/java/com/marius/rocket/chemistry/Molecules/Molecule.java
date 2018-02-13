@@ -14,10 +14,10 @@ import java.util.TreeMap;
  */
 public abstract class Molecule {
     
-    public final HashMap atomlist = new HashMap();
+    public final HashMap atomlist = new HashMap(); //could be strings instead of objects
     public final double weight; // kg
     protected double moles;
-    public final double heat_formation; // J/mol
+    public final double chemical_potential; // J/mol
     public final double heat_fusion; // J/mol
     public final double heat_vaporization; // J/mol
     public final double boiling_point; // K
@@ -32,15 +32,17 @@ public abstract class Molecule {
     protected double CP; // J/mol/K
     protected double CV; // J/mol/K
     protected TreeMap<Double,Double[]> shomate = new TreeMap<>();
+    protected double EA; //electron affinity
+    protected double PA; //proton affinity;
     
-    public Molecule(Atom[] atoms, int[] quantity, double heat_formation, double heat_vaporization, double heat_fusion, double boiling_point, double melting_point, double[] critical_point, double[] triple_point, double[] vapor_pressure){
+    public Molecule(Atom[] atoms, int[] quantity, double chemical_potential, double heat_vaporization, double heat_fusion, double boiling_point, double melting_point, double[] critical_point, double[] triple_point, double[] vapor_pressure){
         double s = 0;
         for(int i = 0; i < atoms.length; i++) {
             atomlist.put(atoms[i], quantity[i]);
             s+= quantity[i]*atoms[i].atomic_mass;
         }
         weight = s;
-        this.heat_formation = heat_formation;
+        this.chemical_potential = chemical_potential;
         this.heat_fusion = heat_fusion;
         this.heat_vaporization = heat_vaporization;
         this.boiling_point = boiling_point;
