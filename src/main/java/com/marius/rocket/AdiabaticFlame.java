@@ -5,10 +5,25 @@
  */
 package com.marius.rocket;
 
+import com.marius.rocket.chemistry.Molecules.Molecule;
+import java.util.ArrayList;
+
 /**
  *
  * @author n5823a
  */
 public class AdiabaticFlame {
+    public ArrayList<Molecule> species;
     
+    
+    public void precalc() {
+        double totalMoles = 0;
+        for(Molecule reactant : species) {
+            reactant.calc();
+        }
+    }
+    
+    public void calc() {
+        
+    }
 }
