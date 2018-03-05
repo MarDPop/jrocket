@@ -40,7 +40,8 @@ public class Sim {
         selected.add(new Oxygen(1));
         flame.species = selected;
         flame.init(1500);
-        flame.calcNASAConstantVolume(1);
+        flame.calcNASAConstantVolume(0.01);
+        
         System.out.println();
     }
     

@@ -17,8 +17,8 @@ import java.util.ArrayList;
  * @author n5823a
  */
 public class AdiabaticFlame {
-    public ArrayList<Molecule> species;
-    private ArrayList<Class> elements;
+    public ArrayList<Molecule> species  = new ArrayList<>();
+    private final ArrayList<Class> elements = new ArrayList<>();
     private double[] elementSum;
     private double enthalpy;
     private double temperature;
@@ -47,6 +47,7 @@ public class AdiabaticFlame {
             reactant.calc();
             for(Atom atom : reactant.elList.keySet())  {
                 Class el = atom.getClass();
+                System.out.println(el);
                 if(!elements.contains(el)) {
                     elements.add(el);
                 }
