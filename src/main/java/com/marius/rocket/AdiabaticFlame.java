@@ -28,6 +28,18 @@ public class AdiabaticFlame {
     public boolean useNASA = true;
     int[][] coef;
     
+    public double getTemperature() {
+        return this.temperature;
+    }
+    
+    public double getPressure() {
+        return this.pressure;
+    }
+    
+    public double getEnthalpy() {
+        return this.enthalpy;
+    }
+    
     public void init(double temperature) {
         this.temperature = temperature;
         enthalpy = 0;

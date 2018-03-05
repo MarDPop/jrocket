@@ -8,12 +8,16 @@ import static com.marius.rocket.Math.LA.*;
 import com.marius.rocket.Math.Order2euler;
 import com.marius.rocket.Math.RK2;
 import com.marius.rocket.Utils.Recorder;
+import com.marius.rocket.chemistry.Molecules.Hydrogen;
+import com.marius.rocket.chemistry.Molecules.Molecule;
+import com.marius.rocket.chemistry.Molecules.Oxygen;
 import java.util.Arrays;
 import com.marius.rocket.physics.*;
 import com.marius.rocket.physics.forces.Gravity;
 import com.marius.rocket.vehicle.components.thrusters.IdealNozzle;
 import com.marius.rocket.vehicle.presets.SimpleRocket;
 import com.marius.rocket.vehicle.presets.SugarRocket;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -30,7 +34,14 @@ public class Sim {
     }
     
     private static void test3(){
-        System.out.println(180/Math.PI*CompressibleFlow.obliqueShockAngleFromDeflection(12*Math.PI/180, 1.4,4,true, 1e-6));
+        AdiabaticFlame flame = new AdiabaticFlame();
+        ArrayList<Molecule> selected = new ArrayList<>();
+        selected.add(new Hydrogen(2));
+        selected.add(new Oxygen(1));
+        flame.species = selected;
+        flame.init(1500);
+        flame.calcNASAConstantVolume(1);
+        System.out.println();
     }
     
     private static void test(){
