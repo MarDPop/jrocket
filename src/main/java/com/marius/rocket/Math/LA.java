@@ -166,6 +166,31 @@ public class LA {
         return u;
     }
     
+    public static double[] diff(double[] u, double[] v) {
+        double[] out = new double[u.length];
+        for (int i = 0; i < u.length; i++) 
+            out[i] = u[i] - v[i];
+        return out;
+    }
+    
+    public static double diffSquared(double[] u, double[] v) {
+        double num = 0;
+        for (int i = 0; i < u.length; i++) 
+            num += (u[i] - v[i])*(u[i] - v[i]);
+        return num;
+    }
+    
+    public static double rSquared(double[] u, double[] v) {
+        double num = 0;
+        double den = 0;
+        for (int i = 0; i < u.length; i++) {
+            double temp = u[i] - v[i];
+            num += temp*temp;
+            den += abs(u[i])+abs(v[i]);
+        }
+        return num/den;
+    }
+    
     public static double[] multiply(double[] u, double a) {
         for (int i = 0; i < u.length; i++)
             u[i] *= a;

@@ -15,7 +15,7 @@ import java.util.TreeMap;
  */
 public abstract class Molecule {
     
-    public final HashMap atomlist = new HashMap(); //could be strings instead of objects
+    public final HashMap<Atom,Integer> elList; //could be strings instead of objects
     public final double weight; // kg
     protected double moles;
     public final double chemical_potential; // J/mol
@@ -38,9 +38,10 @@ public abstract class Molecule {
     protected double PA; //proton affinity;
     
     public Molecule(Atom[] atoms, int[] quantity, double chemical_potential, double heat_vaporization, double heat_fusion, double boiling_point, double melting_point, double[] critical_point, double[] triple_point, double[] vapor_pressure){
+        this.elList = new HashMap<>();
         double s = 0;
         for(int i = 0; i < atoms.length; i++) {
-            atomlist.put(atoms[i], quantity[i]);
+            elList.put(atoms[i], quantity[i]);
             s+= quantity[i]*atoms[i].atomic_mass;
         }
         weight = s;
@@ -109,6 +110,10 @@ public abstract class Molecule {
     
     public final double getEnthalpy() {
         return Enthalpy;
+    }
+    
+    public final double getCP() {
+        return CP;
     }
     
     public final double getEntropy() {
