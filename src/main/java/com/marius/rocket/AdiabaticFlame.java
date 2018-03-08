@@ -55,7 +55,7 @@ public class AdiabaticFlame {
                     elements.add(el);
                 }
             }
-            enthalpy += reactant.getEnthalpy();
+            enthalpy += reactant.getEnthalpy()-reactant.chemical_potential;
         }
         this.nEl = elements.size();
         this.nSp = species.size();
@@ -79,6 +79,7 @@ public class AdiabaticFlame {
                 if(coef[i][j] > 0) {
                     if(max[i]<0) {
                         max[i] = elementSum[j]/coef[i][j];
+                    } else {
                         if(elementSum[j]/coef[i][j] < max[i]) {
                             max[i] = elementSum[j]/coef[i][j];
                         }
@@ -90,15 +91,17 @@ public class AdiabaticFlame {
     }
     
     /* NASA Method */
-    public void calcNASAConstantVolume(double Volume) { 
+    public void calcNASAConstantPressure(double pressure) { 
+        //CONSTANT VOLUME NEEDS CV (internal neergy) NOT CP
         //Solution variables
         double[] X = new double[nSp];
         double[] newX = new double[nSp];
         double[] h = new double[nSp];
+        this.pressure = pressure;
         for(int tempIter = 0; tempIter < 30; tempIter++) {
             // constants in temperature calc
             double RT = Fluid.R*temperature;
-            double cons = Math.log(RT/Volume);
+            double cons = Math.log(pressure);
             double sumX = 0;
             for(int i = 0; i < nSp; i++) {
                 sumX += X[i] = species.get(i).getMoles();
@@ -109,7 +112,6 @@ public class AdiabaticFlame {
                 double[][] A = new double[b_.length][b_.length];
                 
                 //Variable construction
-                
                 for(int i = 0; i < nSp; i++) {
                     if(X[i] > 0) {
                         b_[0] += h[i] = X[i]*(species.get(i).chemical_potential/RT+cons+Math.log(X[i]/sumX));
@@ -120,9 +122,9 @@ public class AdiabaticFlame {
                 for(int j = 0; j < nEl; j++) {
                     b_[j+1] = elementSum[j];
                     for(int i = 0; i < nSp; i++) {
-                        b_[j+1] += h[i]*coef[i][j];
-                        A[0][j] += X[i]*coef[i][j];
-                        A[j+1][nEl] += A[0][j];      
+                        b_[j+1] += h[i]*coef[i][j]; 
+                        A[0][j] += X[i]*coef[i][j]; //OPTIMIZE SECION
+                        A[j+1][nEl] += X[i]*coef[i][j];      
                         for(int k = 0; k < nEl; k++) {
                             A[j+1][k] += coef[i][k]*X[i]*coef[i][j];
                         }
@@ -156,7 +158,6 @@ public class AdiabaticFlame {
                         newX[i] = X[i]/4;
                     }
                 }
-                System.out.println(Arrays.toString(newX));
                 //Stop condition
                 if(LA.rSquared(X,newX) < 0.000001) {
                     break;
@@ -169,26 +170,26 @@ public class AdiabaticFlame {
             for(int i = 0; i < nSp; i++) {
                 sumX += newX[i];
             }
-            this.pressure = sumX*RT/Volume;
+            this.volume = sumX*RT/pressure;
             
             double enthalpy_calc = 0;
             double avgCP = 0;
-            
+            System.out.println(temperature);
             for(int i = 0; i < nSp; i++) {
                 Molecule blah = species.get(i);
                 blah.setMoles(newX[i]);
                 blah.SetAndCalcAll(temperature, pressure);
-                enthalpy_calc += newX[i]*blah.getEnthalpy();
+                enthalpy_calc += newX[i]*(blah.getEnthalpy()-blah.chemical_potential);
                 avgCP += newX[i]*blah.getCP();
             }
             avgCP /= sumX;
-            double dT = 0.5*(enthalpy_calc-enthalpy)/avgCP;
+            double dT = 0.1*(enthalpy_calc-enthalpy)/avgCP;
             this.temperature -= dT;
             if (Math.abs(dT/this.temperature) < 0.001) {
                 System.out.println("Temperature");
                 System.out.println(temperature+"K");
-                System.out.println("Pressure");
-                System.out.println(pressure+"Pa");
+                System.out.println("Volume");
+                System.out.println(volume+"M^3");
                 System.out.println("Species");
                 for(int i = 0; i < nSp; i++) {
                     System.out.println(species.get(i).getClass().getSimpleName());

@@ -56,7 +56,7 @@ public class Sim {
         selected.add(OH);
         flame.species = selected;
         flame.init(1500);
-        flame.calcNASAConstantVolume(0.01);
+        flame.calcNASAConstantPressure(100000.0);
         
         System.out.println();
     }

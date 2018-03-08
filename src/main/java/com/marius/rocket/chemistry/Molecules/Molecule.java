@@ -166,6 +166,7 @@ public abstract class Molecule {
         this.CP = constants[0] + constants[1]*t + constants[2]*t2 + constants[3]*t3 + constants[4]/t2;
         double H = constants[0]*t + constants[1]*t2/2 + constants[2]*t3/3 + constants[3]*t4/4 - constants[4]/t + constants[5];
         this.Enthalpy = H*1000 + constants[7];
+        //add internal energy
         this.Entropy = constants[0]*Math.log(t) + constants[1]*t + constants[2]*t2/2 + constants[3]*t3/3 - constants[4]/(2*t2) + constants[6];
     }
     
