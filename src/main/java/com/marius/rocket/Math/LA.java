@@ -146,6 +146,14 @@ public class LA {
         }
         return out;
     }
+    
+    public static double sum(double[] u) {
+        double sum = 0;
+        for (int i = 0; i < u.length; i++) 
+            sum += u[i];
+        return sum;
+    }
+    
     // these funcitons overwrite!!
     public static double[] add(double[] u, double[] v) {
         for (int i = 0; i < u.length; i++) 
