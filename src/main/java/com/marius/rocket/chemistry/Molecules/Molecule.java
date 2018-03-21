@@ -18,16 +18,16 @@ public abstract class Molecule {
     public final HashMap<Atom,Integer> elList; //could be strings instead of objects
     public final double weight; // kg
     protected double moles;
-    public final double chemical_potential; // J/mol
-    public final double heat_fusion; // J/mol
-    public final double heat_vaporization; // J/mol
-    public final double boiling_point; // K
-    public final double melting_point; // K
+    public final double heat_formation; // J/mol @298.15
+    public final double heat_fusion; // J/mol @stp
+    public final double heat_vaporization; // J/mol @stp
+    public final double boiling_point; // K @stp
+    public final double melting_point; // K @stp
     protected double Temp; // K
     protected double Pres; // Pa
     protected double Concentration; // mol/m3
-    protected double Enthalpy;  // J/mol
-    protected double Entropy; // J/mol
+    protected double Enthalpy;  // J/mol  <---- THIS IS NOT Standard ENTHALPY
+    protected double StandardEntropy; // J/mol /k
     protected double Gibbs; // J/mol
     protected double InternalEnergy; // J/mol
     protected double CP; // J/mol/K
@@ -37,7 +37,7 @@ public abstract class Molecule {
     protected double EA; //electron affinity
     protected double PA; //proton affinity;
     
-    public Molecule(Atom[] atoms, int[] quantity, double chemical_potential, double heat_vaporization, double heat_fusion, double boiling_point, double melting_point, double[] critical_point, double[] triple_point, double[] vapor_pressure){
+    public Molecule(Atom[] atoms, int[] quantity, double heat_formation, double heat_vaporization, double heat_fusion, double boiling_point, double melting_point, double[] critical_point, double[] triple_point, double[] vapor_pressure){
         this.elList = new HashMap<>();
         double s = 0;
         for(int i = 0; i < atoms.length; i++) {
@@ -45,7 +45,7 @@ public abstract class Molecule {
             s+= quantity[i]*atoms[i].atomic_mass;
         }
         weight = s;
-        this.chemical_potential = chemical_potential;
+        this.heat_formation = heat_formation*1000;
         this.heat_fusion = heat_fusion;
         this.heat_vaporization = heat_vaporization;
         this.boiling_point = boiling_point;
@@ -117,7 +117,7 @@ public abstract class Molecule {
     }
     
     public final double getEntropy() {
-        return Entropy;
+        return StandardEntropy;
     }
     
     public final double getGibbs() {
@@ -147,8 +147,8 @@ public abstract class Molecule {
     
     public double shomateEntropy(double[] constants){
         double t = this.Temp/1000;
-        this.Entropy = constants[0]*Math.log(t) + constants[1]*t + constants[2]*t*t/2 + constants[3]*t*t*t/3 - constants[4]/(2*t*t) + constants[6];
-        return this.Entropy;
+        this.Enthalpy = constants[0]*Math.log(t) + constants[1]*t + constants[2]*t*t/2 + constants[3]*t*t*t/3 - constants[4]/(2*t*t) + constants[6];
+        return this.Enthalpy;
     }
     
     public void SetAndCalcAll(double Temp ,double Pres) {
@@ -165,9 +165,13 @@ public abstract class Molecule {
         double t4 = t3*t;
         this.CP = constants[0] + constants[1]*t + constants[2]*t2 + constants[3]*t3 + constants[4]/t2;
         double H = constants[0]*t + constants[1]*t2/2 + constants[2]*t3/3 + constants[3]*t4/4 - constants[4]/t + constants[5];
-        this.Enthalpy = H*1000 + constants[7];
+        this.Enthalpy = H*1000; 
         //add internal energy
-        this.Entropy = constants[0]*Math.log(t) + constants[1]*t + constants[2]*t2/2 + constants[3]*t3/3 - constants[4]/(2*t2) + constants[6];
+        this.StandardEntropy = constants[0]*Math.log(t) + constants[1]*t + constants[2]*t2/2 + constants[3]*t3/3 - constants[4]/(2*t2) + constants[6];
+    }
+    
+    public double getStandardGibbs() {
+        return this.Enthalpy - Temp*StandardEntropy;
     }
     
 }

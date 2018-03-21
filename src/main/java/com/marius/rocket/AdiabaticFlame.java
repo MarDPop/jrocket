@@ -55,7 +55,7 @@ public class AdiabaticFlame {
                     elements.add(el);
                 }
             }
-            enthalpy += reactant.getEnthalpy()-reactant.chemical_potential;
+            enthalpy += reactant.getMoles()*reactant.getEnthalpy();
         }
         this.nEl = elements.size();
         this.nSp = species.size();
@@ -87,24 +87,27 @@ public class AdiabaticFlame {
                 }
             }
         }
+        System.out.println(enthalpy);
         set = true;
     }
     
     /* NASA Method */
-    public void calcNASAConstantPressure(double pressure) { 
+    public void calcNASAConstantPressure(double Pressure) { 
         //CONSTANT VOLUME NEEDS CV (internal neergy) NOT CP
+        //PRESSURE MUST BE IN ATM
         //Solution variables
         double[] X = new double[nSp];
         double[] newX = new double[nSp];
         double[] h = new double[nSp];
-        this.pressure = pressure;
-        for(int tempIter = 0; tempIter < 30; tempIter++) {
+        this.pressure = Pressure;
+        double cons = Math.log(Pressure/101325); //MUST BE IN UNITLESS (ATM)
+        for(int tempIter = 0; tempIter < 100; tempIter++) {
             // constants in temperature calc
-            double RT = Fluid.R*temperature;
-            double cons = Math.log(pressure);
+            double RT = Fluid.R*temperature; 
             double sumX = 0;
             for(int i = 0; i < nSp; i++) {
                 sumX += X[i] = species.get(i).getMoles();
+                species.get(i).SetAndCalcAll(temperature, Pressure);
             }
             for(int iter = 0; iter < 30; iter++) {
                 //Intermediate Unknowns
@@ -114,21 +117,23 @@ public class AdiabaticFlame {
                 //Variable construction
                 for(int i = 0; i < nSp; i++) {
                     if(X[i] > 0) {
-                        b_[0] += h[i] = X[i]*(species.get(i).chemical_potential/RT+cons+Math.log(X[i]/sumX));
+                        b_[0] += h[i] = X[i]*(species.get(i).getStandardGibbs()/RT+cons+Math.log(X[i]/sumX));
                     } else {
                         h[i] = 0;
                     }
                 }
                 for(int j = 0; j < nEl; j++) {
                     b_[j+1] = elementSum[j];
+                    double sum = 0;
                     for(int i = 0; i < nSp; i++) {
                         b_[j+1] += h[i]*coef[i][j]; 
-                        A[0][j] += X[i]*coef[i][j]; //OPTIMIZE SECION
-                        A[j+1][nEl] += X[i]*coef[i][j];      
+                        sum += X[i]*coef[i][j]; //OPTIMIZE SECION   
                         for(int k = 0; k < nEl; k++) {
-                            A[j+1][k] += coef[i][k]*X[i]*coef[i][j];
+                            A[j+1][k] += coef[i][k]*coef[i][j]*X[i];
                         }
                     }
+                    A[0][j] = sum;
+                    A[j+1][nEl] = sum;
                 }
                 // Solution
                 double[] x_ = LA.GEPP2(A, b_);
@@ -137,8 +142,8 @@ public class AdiabaticFlame {
                     for(int j = 0; j < nEl; j++) {
                         newX[i] += x_[j]*coef[i][j]; 
                     }
-                    if(X[i] < 0.000001*sumX) {
-                        newX[i] = sumX*Math.exp(newX[i]-cons-species.get(i).chemical_potential/RT);
+                    if(X[i] < 0.01*sumX) {
+                        newX[i] = sumX*Math.exp(newX[i]-cons-species.get(i).getStandardGibbs()/RT);
                     } else {
                         newX[i] = -h[i] + X[i]*(x_[nEl]+newX[i]);
                     }
@@ -146,7 +151,7 @@ public class AdiabaticFlame {
                 //SOR
                 for(int i = 0; i < nSp; i++) {
                     double dX = newX[i] - X[i];
-                    newX[i] = X[i]+0.2*dX;
+                    newX[i] = X[i]+0.9*dX;
                     if (newX[i] > max[i]) {
                         if(max[i] > 0) {
                             newX[i] = max[i]*(0.9+i/300.0);
@@ -159,6 +164,151 @@ public class AdiabaticFlame {
                     }
                 }
                 //Stop condition
+                if(LA.rSquared(X,newX) < 1e-9) {
+                    //System.out.println("step "+tempIter+" in "+iter+ "steps ");
+                    sumX = LA.sum(newX);
+                    break;
+                } else {
+                    System.arraycopy( newX, 0, X, 0, X.length );
+                    sumX = LA.sum(X);
+                }
+            }
+            // temperature loop calc
+            double enthalpy_calc = 0;
+            double avgCP = 0;
+            
+            for(int i = 0; i < nSp; i++) {
+                Molecule product = species.get(i);
+                product.setMoles(newX[i]);
+                enthalpy_calc += newX[i]*product.getEnthalpy();
+                avgCP += newX[i]*product.getCP();
+            }
+            //System.out.println(enthalpy_calc+"J");
+            avgCP /= sumX;
+            double dT = (enthalpy_calc-enthalpy)/avgCP;
+            this.temperature -= 0.1*dT;
+            
+            this.volume = sumX*RT/Pressure;
+            if (Math.abs(dT/this.temperature) < 0.0005) {
+                System.out.println("Temperature");
+                System.out.println(temperature+"K");
+                System.out.println("Volume");
+                System.out.println(volume+"M^3");
+                System.out.println("Species");
+                for(int i = 0; i < nSp; i++) {
+                    System.out.println(species.get(i).getClass().getSimpleName());
+                    System.out.println(species.get(i).getMoles());
+                }
+                break;
+            }
+        }
+    }
+    
+    public void getEquilibrium(double T, double P) {
+        double[] X = new double[nSp];
+        double[] newX = new double[nSp];
+        double[] h = new double[nSp];
+        this.pressure = P;
+        this.temperature = T;
+        double cons = Math.log(P/101325); //MUST BE IN UNITLESS (ATM)
+        double RT = Fluid.R*temperature; 
+        double sumX = 0;
+        for(int i = 0; i < nSp; i++) {
+            sumX += X[i] = species.get(i).getMoles();
+            species.get(i).SetAndCalcAll(T, P);
+        }
+        for(int iter = 0; iter < 30; iter++) {
+                //Intermediate Unknowns
+                double[] b_ = new double[nEl+1];
+                double[][] A = new double[b_.length][b_.length];
+                
+                //Variable construction
+                for(int i = 0; i < nSp; i++) {
+                    if(X[i] > 0) {
+                        b_[0] += h[i] = X[i]*(species.get(i).getStandardGibbs()/RT+cons+Math.log(X[i]/sumX));
+                    } else {
+                        h[i] = 0;
+                    }
+                }
+                for(int j = 0; j < nEl; j++) {
+                    b_[j+1] = elementSum[j];
+                    double sum = 0;
+                    for(int i = 0; i < nSp; i++) {
+                        b_[j+1] += h[i]*coef[i][j]; 
+                        sum += X[i]*coef[i][j]; //OPTIMIZE SECION   
+                        for(int k = 0; k < nEl; k++) {
+                            A[j+1][k] += coef[i][k]*coef[i][j]*X[i];
+                        }
+                    }
+                    A[0][j] = sum;
+                    A[j+1][nEl] = sum;
+                }
+                // Solution
+                double[] x_ = LA.GEPP2(A, b_);
+                for(int i = 0; i < nSp; i++) {
+                    newX[i] = 0; 
+                    for(int j = 0; j < nEl; j++) {
+                        newX[i] += x_[j]*coef[i][j]; 
+                    }
+                    if(X[i] < 0.01*sumX) {
+                        newX[i] = sumX*Math.exp(newX[i]-cons-species.get(i).getStandardGibbs()/RT);
+                    } else {
+                        newX[i] = -h[i] + X[i]*(x_[nEl]+newX[i]);
+                    }
+                }
+                //SOR
+                for(int i = 0; i < nSp; i++) {
+                    double dX = newX[i] - X[i];
+                    newX[i] = X[i]+0.9*dX;
+                    if (newX[i] > max[i]) {
+                        if(max[i] > 0) {
+                            newX[i] = max[i]*(0.9+i/300.0);
+                        } else {
+                            newX[i] = 0;
+                        }
+                    }
+                    if(newX[i] < 0) {
+                        newX[i] = X[i]/4;
+                    }
+                }
+                //Stop condition
+                if(LA.rSquared(X,newX) < 1e-9) {
+                    //System.out.println("step "+tempIter+" in "+iter+ "steps ");
+                    sumX = LA.sum(newX);
+                    for(int i = 0; i < nSp; i++) {
+                        species.get(i).setMoles(newX[i]);
+                    }
+                    break;
+                } else {
+                    System.arraycopy( newX, 0, X, 0, X.length );
+                    sumX = LA.sum(X);
+                }
+            }
+            
+    }
+    
+    public void calcConstantPressure(double Pressure) { 
+        //CONSTANT VOLUME NEEDS CV (internal neergy) NOT CP
+        //PRESSURE MUST BE IN ATM
+        //Solution variables
+        double[] X = new double[nSp];
+        double[] newX = new double[nSp];
+        double[] h = new double[nSp];
+        this.pressure = Pressure;
+        double cons = Math.log(Pressure/101325); //MUST BE IN UNITLESS (ATM)
+        for(int tempIter = 0; tempIter < 100; tempIter++) {
+            // constants in temperature calc
+            double RT = Fluid.R*temperature; 
+            double sumX = 0;
+            for(int i = 0; i < nSp; i++) {
+                sumX += X[i] = species.get(i).getMoles();
+            }
+            for(int iter = 0; iter < 30; iter++) {
+                for(int i = 0; i < nSp; i++) {
+                    
+                }
+                
+                //Stop condition
                 if(LA.rSquared(X,newX) < 0.000001) {
                     break;
                 } else {
@@ -170,22 +320,23 @@ public class AdiabaticFlame {
             for(int i = 0; i < nSp; i++) {
                 sumX += newX[i];
             }
-            this.volume = sumX*RT/pressure;
+            this.volume = sumX*RT/Pressure;
             
             double enthalpy_calc = 0;
             double avgCP = 0;
-            System.out.println(temperature);
+            System.out.println("step "+tempIter+": "+temperature);
             for(int i = 0; i < nSp; i++) {
-                Molecule blah = species.get(i);
-                blah.setMoles(newX[i]);
-                blah.SetAndCalcAll(temperature, pressure);
-                enthalpy_calc += newX[i]*(blah.getEnthalpy()-blah.chemical_potential);
-                avgCP += newX[i]*blah.getCP();
+                Molecule product = species.get(i);
+                product.setMoles(newX[i]);
+                product.SetAndCalcAll(temperature, Pressure);
+                enthalpy_calc += newX[i]*product.getEnthalpy();
+                avgCP += newX[i]*product.getCP();
             }
+            System.out.println(enthalpy_calc+"J");
             avgCP /= sumX;
-            double dT = 0.1*(enthalpy_calc-enthalpy)/avgCP;
-            this.temperature -= dT;
-            if (Math.abs(dT/this.temperature) < 0.001) {
+            double dT = (enthalpy_calc-enthalpy)/avgCP;
+            this.temperature -= 0.5*dT;
+            if (Math.abs(dT/this.temperature) < 0.0005) {
                 System.out.println("Temperature");
                 System.out.println(temperature+"K");
                 System.out.println("Volume");
@@ -193,7 +344,7 @@ public class AdiabaticFlame {
                 System.out.println("Species");
                 for(int i = 0; i < nSp; i++) {
                     System.out.println(species.get(i).getClass().getSimpleName());
-                    System.out.println(newX[i]);
+                    System.out.println(species.get(i).getMoles());
                 }
                 break;
             }

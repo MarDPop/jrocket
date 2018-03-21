@@ -44,19 +44,19 @@ public class Sim {
         Water H2O = new Water(0);
         MonoHydride H = new MonoHydride(0);
         Hydroxy OH = new Hydroxy(0);
-        LH.setTemp(20);
-        LOX.setTemp(100);
-        H2O.setTemp(400);
-        H.setTemp(400);
-        OH.setTemp(400);
+        LH.setTemp(300);
+        LOX.setTemp(300);
+        H2O.setTemp(3000);
+        H.setTemp(3000);
+        OH.setTemp(3000);
         selected.add(LH);
         selected.add(LOX);
         selected.add(H2O);
         selected.add(H);
         selected.add(OH);
         flame.species = selected;
-        flame.init(1500);
-        flame.calcNASAConstantPressure(100000.0);
+        flame.init(2500);
+        flame.calcNASAConstantPressure(101325);
         
         System.out.println();
     }
