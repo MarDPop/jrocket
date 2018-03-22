@@ -20,9 +20,9 @@ public class IdealNozzle extends Nozzle {
     private double area_reduction;
     
     public void init() {
-        this.flow.setMolarMass(chamber.getMolarMass()); //frozen flow
+        this.flow.setMolarMass(chamber.exitGas.getMolarMass()); //frozen flow
         this.flow.setStagnationTempAndPres(chamber.getTemperature(), chamber.getPressure());
-        this.flow.setGamma(chamber.getGamma());
+        this.flow.setGamma(chamber.exitGas.getGamma());
         this.flow.chokedFlow(A_t); 
     }
     
@@ -53,9 +53,9 @@ public class IdealNozzle extends Nozzle {
             p_ideal = flow.getPressure();
             p_max = flow.getPressure()*flow.normalShockPressureRatio();
             if(ambientPressure > p_max) {
-                double M_exit = getMachExitShockInNozzle(chamber.getGamma(),this.A_t/this.A_e,chamber.getPressure()/ambientPressure);
+                double M_exit = getMachExitShockInNozzle(chamber.exitGas.getGamma(),this.A_t/this.A_e,chamber.getPressure()/ambientPressure);
                 double T_exit = chamber.getTemperature()/CompressibleFlow.beta(1.4,M_exit);
-                double a_exit = Math.sqrt(chamber.getGamma()*flow.getGasConstant()*T_exit);
+                double a_exit = Math.sqrt(chamber.exitGas.getGamma()*flow.getGasConstant()*T_exit);
                 this.exit_v = M_exit*a_exit;
                 exit_p = ambientPressure;
             } else {
@@ -78,20 +78,20 @@ public class IdealNozzle extends Nozzle {
         area_reduction = 1;
         if(ambientPressure > p_ideal*1.1) {
             //underexpanded
-            this.exit_v = Math.sqrt(2*flow.getCp()*chamber.getTemperature()*(1-Math.pow(chamber.getPressure()/ambientPressure,(chamber.getGamma()-1)/chamber.getGamma())));
+            this.exit_v = Math.sqrt(2*flow.getCp()*chamber.getTemperature()*(1-Math.pow(chamber.getPressure()/ambientPressure,(chamber.exitGas.getGamma()-1)/chamber.exitGas.getGamma())));
             flow.setMachFromStaticPressure(ambientPressure);
             double ratio = ambientPressure-flow.getPressure()/(p_max-flow.getPressure());
             area_reduction = A_t/flow.getAstarRatio()/A_e;
             half_angle = ratio*Math.PI/4; //should do the shock diamond calc
         } else if (ambientPressure < p_ideal*0.9) {
             //overexpanded
-            this.exit_v = Math.sqrt(2*flow.getCp()*chamber.getTemperature()*(1-Math.pow(chamber.getPressure()/flow.getPressure(),(chamber.getGamma()-1)/chamber.getGamma())));
+            this.exit_v = Math.sqrt(2*flow.getCp()*chamber.getTemperature()*(1-Math.pow(chamber.getPressure()/flow.getPressure(),(chamber.exitGas.getGamma()-1)/chamber.exitGas.getGamma())));
             double ratio = (flow.getPressure()-ambientPressure)/flow.getPressure();
             this.exit_p = flow.getPressure();
             half_angle = 0+(exitAngle+flow.getPMAngle())*ratio/2;
         } else {
             //design conditions
-            this.exit_v = Math.sqrt(2*flow.getCp()*chamber.getTemperature()*(1-Math.pow(chamber.getPressure()/ambientPressure,(chamber.getGamma()-1)/chamber.getGamma())));
+            this.exit_v = Math.sqrt(2*flow.getCp()*chamber.getTemperature()*(1-Math.pow(chamber.getPressure()/ambientPressure,(chamber.exitGas.getGamma()-1)/chamber.exitGas.getGamma())));
             exit_p = ambientPressure;
         }
     }

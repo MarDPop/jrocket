@@ -12,4 +12,5 @@ package com.marius.rocket.vehicle.components.thrusters;
 public class CombustionChamberWithSimpleStartup extends CombustionChamber {
     private double steadyTemp;
     
+    
 }

@@ -6,6 +6,7 @@
 package com.marius.rocket.physics;
 
 import com.marius.rocket.chemistry.Molecules.Molecule;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,40 +15,42 @@ import com.marius.rocket.chemistry.Molecules.Molecule;
 public class Fluid {
     //ASSUME IDEAL GAS
     public final static double R = 8.3144598; // Gas Constant kg m2 / s2 K mol
+    public final static double Atm2PA = 101325; // PA
     
-    protected Molecule[] species;
+    public ArrayList<Molecule> species  = new ArrayList<>();
     protected double temp;
     protected double pres;
     protected double dens;
     protected double mass;
-    protected double Cp;
-    protected double Cv;
-    protected double Gam;
+    protected double cp;
+    protected double cv;
+    protected double gam;
     protected double a;
     protected double internal_energy;
     protected double enthalpy;
     protected double viscosity;
-    protected double MM;
-    protected double R_specific;
+    protected double molar_mass; //in kg/mol
+    protected double specific_gas_constant;
     
     
-    public void setMolarMass(double MM) {
-        this.MM = MM;
+    public void setMolarMass(double molar_mass) {
+        this.specific_gas_constant = R/molar_mass;
+        this.molar_mass = molar_mass;
     }
     
     public double getMolarMass() {
-        return MM;
+        return molar_mass;
     }
     
-    public void setGamma(double Gam) {
-        this.Gam = Gam;
+    public void setGamma(double gam) {
+        this.gam = gam;
         //default to setting CP
-        this.Cp = Gam*R_specific/(Gam-1);
-        this.Cv = Cp/Gam;
+        this.cp = gam*specific_gas_constant/(gam-1);
+        this.cv = cp/gam;
     }
     
     public double getGamma() {
-        return Gam;
+        return gam;
     }
     
     public void setTemperature(double temp) {
@@ -66,38 +69,38 @@ public class Fluid {
         return pres;
     }
     
-    public void setCv(double Cv) {
-        this.Cv = Cv;
-        if(Gam > 0) {
-            this.Cp = Cv*Gam;
-        } else if(Cp > 0) {
-            this.Gam = this.Cp/this.Cv;
+    public void setCv(double cv) {
+        this.cv = cv;
+        if(gam > 0) {
+            this.cp = cv*gam;
+        } else if(cp > 0) {
+            this.gam = this.cp/this.cv;
         }
     }
     
     public void setCp(double Cp) {
-        this.Cp = Cp;
-        if(Gam > 0) {
-            this.Cv = Cp/Gam;
-        } else if(Cv > 0) {
-            this.Gam = this.Cp/this.Cv;
+        this.cp = Cp;
+        if(gam > 0) {
+            this.cv = cp/gam;
+        } else if(cv > 0) {
+            this.gam = this.cp/this.cv;
         }
     }
     
     public double getCp(){
-        return this.Cp;
+        return this.cp;
     }
     
     public double getCv(){
-        return this.Cv;
+        return this.cv;
     }
     
     public double calcSpeedOfSound() {
-        return a = Math.sqrt(Gam*R_specific*temp);
+        return a = Math.sqrt(gam*specific_gas_constant*temp);
     }
     
     public double getGasConstant() {
-        return R_specific;
+        return specific_gas_constant;
     }
     
 }

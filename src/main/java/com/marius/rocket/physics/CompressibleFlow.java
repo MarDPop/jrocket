@@ -54,7 +54,7 @@ public class CompressibleFlow extends Flow {
     }
     
     public double getSpecificHeatRatio() {
-        return this.Gam;
+        return this.gam;
     }
     
     public double getA() {
@@ -88,7 +88,7 @@ public class CompressibleFlow extends Flow {
     }
     
     private void calcBeta() {
-        this.Beta = M_2*(Gam-1)/2+1; 
+        this.Beta = M_2*(gam-1)/2+1; 
     }
     
     public double getBeta() {
@@ -105,7 +105,7 @@ public class CompressibleFlow extends Flow {
     
     private double PMAngle() {
         double x = Math.sqrt(M*M-1);
-        double y = Math.sqrt((Gam+1)*B);
+        double y = Math.sqrt((gam+1)*B);
         return PMAngle = y*Math.atan(x/y)-Math.atan(x);
     }
     
@@ -136,7 +136,7 @@ public class CompressibleFlow extends Flow {
     }
     
     public double chokedRate() {
-        return P_0*Math.sqrt(Gam/(R_specific*T_0)*A_star_ratio/E);
+        return P_0*Math.sqrt(gam/(specific_gas_constant*T_0)*A_star_ratio/E);
     }
     
     public void intializeMachFromAstarRatio(double AR, boolean supersonic) {
@@ -147,13 +147,13 @@ public class CompressibleFlow extends Flow {
         if(!supersonic) {
             M_high = 0.99;
             M_low = 0.33;
-            if((E*M_low*Math.pow(beta(Gam,M_low),-C)-AR)>0){
+            if((E*M_low*Math.pow(beta(gam,M_low),-C)-AR)>0){
                 setMach(M_low);
                 return;
             }
             sign = -1;
         } else {   
-            if((E*M_high*Math.pow(beta(Gam,M_high),-C)-AR)>0){
+            if((E*M_high*Math.pow(beta(gam,M_high),-C)-AR)>0){
                 setMach(M_high);
                 return;
             }
@@ -188,7 +188,7 @@ public class CompressibleFlow extends Flow {
     }
     
     public double normalShockPressureRatio() { //p2/p1
-        return (2*Gam*M_2-(Gam-1))/(Gam+1);
+        return (2*gam*M_2-(gam-1))/(gam+1);
     }
     
     public double normalShockDensityRatio() { //rho2/rho1
@@ -200,7 +200,7 @@ public class CompressibleFlow extends Flow {
     }
     
     public double normalShockNewMach() { //T2/T1
-        return Math.sqrt(2*Beta/(2*Gam*M_2-(Gam-1)));
+        return Math.sqrt(2*Beta/(2*gam*M_2-(gam-1)));
     }
     
     public static double normalShockNewMach(double M, double k) { //T2/T1
@@ -213,7 +213,7 @@ public class CompressibleFlow extends Flow {
     }
     
     public double normalShockSpecialPressureRatio() { //P02/P1
-        return 1/Math.pow(2*(Gam+1)*M_2,D)*Math.pow(normalShockPressureRatio(),-B);
+        return 1/Math.pow(2*(gam+1)*M_2,D)*Math.pow(normalShockPressureRatio(),-B);
     }
     
     public double[] normalShock() {
@@ -229,7 +229,7 @@ public class CompressibleFlow extends Flow {
     }
     
     public double isentropicExpansion(double M_2) {
-        double AreaRatio = M/M_2*Math.pow(beta(Gam,M_2)/Beta,C);
+        double AreaRatio = M/M_2*Math.pow(beta(gam,M_2)/Beta,C);
         area = area*AreaRatio;
         return AreaRatio;
     }

@@ -11,13 +11,12 @@ import com.marius.rocket.chemistry.Molecules.Molecule;
 import com.marius.rocket.physics.Fluid;
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  *
  * @author n5823a
  */
-public class AdiabaticFlame {
+public class Equilibrium {
     public ArrayList<Molecule> species  = new ArrayList<>();
     private final ArrayList<Class> elements = new ArrayList<>();
     private double[] elementSum;
@@ -42,6 +41,10 @@ public class AdiabaticFlame {
     
     public double getEnthalpy() {
         return this.enthalpy;
+    }
+    
+    public double getVolume() {
+        return this.volume;
     }
     
     public void init(double temperature) {
@@ -91,8 +94,12 @@ public class AdiabaticFlame {
         set = true;
     }
     
+    public void AdiabaticFlame(double P) {
+        calcNASAConstantPressure(P, 0);
+    }
+    
     /* NASA Method */
-    public void calcNASAConstantPressure(double Pressure) { 
+    public void calcNASAConstantPressure(double Pressure, double lostEnergy) { 
         //CONSTANT VOLUME NEEDS CV (internal neergy) NOT CP
         //PRESSURE MUST BE IN ATM
         //Solution variables
@@ -101,7 +108,7 @@ public class AdiabaticFlame {
         double[] h = new double[nSp];
         this.pressure = Pressure;
         double cons = Math.log(Pressure/101325); //MUST BE IN UNITLESS (ATM)
-        for(int tempIter = 0; tempIter < 100; tempIter++) {
+        for(int tempIter = 0; tempIter < 30; tempIter++) {
             // constants in temperature calc
             double RT = Fluid.R*temperature; 
             double sumX = 0;
@@ -185,7 +192,7 @@ public class AdiabaticFlame {
             }
             //System.out.println(enthalpy_calc+"J");
             avgCP /= sumX;
-            double dT = (enthalpy_calc-enthalpy)/avgCP;
+            double dT = (enthalpy_calc-enthalpy+lostEnergy)/avgCP;
             this.temperature -= 0.1*dT;
             
             this.volume = sumX*RT/Pressure;

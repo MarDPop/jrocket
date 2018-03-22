@@ -37,7 +37,7 @@ public class Sim {
     }
     
     private static void test3(){
-        AdiabaticFlame flame = new AdiabaticFlame();
+        Equilibrium flame = new Equilibrium();
         ArrayList<Molecule> selected = new ArrayList<>();
         Hydrogen LH = new Hydrogen(2);
         Oxygen LOX = new Oxygen(1);
@@ -56,7 +56,7 @@ public class Sim {
         selected.add(OH);
         flame.species = selected;
         flame.init(2500);
-        flame.calcNASAConstantPressure(101325);
+        flame.AdiabaticFlame(101325);
         
         System.out.println();
     }

@@ -5,6 +5,7 @@
  */
 package com.marius.rocket.vehicle.components.thrusters;
 
+import com.marius.rocket.physics.Fluid;
 import com.marius.rocket.vehicle.resources.Resource;
 
 /**
@@ -16,10 +17,12 @@ public class CombustionChamber {
     protected double pressure;
     protected Resource fuel;
     protected Resource oxydizer;
-    protected double gamma;
-    protected double cp;
-    protected double cv;
-    protected double MolarMass;
+    public Fluid exitGas;
+    
+    public void init(Resource fuel, Resource oxydizer) {
+        this.fuel = fuel;
+        this.oxydizer = oxydizer;
+    }
     
     public double getTemperature() {
         return temperature;
@@ -36,22 +39,5 @@ public class CombustionChamber {
     public void setPressure(double pressure) {
         this.pressure = pressure;
     }
-    
-    public double getGamma() {
-        return gamma;
-    }
-    
-    public void setGamma(double gamma) {
-        this.gamma = gamma;
-    }
-    
-    public double getMolarMass() {
-        return MolarMass;
-    }
-    
-    public void setMolarMass(double MolarMass) {
-        this.MolarMass = MolarMass;
-    }
-    
     
 }
