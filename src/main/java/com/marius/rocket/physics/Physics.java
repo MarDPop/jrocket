@@ -48,4 +48,6 @@ public class Physics {
         return h*c/wl;
     }
     
+    
+    
 }

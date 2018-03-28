@@ -18,6 +18,10 @@ public class CombustionChamber {
     protected Resource fuel;
     protected Resource oxydizer;
     public Fluid exitGas;
+    protected double volume;
+    protected double length;
+    protected double radius;
+    protected double crossArea;
     
     public void init(Resource fuel, Resource oxydizer) {
         this.fuel = fuel;
@@ -38,6 +42,13 @@ public class CombustionChamber {
     
     public void setPressure(double pressure) {
         this.pressure = pressure;
+    }
+    
+    public void setSize(double l, double r) {
+        this.length = l;
+        this.radius = r;
+        this.crossArea = Math.PI*r*r;
+        this.volume = crossArea*l;
     }
     
 }

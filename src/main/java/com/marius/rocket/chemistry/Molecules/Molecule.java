@@ -36,6 +36,7 @@ public abstract class Molecule {
     protected TreeMap<Double,Double[]> shomate = new TreeMap<>();
     protected double ea; //electron affinity
     protected double pa; //proton affinity;
+    public String name;
     
     public Molecule(Atom[] atoms, int[] quantity, double heat_formation, double heat_vaporization, double heat_fusion, double boiling_point, double melting_point, double[] critical_point, double[] triple_point, double[] vapor_pressure){
         this.elList = new HashMap<>();
@@ -50,6 +51,7 @@ public abstract class Molecule {
         this.heat_vaporization = heat_vaporization;
         this.boiling_point = boiling_point;
         this.melting_point = melting_point;
+        // THIS SHOULD BE LOADED VIA DATABASE
     }
     
     public void calc() {

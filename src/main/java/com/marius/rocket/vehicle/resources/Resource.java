@@ -5,6 +5,8 @@
  */
 package com.marius.rocket.vehicle.resources;
 
+import com.marius.rocket.chemistry.Molecules.Molecule;
+
 /**
  *
  * @author n5823a
@@ -14,6 +16,7 @@ public class Resource {
     private double amount;
     private double density;
     private final int unit; // what unit amount is in default = mass
+    protected Molecule[] content;
     
     public static final int UNIT_KILOGRAM = 0;
     public static final int UNIT_LITER = 1;
@@ -65,5 +68,9 @@ public class Resource {
         }
         return 1/density;
     }  
+    
+    public Molecule[] getContent() {
+        return content;
+    }
     
 }
