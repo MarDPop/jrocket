@@ -83,11 +83,11 @@ public class Material {
         return this.emmisivity;
     }
     
-    public static double hoopWallStress_Cylinder(double pres, double thickness, double rad) {
+    public static double hoopWallStress_ThinCylinder(double pres, double thickness, double rad) {
         return pres/thickness/rad;
     }
     
-    public static double hoopWallStress_Sphere(double pres, double thickness, double rad) {
+    public static double hoopWallStress_ThinSphere(double pres, double thickness, double rad) {
         return pres/thickness/rad/2;
     }
     

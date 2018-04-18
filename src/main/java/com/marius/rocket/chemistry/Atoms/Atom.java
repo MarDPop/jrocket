@@ -22,6 +22,9 @@ public abstract class Atom {
     public final double electronegativy; //paulin scale
     //public final double electronegativity;
     
+    private String sql;
+    
+    
     public Atom(int protons, int neutrons, double atomic_mass, double[] ionization_energy, double[] electron_affinity, double vanderWalls_radius, double electronegativy) {
         this.protons = protons;
         this.neutrons = neutrons;

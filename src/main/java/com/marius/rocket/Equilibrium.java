@@ -90,7 +90,6 @@ public class Equilibrium {
                 }
             }
         }
-        System.out.println(enthalpy);
         set = true;
     }
     
@@ -197,6 +196,7 @@ public class Equilibrium {
             
             this.volume = sumX*RT/Pressure;
             if (Math.abs(dT/this.temperature) < 0.0005) {
+                /*
                 System.out.println("Temperature");
                 System.out.println(temperature+"K");
                 System.out.println("Volume");
@@ -206,6 +206,7 @@ public class Equilibrium {
                     System.out.println(species.get(i).getClass().getSimpleName());
                     System.out.println(species.get(i).getMoles());
                 }
+                */  
                 break;
             }
         }

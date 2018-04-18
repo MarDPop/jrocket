@@ -17,9 +17,11 @@ import com.marius.rocket.chemistry.Molecules.Water;
 import java.util.Arrays;
 import com.marius.rocket.physics.*;
 import com.marius.rocket.physics.forces.Gravity;
+import com.marius.rocket.vehicle.components.thrusters.CombustionChamberWithSimpleStartup;
 import com.marius.rocket.vehicle.components.thrusters.IdealNozzle;
 import com.marius.rocket.vehicle.presets.SimpleRocket;
 import com.marius.rocket.vehicle.presets.SugarRocket;
+import com.marius.rocket.vehicle.resources.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -33,8 +35,22 @@ public class Sim {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       test3();
+       test4();
     }
+    
+    private static void test4(){
+        CombustionChamberWithSimpleStartup chamber = new CombustionChamberWithSimpleStartup();
+        Hydrogen LH = new Hydrogen(2);
+        Oxygen LOX = new Oxygen(1);
+        LH.setTemp(40);
+        LOX.setTemp(100);
+        Resource LiquidHydrogen = new Resource(LH);
+        Resource LiquidOxygen = new Resource(LOX);
+        chamber.init(LiquidHydrogen, LiquidOxygen);
+        chamber.setSize(1, 1);
+        chamber.run(5000000);
+    }
+    
     
     private static void test3(){
         Equilibrium flame = new Equilibrium();

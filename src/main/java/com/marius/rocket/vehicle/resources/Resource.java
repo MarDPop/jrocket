@@ -16,12 +16,14 @@ public class Resource {
     private double amount;
     private double density;
     private final int unit; // what unit amount is in default = mass
-    protected Molecule[] content;
+    private double cost;
+    private Molecule[] content;
     
     public static final int UNIT_KILOGRAM = 0;
     public static final int UNIT_LITER = 1;
     public static final int UNIT_METER = 2;
     public static final int UNIT_AMP_HOUR = 3;
+    public static final int UNIT_MOLES = 4;
     
     public Resource() {
         this.unit = 0;
@@ -30,6 +32,12 @@ public class Resource {
     public Resource(double amount) {
         this.amount = amount;
         this.unit = 0;
+    }
+    
+    public Resource(Molecule content) {
+        this.content = new Molecule[]{content};
+        this.amount = content.getMoles();
+        this.unit = 4;
     }
     
     public Resource(double amount, int unit) {
@@ -67,7 +75,11 @@ public class Resource {
             return 1;
         }
         return 1/density;
-    }  
+    }
+    
+    public void setContent(Molecule[] content) {
+        this.content = content;
+    }
     
     public Molecule[] getContent() {
         return content;

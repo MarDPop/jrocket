@@ -5,6 +5,7 @@
  */
 package com.marius.rocket.vehicle.components.thrusters;
 
+import com.marius.rocket.chemistry.Molecules.Molecule;
 import com.marius.rocket.physics.Fluid;
 import com.marius.rocket.vehicle.resources.Resource;
 
@@ -15,18 +16,12 @@ import com.marius.rocket.vehicle.resources.Resource;
 public class CombustionChamber {
     protected double temperature;
     protected double pressure;
-    protected Resource fuel;
-    protected Resource oxydizer;
+    public Resource[] input;
     public Fluid exitGas;
     protected double volume;
     protected double length;
     protected double radius;
     protected double crossArea;
-    
-    public void init(Resource fuel, Resource oxydizer) {
-        this.fuel = fuel;
-        this.oxydizer = oxydizer;
-    }
     
     public double getTemperature() {
         return temperature;
