@@ -13,6 +13,6 @@ import com.marius.rocket.chemistry.Atoms.Atom;
  */
 public class Li extends Atom{
     public Li() {
-        super(3,3,6.94, new double[] {5.39172,75.64018,122.45429});
+        super("Li",3,3,6.94, new double[] {5.39172,75.64018,122.45429}, new double[]{0.618049},167,0.98);
     }
 }

@@ -55,7 +55,6 @@ public class CombustionChamberWithSimpleStartup extends BipropellantChamber {
             double q_out_wall = airHeatTransferCoef*(wallTemps[i]-300)*areaWall*dt; //
             double q_radiation = metal.getEmmisivity()*Physics.SB*Math.pow(wallTemps[i],4)*areaWall*dt;
             System.out.println(thickness);
-            pause;
             calc.calcNASAConstantPressure(pressure, q_to_wall);
             i++;
             

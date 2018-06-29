@@ -11,6 +11,6 @@ package com.marius.rocket.chemistry.Atoms;
  */
 public class D extends Atom {
     public D() {
-        super(1,1,2.0141017778, new double[] {13.603}, new double[]{0.73},120,2.2);
+        super("D",1,1,2.0141017778, new double[] {13.603}, new double[]{0.73},120,2.2);
     }
 }

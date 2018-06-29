@@ -11,6 +11,6 @@ package com.marius.rocket.chemistry.Atoms;
  */
 public class Fe extends Atom {
     public Fe() {
-        super(1,0,1.007825, new double[] {13.5984},new double[] {0.75497}, 120,2.2);
+        super("Fe",1,0,1.007825, new double[] {13.5984},new double[] {0.75497}, 156,2.2);
     }
 }

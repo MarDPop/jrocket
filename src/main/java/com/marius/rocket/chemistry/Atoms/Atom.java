@@ -12,20 +12,22 @@ import com.marius.rocket.physics.Physics;
  */
 public abstract class Atom {
     //public final static double EV2KJ = 1312.0/13.59844;
+    public final String symbol;
     public final int protons;
     public final int neutrons;
     protected int ionization;
     public final double[] ionization_energy; //in eV
     public final double[] electron_affinity; //in eV
     public final double atomic_mass; //in dalton
-    public final double vanderWalls_radius; //pm
+    public final double atomic_radius; //pm
     public final double electronegativy; //paulin scale
     //public final double electronegativity;
-    
+    // PLEASE NOTE, this data is STANDARD, things like molecular behavior may affect electron affinity, ionization energy etc.
     private String sql;
     
     
-    public Atom(int protons, int neutrons, double atomic_mass, double[] ionization_energy, double[] electron_affinity, double vanderWalls_radius, double electronegativy) {
+    public Atom(String symbol,int protons, int neutrons, double atomic_mass, double[] ionization_energy, double[] electron_affinity, double atomic_radius, double electronegativy) {
+        this.symbol = symbol;
         this.protons = protons;
         this.neutrons = neutrons;
         this.atomic_mass = atomic_mass;
@@ -33,7 +35,7 @@ public abstract class Atom {
         this.electron_affinity = electron_affinity;
 
         this.electronegativy = electronegativy;
-        this.vanderWalls_radius = vanderWalls_radius;
+        this.atomic_radius = atomic_radius;
     }
     
     public final int getIonization() {

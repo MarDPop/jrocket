@@ -11,6 +11,6 @@ package com.marius.rocket.chemistry.Atoms;
  */
 public class He extends Atom{
     public He() {
-        super(2,2,4.002602,new double[]{24.58741,54.41778}, new double[]{-0.52},140,0);
+        super("He",2,2,4.002602,new double[]{24.58741,54.41778}, new double[]{-0.52},31,0);
     }
 }
