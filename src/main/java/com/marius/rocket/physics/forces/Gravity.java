@@ -25,7 +25,7 @@ public class Gravity extends Force {
     public Gravity(Body main, Planet[] list) {
             this.ref = main;
             this.main = main;
-            this.mu = main.getMass()*Physics.G;
+            this.mu = main.getMass()*Physics.GRAVITY;
             this.m = main.getMass();
             this.list = list; 
             this.internal = false;

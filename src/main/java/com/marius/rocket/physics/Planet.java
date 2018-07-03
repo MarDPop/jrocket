@@ -19,7 +19,7 @@ public class Planet extends Body {
     protected double rotationalSpeed;
     
     public Planet(double MU, double Radius){
-        super(MU/Physics.G);
+        super(MU/Physics.GRAVITY);
         this.MU = MU;
         this.AVGRADIUS = Radius;
     }

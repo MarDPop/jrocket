@@ -53,8 +53,8 @@ public class CombustionChamberWithSimpleStartup extends BipropellantChamber {
             double dTdx = (flameTemps[i]-wallTemps[i])/(thickness/2); // wall temp is assumed to be average in middle
             double q_to_wall = metal.getThermalConductivity()*dTdx*areaWall*dt;
             double q_out_wall = airHeatTransferCoef*(wallTemps[i]-300)*areaWall*dt; //
-            double q_radiation = metal.getEmmisivity()*Physics.SB*Math.pow(wallTemps[i],4)*areaWall*dt;
-            System.out.println(thickness);
+            double q_radiation = metal.getEmmisivity()*Physics.STEFAN_BOLTZMANN*Math.pow(wallTemps[i],4)*areaWall*dt;
+            System.out.println("heat to wall: "+q_to_wall);
             calc.calcNASAConstantPressure(pressure, q_to_wall);
             i++;
             

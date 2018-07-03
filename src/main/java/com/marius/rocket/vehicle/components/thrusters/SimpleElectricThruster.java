@@ -81,7 +81,7 @@ public class SimpleElectricThruster extends Thruster {
     }
     
     public void calcMassUtilizationEfficiency(){
-        this.n_m = massUtilizationFactor*J/Physics.eV*Ma/massflow;
+        this.n_m = massUtilizationFactor*J/Physics.ELECTRON_VOLT*Ma/massflow;
     }
     
     public void setMassUtilizationEfficiency(double n_m){
@@ -105,11 +105,11 @@ public class SimpleElectricThruster extends Thruster {
     }
     
     public void calcIsp() {
-        this.isp = gamma*n_m/9.806*Math.sqrt(2*Physics.eV*V_b/Ma);
+        this.isp = gamma*n_m/9.806*Math.sqrt(2*Physics.ELECTRON_VOLT*V_b/Ma);
     }
     
     public void calcThrust() {
-        this.currentThrust = gamma*Math.sqrt(2*Ma*V_b/Physics.eV)*J;
+        this.currentThrust = gamma*Math.sqrt(2*Ma*V_b/Physics.ELECTRON_VOLT)*J;
     }
     
     public void calcElectricalEfficiency() {

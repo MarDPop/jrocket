@@ -15,16 +15,13 @@ public abstract class Atom {
     public final String symbol;
     public final int protons;
     public final int neutrons;
+    public final double atomic_mass; //in dalton
     protected int ionization;
+    // PLEASE NOTE, the following data is STANDARD, things like molecular behavior may affect electron affinity, ionization energy etc and is for reference only
     public final double[] ionization_energy; //in eV
     public final double[] electron_affinity; //in eV
-    public final double atomic_mass; //in dalton
     public final double atomic_radius; //pm
     public final double electronegativy; //paulin scale
-    //public final double electronegativity;
-    // PLEASE NOTE, this data is STANDARD, things like molecular behavior may affect electron affinity, ionization energy etc.
-    private String sql;
-    
     
     public Atom(String symbol,int protons, int neutrons, double atomic_mass, double[] ionization_energy, double[] electron_affinity, double atomic_radius, double electronegativy) {
         this.symbol = symbol;
@@ -33,7 +30,6 @@ public abstract class Atom {
         this.atomic_mass = atomic_mass;
         this.ionization_energy = ionization_energy;
         this.electron_affinity = electron_affinity;
-
         this.electronegativy = electronegativy;
         this.atomic_radius = atomic_radius;
     }
@@ -47,7 +43,7 @@ public abstract class Atom {
     }
     
     public final double kgMass() {
-        return this.atomic_mass*Physics.amu;
+        return this.atomic_mass*Physics.ATOMIC_MASS_UNIT;
     }
     
     

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<Molecule>
+    
+    <thermodynamics>
+        <stp>
+            <cp></cp>
+            <cv></cv>
+        </stp>
+        <shomate>
+            <row>
+                <temp unit='K'></temp>
+                <values>
+                    <constant col='A'></constant>
+                    <constant col='B'></constant>
+                    <constant col='C'></constant>
+                    <constant col='D'></constant>
+                    <constant col='E'></constant>
+                    <constant col='F'></constant>
+                    <constant col='G'></constant>
+                    <constant col='H'></constant>
+                </values>
+            </row>
+        </shomate>
+    </thermodynamics>
+    <electronics>
+        
+    </electronics>
+</Molecule>

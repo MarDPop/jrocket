@@ -9,6 +9,7 @@ import com.marius.rocket.chemistry.Atoms.Atom;
 import com.marius.rocket.physics.Fluid;
 import java.util.HashMap;
 import java.util.TreeMap;
+
 /**
  *
  * @author n5823a
@@ -18,6 +19,7 @@ public abstract class Molecule {
     public final HashMap<Atom,Integer> elList; //could be strings instead of objects
     public final double weight; // kg
     protected double moles;
+    protected short[] assumptions; // Assumptions to use
     public final double heat_formation; // J/mol @298.15
     public final double heat_fusion; // J/mol @stp
     public final double heat_vaporization; // J/mol @stp
@@ -36,7 +38,9 @@ public abstract class Molecule {
     protected TreeMap<Double,Double[]> shomate = new TreeMap<>();
     protected double ea; //electron affinity
     protected double pa; //proton affinity;
-    public String name;
+    protected double ie; //ionization energy
+    public String name; // should be used especially with database
+    // Perhaps it's better to use thermodynamics packages and set via database as "fluid"
     
     public Molecule(Atom[] atoms, int[] quantity, double heat_formation, double heat_vaporization, double heat_fusion, double boiling_point, double melting_point, double[] critical_point, double[] triple_point, double[] vapor_pressure){
         this.elList = new HashMap<>();
@@ -118,6 +122,10 @@ public abstract class Molecule {
         return cp;
     }
     
+    public final double getCV() {
+        return cv;
+    }
+    
     public final double getEntropy() {
         return standardEntropy;
     }
@@ -156,6 +164,7 @@ public abstract class Molecule {
     }
     
     private void calcShomate() {
+        System.out.println("Internal Temp: "+temp);
         Double[] constants = shomate.ceilingEntry(temp).getValue(); //conversion to primative might be slow, please check
         double t = this.temp/1000;
         double t2 = t*t;

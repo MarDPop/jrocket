@@ -109,10 +109,12 @@ public class Equilibrium {
         double cons = Math.log(Pressure/101325); //MUST BE IN UNITLESS (ATM)
         for(int tempIter = 0; tempIter < 30; tempIter++) {
             // constants in temperature calc
+            System.out.println("Loop "+tempIter+" Temp: "+temperature);
             double RT = Fluid.R*temperature; 
             double sumX = 0;
             for(int i = 0; i < nSp; i++) {
                 sumX += X[i] = species.get(i).getMoles();
+                System.out.println(species.get(i).getClass());
                 species.get(i).SetAndCalcAll(temperature, Pressure);
             }
             for(int iter = 0; iter < 30; iter++) {
@@ -189,13 +191,14 @@ public class Equilibrium {
                 enthalpy_calc += newX[i]*product.getEnthalpy();
                 avgCP += newX[i]*product.getCP();
             }
-            //System.out.println(enthalpy_calc+"J");
+            System.out.println(enthalpy_calc+"J");
             avgCP /= sumX;
-            double dT = (enthalpy_calc-enthalpy+lostEnergy)/avgCP;
-            this.temperature -= 0.1*dT;
+            double dT = (enthalpy-lostEnergy-enthalpy_calc)/avgCP;
+            this.temperature += 0.1*dT;
             
             this.volume = sumX*RT/Pressure;
             if (Math.abs(dT/this.temperature) < 0.0005) {
+                System.out.println("Temperature");
                 /*
                 System.out.println("Temperature");
                 System.out.println(temperature+"K");
