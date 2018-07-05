@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.marius.rocket.physics;
+package com.marius.rocket.physics.Objects;
 
 import com.marius.rocket.chemistry.Molecules.Molecule;
 import java.util.ArrayList;

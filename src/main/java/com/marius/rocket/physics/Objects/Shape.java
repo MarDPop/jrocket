@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.marius.rocket.physics;
+package com.marius.rocket.physics.Objects;
 
 /**
  *
- * @author mpopescu
+ * @author n5823a
  */
-public class Kinematics {
-    
+public class Shape {
+    public Shape() {
+        
+    }
 }

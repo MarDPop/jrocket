@@ -5,7 +5,7 @@
  */
 package com.marius.rocket.vehicle.components;
 
-import com.marius.rocket.physics.Environment;
+import com.marius.rocket.physics.Objects.Environment;
 import com.marius.rocket.physics.forces.Force;
 import com.marius.rocket.physics.forces.SimpleDrag;
 

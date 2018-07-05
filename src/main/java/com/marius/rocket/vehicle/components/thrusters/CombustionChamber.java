@@ -6,7 +6,7 @@
 package com.marius.rocket.vehicle.components.thrusters;
 
 import com.marius.rocket.chemistry.Molecules.Molecule;
-import com.marius.rocket.physics.Fluid;
+import com.marius.rocket.physics.Objects.Fluid;
 import com.marius.rocket.vehicle.resources.Resource;
 
 /**

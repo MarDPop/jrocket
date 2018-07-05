@@ -6,7 +6,7 @@
 package com.marius.rocket.chemistry.Molecules;
 
 import com.marius.rocket.chemistry.Atoms.Atom;
-import com.marius.rocket.physics.Fluid;
+import com.marius.rocket.physics.Objects.Fluid;
 import java.util.HashMap;
 import java.util.TreeMap;
 
@@ -164,7 +164,6 @@ public abstract class Molecule {
     }
     
     private void calcShomate() {
-        System.out.println("Internal Temp: "+temp);
         Double[] constants = shomate.ceilingEntry(temp).getValue(); //conversion to primative might be slow, please check
         double t = this.temp/1000;
         double t2 = t*t;

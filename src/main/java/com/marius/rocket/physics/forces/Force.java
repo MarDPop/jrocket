@@ -5,6 +5,7 @@
  */
 package com.marius.rocket.physics.forces;
 
+import com.marius.rocket.physics.Objects.Frame;
 import com.marius.rocket.Math.LA;
 import com.marius.rocket.physics.*;
 

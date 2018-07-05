@@ -7,12 +7,8 @@ package com.marius.rocket.physics;
 
 /**
  *
- * @author n5823a
+ * @author mpopescu
  */
-public class Sphere extends Shape{
-    public final double radius;
+public class Dynamics {
     
-    public Sphere(double radius) {
-        this.radius = radius;
-    }
 }

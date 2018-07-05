@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.marius.rocket.physics;
+package com.marius.rocket.physics.Objects;
 import com.marius.rocket.Math.LA;
 /**
  *
@@ -211,9 +211,9 @@ public class Frame {
     }
     
     public final void changeOrientation(double[] axis, double angle) {
-        this.orientation[0] = LA.RotateAxis(this.orientation[0], axis, angle);
-        this.orientation[1] = LA.RotateAxis(this.orientation[1], axis, angle);
-        this.orientation[2] = LA.RotateAxis(this.orientation[2], axis, angle);
+        this.orientation[0] = LA.rotateAxis(this.orientation[0], axis, angle);
+        this.orientation[1] = LA.rotateAxis(this.orientation[1], axis, angle);
+        this.orientation[2] = LA.rotateAxis(this.orientation[2], axis, angle);
     }
     
     public final double[] body2xyz(double[] vec) {

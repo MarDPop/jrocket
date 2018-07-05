@@ -5,7 +5,7 @@
  */
 package com.marius.rocket.vehicle.components.thrusters;
 
-import com.marius.rocket.physics.Environment;
+import com.marius.rocket.physics.Objects.Environment;
 
 /**
  *

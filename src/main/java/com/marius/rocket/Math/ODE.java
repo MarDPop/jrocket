@@ -5,7 +5,7 @@
  */
 package com.marius.rocket.Math;
 
-import com.marius.rocket.physics.Body;
+import com.marius.rocket.physics.Objects.Body;
 import java.util.ArrayList;
 import java.util.HashMap;
 

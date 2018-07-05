@@ -2,6 +2,10 @@
 // --------------------------
 package com.marius.rocket;
 
+import com.marius.rocket.physics.Objects.Earth;
+import com.marius.rocket.physics.Objects.Environment;
+import com.marius.rocket.physics.Objects.Body;
+import com.marius.rocket.physics.Objects.Planet;
 import com.marius.rocket.Math.Euler;
 import com.marius.rocket.Math.LA;
 import static com.marius.rocket.Math.LA.*;
@@ -35,7 +39,12 @@ public class Sim {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       test4();
+       test5();
+    }
+    
+    private static void test5() {
+        System.out.println(CombustionChamberWithSimpleStartup.thermalConductivityAir(500,10000000));
+        
     }
     
     private static void test4(){

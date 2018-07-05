@@ -5,7 +5,7 @@
  */
 package com.marius.rocket.Math;
 
-import com.marius.rocket.physics.Body;
+import com.marius.rocket.physics.Objects.Body;
 
 /**
  *

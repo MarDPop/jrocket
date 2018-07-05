@@ -7,9 +7,9 @@ package com.marius.rocket.physics.forces;
 
 import com.marius.rocket.Globals;
 import com.marius.rocket.Math.LA;
-import com.marius.rocket.physics.Body;
+import com.marius.rocket.physics.Objects.Body;
 import com.marius.rocket.physics.Physics;
-import com.marius.rocket.physics.Planet;
+import com.marius.rocket.physics.Objects.Planet;
 import java.util.Arrays;
 
 /**

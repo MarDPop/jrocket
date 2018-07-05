@@ -154,6 +154,10 @@ public class LA {
         return sum;
     }
     
+    public static double average(double[] u) {
+        return sum(u)/u.length;
+    }
+    
     // these funcitons overwrite!!
     public static double[] add(double[] u, double[] v) {
         for (int i = 0; i < u.length; i++) 
@@ -188,16 +192,14 @@ public class LA {
         return num;
     }
     
-    public static double rSquared(double[] u, double[] v) {
-        double num = 0;
+    public static double errSquared(double[] u, double[] v) {
+        // not sure this is eersquared
         double den = 0;
         for (int i = 0; i < u.length; i++) {
-            double temp = u[i] - v[i];
-            num += temp*temp;
             den += abs(u[i])+abs(v[i]);
         }
-        return num/den;
-    }
+        return diffSquared(u, v)/den;
+    } 
     
     public static double[] multiply(double[] u, double a) {
         for (int i = 0; i < u.length; i++)
@@ -591,6 +593,11 @@ public class LA {
         return UTS(U,y);
     }
     
+    public static double[] LUinv(double[][] A, double[] b) {
+            double[][][] out = LU(A);
+            return LUsolve(out[0],out[1],b);
+    }
+    
     public static double[][] Chol(double[][] A){
         //lower triangular solver by forward substitution
         int n = A.length;
@@ -844,25 +851,25 @@ public class LA {
         return xnew;
     }
     
-    public static double[] RotateX(double[] v, double angle) {
+    public static double[] rotateX(double[] v, double angle) {
         v[1] = cos(angle)*v[1]-sin(angle)*v[2];
         v[2] = cos(angle)*v[2]+sin(angle)*v[1];
         return v;
     }
     
-    public static double[] RotateY(double[] v, double angle) {
+    public static double[] rotateY(double[] v, double angle) {
         v[0] = cos(angle)*v[0]+sin(angle)*v[2];
         v[2] = cos(angle)*v[2]-sin(angle)*v[0];
         return v;
     }
     
-    public static double[] RotateZ(double[] v, double angle) {
+    public static double[] rotateZ(double[] v, double angle) {
         v[0] = cos(angle)*v[0]-sin(angle)*v[1];
         v[1] = cos(angle)*v[1]+sin(angle)*v[0];
         return v;
     }
     
-    public static double[] RotateAxis(double[] v, double[] u, double angle) {
+    public static double[] rotateAxis(double[] v, double[] u, double angle) {
         //u  = unit vector of rotation axis
         double c = cos(angle);
         double c1 = 1-c;
@@ -873,5 +880,80 @@ public class LA {
         return v;
     }
     
+    // ***** Curve fitting ****
+    
+    public static double[] polyFit(double[] x, double[] y, int order) {
+        // returns vector of coefficients for curve fit 
+        // this is unoptimized
+        // assume length of x = y
+        int n = x.length;
+        double[][] A = new double[order+1][order+1];
+        double[] b = new double[order+1];
+        int exp = order+order;
+        double[][] xmat = new double[n][exp];        
+        double[] sumx = new double[exp+1];
+        sumx[0]=n;
+        
+        for (int i = 0; i < n; i++) {
+            xmat[i][0] = x[i];
+            sumx[1] += x[i];
+            for(int j = 1; j < exp; j++){
+                xmat[i][j] = xmat[i][j-1]*x[i];
+                sumx[j+1] += xmat[i][j];
+            }
+            b[0]+=y[i];
+            for (int j = 0; j < order; j++) {
+                b[j+1] += xmat[i][j]*y[i];
+            }
+        }
+        for (int i = 0; i <= order; i++){            
+            for(int j = 0; j <= order; j++){
+                A[i][j] = sumx[i+j];
+            }
+        }
+        return GEPP(A,b);
+    }
+    
+    public static double rSquared(double[] y, double[] fx) {
+        double avg = average(y);
+        int n = y.length;
+        double sstot = 0;
+        double ssres = 0;
+        for (int i = 0; i < n; i++) {
+            sstot += (y[i] - avg)*(y[i] - avg);
+            ssres += (y[i] - fx[i])*(y[i] - fx[i]);
+        }
+        return 1 - ssres/sstot;
+    }
+    
+    public static double[] poly(double[] coef, double[] x) {
+        // returns y values of poly with coef
+        int order = coef.length;
+        int n = x.length;
+        double[] fx = new double[n];
+        for (int i = 0; i < n; i++) {
+            double xtemp = 1;
+            for(int j = 0; j < order; j++){
+                fx[i] += xtemp*coef[j];
+                xtemp *= x[i];
+            } 
+        }
+        return fx;
+    }
+    
+    public static double poly(double[] coef, double x) {
+        // returns y values of poly with coef
+        double xtemp = x;
+        double fx = coef[0];
+        for(int j = 1; j < coef.length; j++){
+            fx += xtemp*coef[j];
+            xtemp *= x;
+        } 
+        return fx;
+    }
+    
+    public static double polyRSquared(double[] coef, double[] x, double[] y) {        
+        return rSquared(y,poly(coef, x));
+    }
     
 }

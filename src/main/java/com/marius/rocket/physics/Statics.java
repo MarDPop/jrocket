@@ -7,10 +7,8 @@ package com.marius.rocket.physics;
 
 /**
  *
- * @author n5823a
+ * @author mpopescu
  */
-public class Shape {
-    public Shape() {
-        
-    }
+public class Statics {
+    
 }

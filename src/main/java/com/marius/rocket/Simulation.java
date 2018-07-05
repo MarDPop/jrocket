@@ -6,8 +6,8 @@
 package com.marius.rocket;
 
 import com.marius.rocket.Math.ODE;
-import com.marius.rocket.physics.Body;
-import com.marius.rocket.physics.Frame;
+import com.marius.rocket.physics.Objects.Body;
+import com.marius.rocket.physics.Objects.Frame;
 import java.util.ArrayList;
 
 /**

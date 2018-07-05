@@ -8,7 +8,7 @@ package com.marius.rocket;
 import com.marius.rocket.Math.LA;
 import com.marius.rocket.chemistry.Atoms.Atom;
 import com.marius.rocket.chemistry.Molecules.Molecule;
-import com.marius.rocket.physics.Fluid;
+import com.marius.rocket.physics.Objects.Fluid;
 import java.util.HashMap;
 import java.util.ArrayList;
 
@@ -91,6 +91,7 @@ public class Equilibrium {
             }
         }
         set = true;
+        System.out.println("enthalpy initial: "+enthalpy);
     }
     
     public void AdiabaticFlame(double P) {
@@ -114,7 +115,6 @@ public class Equilibrium {
             double sumX = 0;
             for(int i = 0; i < nSp; i++) {
                 sumX += X[i] = species.get(i).getMoles();
-                System.out.println(species.get(i).getClass());
                 species.get(i).SetAndCalcAll(temperature, Pressure);
             }
             for(int iter = 0; iter < 30; iter++) {
@@ -173,7 +173,7 @@ public class Equilibrium {
                 }
                 //Stop condition
                 if(LA.rSquared(X,newX) < 1e-9) {
-                    //System.out.println("step "+tempIter+" in "+iter+ "steps ");
+                    System.out.println("step "+tempIter+" in "+iter+ "steps ");
                     sumX = LA.sum(newX);
                     break;
                 } else {
@@ -191,7 +191,7 @@ public class Equilibrium {
                 enthalpy_calc += newX[i]*product.getEnthalpy();
                 avgCP += newX[i]*product.getCP();
             }
-            System.out.println(enthalpy_calc+"J");
+            System.out.println("calced enthalpy: "+enthalpy_calc+"J");
             avgCP /= sumX;
             double dT = (enthalpy-lostEnergy-enthalpy_calc)/avgCP;
             this.temperature += 0.1*dT;
@@ -199,7 +199,7 @@ public class Equilibrium {
             this.volume = sumX*RT/Pressure;
             if (Math.abs(dT/this.temperature) < 0.0005) {
                 System.out.println("Temperature");
-                /*
+                
                 System.out.println("Temperature");
                 System.out.println(temperature+"K");
                 System.out.println("Volume");
@@ -209,7 +209,7 @@ public class Equilibrium {
                     System.out.println(species.get(i).getClass().getSimpleName());
                     System.out.println(species.get(i).getMoles());
                 }
-                */  
+                 
                 break;
             }
         }

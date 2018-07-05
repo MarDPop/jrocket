@@ -5,6 +5,7 @@
  */
 package com.marius.rocket.physics;
 
+import com.marius.rocket.physics.Objects.Fluid;
 import com.marius.rocket.Math.LA;
 import static com.marius.rocket.physics.Physics.*;
 import com.marius.rocket.vehicle.components.Component;

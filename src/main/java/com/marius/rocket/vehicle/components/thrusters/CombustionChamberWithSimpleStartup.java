@@ -6,6 +6,7 @@
 package com.marius.rocket.vehicle.components.thrusters;
 
 import com.marius.rocket.Equilibrium;
+import com.marius.rocket.Math.LA;
 import com.marius.rocket.chemistry.Molecules.Hydroxy;
 import com.marius.rocket.chemistry.Molecules.Molecule;
 import com.marius.rocket.chemistry.Molecules.MonoHydride;
@@ -50,8 +51,10 @@ public class CombustionChamberWithSimpleStartup extends BipropellantChamber {
         for(double time = 0; time < final_time; time += dt) {
             System.out.println(time);
             times[i] = time;
-            double dTdx = (flameTemps[i]-wallTemps[i])/(thickness/2); // wall temp is assumed to be average in middle
-            double q_to_wall = metal.getThermalConductivity()*dTdx*areaWall*dt;
+            // assume inner wall temp is temp of flame
+            //double dTdx = (flameTemps[i]-wallTemps[i])/(thickness/2); // wall temp is assumed to be average in middle
+            //double q_to_wall = metal.getThermalConductivity()*dTdx*areaWall*dt;
+            double q_to_wall = 100*(flameTemps[i] - wallTemps[i])*areaWall*dt; 
             double q_out_wall = airHeatTransferCoef*(wallTemps[i]-300)*areaWall*dt; //
             double q_radiation = metal.getEmmisivity()*Physics.STEFAN_BOLTZMANN*Math.pow(wallTemps[i],4)*areaWall*dt;
             System.out.println("heat to wall: "+q_to_wall);
@@ -88,6 +91,21 @@ public class CombustionChamberWithSimpleStartup extends BipropellantChamber {
         massChamber = areaWall*thickness*metal.getDensity();
         calc.init(3000);
         calc.AdiabaticFlame(pressure);
+    }
+    
+    private double simpleHeatTransferCoefficient(double vel) {
+        // works between 2 and 20 m/s and is in W/m2 K
+        return 10.45 - vel + 10*Math.sqrt(vel);
+    }
+    
+    public static double thermalConductivityAir(double K, double pres){
+        double[] points = new double[4];
+        points[0] = 1.4e-5*K*K*K -4.58e-2*K*K+98.9*K+364; //1bar in W/m/K
+        points[1] = -0.0161*K*K + 79.101*K+4692; // 20bar
+        points[2] = -0.0092*K*K + 68.257*K+9086.6; //50bar
+        points[3] = -2.26e-5*K*K +4.6e-2*K*K+24.9*K+20800; // 100bar
+        double[] c = LA.polyFit(new double[]{100000,2000000,5000000,10000000}, points, 2);
+        return LA.poly(c,pres);
     }
     
     public int check() {
