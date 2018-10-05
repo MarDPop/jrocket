@@ -56,7 +56,7 @@ public class LA {
         return v;
     }
     
-        public static int[] linspace(int start,int n) {
+    public static int[] linspace(int start,int n) {
         int[] x = new int[n];
         for (int i = 0; i < n; i++) 
             x[i]=start+i;
@@ -732,6 +732,21 @@ public class LA {
         return out;
     }
     
+    public static double[][] Chol2(double[][] a){
+            int m = a.length;
+            double[][] l = new double[m][m]; 
+            for(int i = 0; i< m;i++){
+                    for(int k = 0; k < (i+1); k++){
+                            double sum = 0;
+                            for(int j = 0; j < k; j++){
+                                    sum += l[i][j] * l[k][j];
+                            }
+                            l[i][k] = (i == k) ? Math.sqrt(a[i][i] - sum) :
+                                    (1.0 / l[k][k] * (a[i][k] - sum));
+                    }
+            }
+            return l;
+    }
     
     public static double powereig(double[][] A) {
         int n = A.length;
@@ -851,34 +866,26 @@ public class LA {
         return xnew;
     }
     
-    public static double[] rotateX(double[] v, double angle) {
-        v[1] = cos(angle)*v[1]-sin(angle)*v[2];
-        v[2] = cos(angle)*v[2]+sin(angle)*v[1];
-        return v;
+    public static double[] steepestDescent(double[][] A, double[] b){
+        int n = b.length;
+        double[] x = new double[n];
+        
+        return x;
     }
     
-    public static double[] rotateY(double[] v, double angle) {
-        v[0] = cos(angle)*v[0]+sin(angle)*v[2];
-        v[2] = cos(angle)*v[2]-sin(angle)*v[0];
-        return v;
+    /*
+    public static double condition(double[][] A) {
+        
     }
     
-    public static double[] rotateZ(double[] v, double angle) {
-        v[0] = cos(angle)*v[0]-sin(angle)*v[1];
-        v[1] = cos(angle)*v[1]+sin(angle)*v[0];
-        return v;
+    public static double[][][] svd(double[][] A) {
+        
     }
     
-    public static double[] rotateAxis(double[] v, double[] u, double angle) {
-        //u  = unit vector of rotation axis
-        double c = cos(angle);
-        double c1 = 1-c;
-        double s = sin(angle);
-        v[0] = (c + u[0]*u[0]*c1)*v[0] + (u[0]*u[1]*c1-u[2]*s)*v[1] + (u[0]*u[2]*c1+u[1]*s)*v[2];
-        v[1] = (c + u[1]*u[1]*c1)*v[1] + (u[0]*u[1]*c1+u[2]*s)*v[0] + (u[1]*u[2]*c1-u[0]*s)*v[2];
-        v[2] = (c + u[2]*u[2]*c1)*v[2] + (u[0]*u[2]*c1-u[1]*s)*v[0] + (u[1]*u[2]*c1+u[0]*s)*v[1];
-        return v;
+    public static double[][] moorePenrose(double[][] A) {
+        
     }
+    */
     
     // ***** Curve fitting ****
     
@@ -955,5 +962,4 @@ public class LA {
     public static double polyRSquared(double[] coef, double[] x, double[] y) {        
         return rSquared(y,poly(coef, x));
     }
-    
 }

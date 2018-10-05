@@ -2,10 +2,10 @@
 // --------------------------
 package com.marius.rocket;
 
-import com.marius.rocket.physics.Objects.Earth;
+import com.marius.rocket.physics.Objects.planets.Earth;
 import com.marius.rocket.physics.Objects.Environment;
 import com.marius.rocket.physics.Objects.Body;
-import com.marius.rocket.physics.Objects.Planet;
+import com.marius.rocket.physics.Objects.planets.Planet;
 import com.marius.rocket.Math.Euler;
 import com.marius.rocket.Math.LA;
 import static com.marius.rocket.Math.LA.*;
@@ -21,11 +21,11 @@ import com.marius.rocket.chemistry.Molecules.Water;
 import java.util.Arrays;
 import com.marius.rocket.physics.*;
 import com.marius.rocket.physics.forces.Gravity;
-import com.marius.rocket.vehicle.components.thrusters.CombustionChamberWithSimpleStartup;
-import com.marius.rocket.vehicle.components.thrusters.IdealNozzle;
-import com.marius.rocket.vehicle.presets.SimpleRocket;
-import com.marius.rocket.vehicle.presets.SugarRocket;
-import com.marius.rocket.vehicle.resources.Resource;
+import com.marius.rocket.physics.Objects.vehicle.components.thrusters.CombustionChamberWithSimpleStartup;
+import com.marius.rocket.physics.Objects.vehicle.components.thrusters.IdealNozzle;
+import com.marius.rocket.physics.Objects.vehicle.presets.SimpleRocket;
+import com.marius.rocket.physics.Objects.vehicle.presets.SugarRocket;
+import com.marius.rocket.physics.Objects.vehicle.resources.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 

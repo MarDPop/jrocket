@@ -5,6 +5,7 @@
  */
 package com.marius.rocket.physics.Objects;
 
+import com.marius.rocket.physics.Objects.atmospheres.Atmosphere;
 import com.marius.rocket.Globals;
 import com.marius.rocket.Math.LA;
 import java.util.HashMap;

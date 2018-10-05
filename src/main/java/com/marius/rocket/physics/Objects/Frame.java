@@ -5,6 +5,7 @@
  */
 package com.marius.rocket.physics.Objects;
 import com.marius.rocket.Math.LA;
+import com.marius.rocket.Math.tools.Coordinates;
 /**
  *
  * @author n5823a
@@ -211,9 +212,9 @@ public class Frame {
     }
     
     public final void changeOrientation(double[] axis, double angle) {
-        this.orientation[0] = LA.rotateAxis(this.orientation[0], axis, angle);
-        this.orientation[1] = LA.rotateAxis(this.orientation[1], axis, angle);
-        this.orientation[2] = LA.rotateAxis(this.orientation[2], axis, angle);
+        this.orientation[0] = Coordinates.rotateAxis(this.orientation[0], axis, angle);
+        this.orientation[1] = Coordinates.rotateAxis(this.orientation[1], axis, angle);
+        this.orientation[2] = Coordinates.rotateAxis(this.orientation[2], axis, angle);
     }
     
     public final double[] body2xyz(double[] vec) {

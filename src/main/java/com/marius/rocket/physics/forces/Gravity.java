@@ -9,7 +9,7 @@ import com.marius.rocket.Globals;
 import com.marius.rocket.Math.LA;
 import com.marius.rocket.physics.Objects.Body;
 import com.marius.rocket.physics.Physics;
-import com.marius.rocket.physics.Objects.Planet;
+import com.marius.rocket.physics.Objects.planets.Planet;
 import java.util.Arrays;
 
 /**

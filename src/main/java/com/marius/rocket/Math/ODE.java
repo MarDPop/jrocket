@@ -36,7 +36,7 @@ public class ODE {
     
     public void run() {
         time = start_time;
-        while(step() < end_time) {
+        while(time < end_time) {
             
         }
     }

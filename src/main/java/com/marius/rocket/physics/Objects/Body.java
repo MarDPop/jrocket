@@ -29,6 +29,7 @@ public class Body extends Frame{
     public boolean onrails = false;
     public double massRate;
     public double chargeRate;
+    public double[] state;
     
     public Body(double mass) {
         this.mass = mass;
