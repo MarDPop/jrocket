@@ -14,13 +14,20 @@ import com.marius.rocket.physics.Objects.Body;
 public class DynamicsBody extends Dynamics {
     
     Body main;
+    boolean hit = false;
     
     public DynamicsBody(Body main) {
         super(main.state.length);
     }
     
-    public void calc(double[] x, double t) {
+    @Override
+    public double[] calc(double[] x, double t) {
         
+    }
+    
+    @Override
+    public boolean stop() {
+        return hit;
     }
     
 }
