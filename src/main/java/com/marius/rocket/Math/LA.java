@@ -93,6 +93,14 @@ public class LA {
         return B;        
     }
     
+    public static double[][] range(double[][] A, int i1, int i2, int j1, int j2){
+        double[][] B = new double[i2-i1][j2-j1];
+        for (int i = i1; i < i2; i++) 
+            for (int j = j1; j < j2; j++) 
+                B[i-i1][j-j1] = A[i][j];
+         return B;
+    }
+    
     public static double[] bubbleSort(double[] u) {
         for (int i = 0; i < u.length; i++) {
             for (int j = 0; j < u.length - i - 1; j++) {
@@ -1011,7 +1019,7 @@ public class LA {
         int m = A.length;
         double[][] Q = new double[n+1][m];
         double[][] h = new double[n+1][n];
-        Q[0] = b;
+        Q[0] = b; // USE SYSTEM copy
         for(int k = 0; k < n; k++){
             double[] v = multiply(A,Q[k]);
             for(int j = 0; j <= k; j++){
@@ -1030,15 +1038,67 @@ public class LA {
     public static double[] GMRES(double[][] A, double[] b) {
         int n = b.length;
         int max_iter = 100;
-        double[] x = new double[max_iter];
+        
+        double[] x = new double[n];
+        double[] r = new double[n];
+        double[] e1 = new double[n];
+        e1[0] = 1;
+        System.arraycopy(b, 0, r, 0, n);
+        
+        subtract(r,multiply(A,b));
+        
         double[] cs = new double[max_iter];
         double[] sn = new double[max_iter];
         
+        double r_norm = mag(r);
+        double b_norm = mag(b);
+        double err = r_norm/b_norm;
+        
+        double[][] Q = new double[max_iter][n]; // Q is transposed!!
+        System.arraycopy(normalize(r), 0, Q[0], 0, n);
+        
+        double[][] H = new double[max_iter][max_iter];
+        
+        double[] beta = new double[n];
+        beta[0] = r_norm;
+        
+        for(int k = 0; k < max_iter; k++) {
+            double[][] out = gmresArnoldi(A,Q,k);
+            
+            gmresGivensRotation(out[0],cs,sn,k);
+            
+            
+                    
+            beta[k+1] = -sn[k]*beta[k];
+            beta[k] = cs[k]*beta[k];
+            err = abs(beta[k+1])/b_norm;
+            if(err < 1e-6) {
+                break;
+            }
+        }
+        
+        double[] y;
         
         return x;
     }
     
-    public static void applyGivensRotation(double[] h, double[] cs, double[] sn, int k) {
+    public static double[][] gmresArnoldi(double[][] A, double[][] Q, int k) {
+        int m = Q[0].length;
+        double[] q = new double[m];
+        double[] temp = new double[m];
+        double[] h = new double[k];
+        System.arraycopy(Q[k], 0, q, 0, m);
+        q = multiply(A,q);
+        for(int j = 0; j < k; j++) {
+            h[j] = dot(q,Q[j]);
+            subtract(q,multiply(temp,h[j]));
+        }
+        h[k+1] = mag(q);
+        multiply(q,1/h[k+1]);
+        return new double[][]{h,q};
+    }
+    
+    public static void gmresGivensRotation(double[] h, double[] cs, double[] sn, int k) {
         for(int i = 0; i < k; i++) {
             double temp = cs[i]*h[i]+sn[i]*h[i+1];
             h[i+1]= -sn[i]*h[i]+cs[i]*h[i+1];
@@ -1051,7 +1111,6 @@ public class LA {
         
         h[k] = out[0]*h[k]+out[1]*h[k+1];
         h[k+1] = 0.0;
-        
     }
     
     public static double[] givensRotation(double v1, double v2) {
