@@ -58,7 +58,7 @@ public class Order2euler extends ODE{
             bodies[i].getXYZ()[1][0] = dx[3*i];
             bodies[i].getXYZ()[1][1] = dx[3*i+1];
             bodies[i].getXYZ()[1][2] = dx[3*i+2];
-            bodies[i].update(time,dt);
+            bodies[i].update(time);
         }
     }
     

@@ -46,7 +46,7 @@ public class Environment {
         return body != null;
     }
     
-    public void calc() {
+    public void update() {
         atm.setAltitude(body.spherical[0][0]-atm.getPlanet().getRadiusFromLatitude(body.spherical[0][2]));
         freestream_velocity = LA.cross(atm.getPlanet().getAngularVelocity(), body.getXYZ()[0]); 
         freestream_velocity = LA.add(LA.multiply(freestream_velocity,-1), body.getXYZ()[1]);

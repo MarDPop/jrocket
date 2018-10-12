@@ -24,6 +24,7 @@ public class Thruster extends Component {
     //protected double[] bodyOrientation; // of the  body frame
     
     public Thruster() { 
+        super(0);
         this.thrust = new Thrust();
         this.forces.add(this.thrust);
     }

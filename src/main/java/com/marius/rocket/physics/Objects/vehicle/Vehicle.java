@@ -71,7 +71,8 @@ public class Vehicle extends Body {
         }
     }
     
-    public final void recalcMass() {
+    @Override
+    public double updateMass() {
         this.mass = 0;
         this.COG = new double[3];
         this.Inertia = new double[3][3];
@@ -87,10 +88,11 @@ public class Vehicle extends Body {
                     this.Inertia[i][j] -= c.getMass()*x[i]*x[j]; //probably not the most efficient way of doing this
                 }
             }
-            LA.add(this.Inertia, c.Inertia);
+            LA.add(this.Inertia, c.getInertia());
             LA.add(this.COG,LA.multiply(x, mass));
         });
         LA.multiply(this.COG,1/this.mass);
+        return this.mass;
     }
     
     public final void recalcResources() {
@@ -104,12 +106,10 @@ public class Vehicle extends Body {
     }
     
     @Override
-    public void update(double time, double dt) {
-        this.calcSphericalFromCartesian();
-        this.environment.calc();
-        recalcMass();
-        this.ComponentList.forEach((c)->c.update(time,dt));
-        super.update(time,dt);
+    public void update(double t) {
+        this.environment.update();
+        this.ComponentList.forEach((c)->c.update(t));
+        super.update(t);
     }
     
 }

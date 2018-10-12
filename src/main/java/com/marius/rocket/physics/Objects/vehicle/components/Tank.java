@@ -18,6 +18,7 @@ public class Tank extends Component {
     protected double flowrate;
     
     public Tank(double emptymass) {
+        super(emptymass);
         this.emptymass = emptymass;
     }
     
@@ -39,12 +40,13 @@ public class Tank extends Component {
     
     @Override
     public double getMass() {
-        return emptymass+fluid.getMass();
+        return this.mass;
     }
     
     @Override
-    public void update(double time, double dt) {
-        this.fluid.changeAmount(-flowrate*dt);
+    public double updateMass() {
+        this.mass = emptymass+fluid.getMass();
+        return this.mass;
     }
     
 }

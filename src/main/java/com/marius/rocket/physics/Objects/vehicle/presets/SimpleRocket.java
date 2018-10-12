@@ -21,8 +21,7 @@ public class SimpleRocket extends Rocket {
         env.setBody(this);
         this.environment = env;
         this.ComponentList.add(new SimpleThruster(100,270,2,0.1));
-        Component shell = new Component();
-        shell.setMass(2);
+        Component shell = new Component(2);
         SimpleDrag d = new SimpleDrag(0.5, 0.01, env);
         shell.forces.add(d);
         this.ComponentList.add(shell);

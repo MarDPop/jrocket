@@ -3,18 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.marius.rocket.physics.Objects.vehicle.components;
+package com.marius.rocket.Utils.pic;
 
 /**
  *
- * @author n5823a
+ * @author mpopescu
  */
-public class Part {
+public class Proton extends Particle {
+    public static final double MASS = 1.6726219e-27;
     
-    private double temp;
-    private double mass;
-    
-    public Part(){
-        
+    public Proton(){
+        super(MASS,Electron.EV);
     }
 }

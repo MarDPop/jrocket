@@ -617,28 +617,130 @@ public class LA {
         return R;
     }
     
-    public static double[][] Householder(double[][] A ){
-        return A;
+    public static double[] HouseholderRtau(double[][] A ){
+        int m = A.length;
+        int n = A[0].length;
+        double[] tau = new double[n];
+        double[] v = new double[m];
+        for(int k = 0; k < n; k++) {
+            if(k > 0) {
+                v[k-1] = 0.0;
+            }
+            for(int i = k; i < m; i++) {
+                v[i] = A[i][k];
+            }
+            
+            double normv = mag(v);
+            double s = -signum(v[k]);
+            double u1 = v[k] -s*normv;
+            multiply(v,1/u1);
+            for(int i = k+1; i < m; i++) {
+                A[i][k] = v[i];
+            }
+            v[k] = 1;
+            A[k][k] = s*normv;
+            tau[k] = -s*u1/normv;
+            for(int j = k+1; j < n; j++) { 
+                double sum = 0;
+                for(int l = k; l < m; l++) {
+                    sum+= v[l]*A[l][j];
+                }
+                sum *= tau[k];
+                for(int i = k; i < m; i++) { 
+                    A[i][j] -= v[i]*sum;
+                }
+            }
+        }
+        return tau;
     }
+    
+    public static double[][] HouseholderQR(double[][] A ){
+        int m = A.length;
+        int n = A[0].length;
+        double[] tau = new double[n];
+        double[] v = new double[m];
+        double[][] Q = eye(m);
+        for(int k = 0; k < n; k++) {
+            if(k > 0) {
+                v[k-1] = 0.0;
+            }
+            for(int i = k; i < m; i++) {
+                v[i] = A[i][k];
+            }
+            double normv = mag(v);
+            double s = -signum(v[k]);
+            double u1 = v[k] -s*normv;
+            multiply(v,1/u1);
+            for(int i = k+1; i < m; i++) {
+                A[i][k] = v[i];
+            }
+            v[k] = 1;
+            A[k][k] = s*normv;
+            tau[k] = -s*u1/normv;
+            for(int j = k+1; j < n; j++) { 
+                double sum = 0;
+                for(int i = k; i < m; i++) {
+                    sum += v[i]*A[i][j];
+                }
+                sum *= tau[k];
+                for(int i = k; i < m; i++) { 
+                    A[i][j] -= v[i]*sum;
+                }
+            }
+        }
+        v = new double[m];
+        double[] w = new double[n];
+        for (int k = n-1; k >= 0; k--) {
+            for(int j = k+1; j < m; j++) {
+                    v[j] = A[j][k];
+            }
+            v[k] = 1;
+            for(int j = 0; j < n; j++) {
+                double sum = 0;
+                for(int l = k; l < m; l++) {
+                    sum += v[l]*Q[l][j];
+                }
+                sum *= tau[k];
+                for(int l = k; l < m; l++) {
+                    Q[l][j] -=  sum*v[l];
+                }
+            }
+        }
+        return Q;
+    }
+    
+    /*
+    public static double[][] applyHouseholderQ(double[][] A, double[] tau, double[][] X){
+        
+    }
+    */
     
     public static double[][] HouseholderRv(double[][] A){
         int m = A.length;
         int n = A[0].length;
-        double[][] vs = new double[m][];
+        double[][] vs = new double[n][m];
+        double[] v = new double[m];
         for(int k = 0; k < n; k++) {
-            double[] v = new double[m-k];
+            if(k > 0) {
+                v[k-1] = 0.0;
+            }
             for(int i = k; i < m; i++) {
                 v[i] = A[i][k];
             }
-            v[0] += Math.signum(v[0])*mag(v);
-            vs[k] = multiply(v,(1/mag(v)));
-            for(int i = k; i < m; i++) { 
-                for(int j = k; j < n; j++) {
-                    double s = 0;
-                    for(int l = k; l < m; l++) {
-                        s+= vs[k][l-k]*A[l][j];
+            v[k] += signum(v[k])*mag(v);
+            System.arraycopy(normalize(v), 0, vs[k], 0, m);
+            for(int j = k; j < n; j++) {
+                double s = 0;
+                for(int l = k; l < m; l++) {
+                    s+= v[l]*A[l][j];
+                }
+                s *= 2;
+                for(int i = k; i < m; i++) {
+                    if(j == k && i > j) {
+                        A[i][j] = 0;
+                    } else {
+                        A[i][j] -= v[i]*s;
                     }
-                    A[i][j] -= vs[k][i-k]*s;
                 }
             }
         }
@@ -648,42 +750,51 @@ public class LA {
     public static double[] HouseholderSolve(double[][] A, double[] b){
         int m = A.length;
         int n = A[0].length;
-        double[][] vs = new double[m][];
+        double[][] vs = new double[n][m];
+        double[] v = new double[m];
         for(int k = 0; k < n; k++) {
-            double[] v = new double[m-k+1];
-            for(int i = k; i < m; i++) {
-                v[i-k] = A[i][k];
+            if(k > 0) {
+                v[k-1] = 0.0;
             }
-            v[0] += Math.signum(v[0])*mag(v);
-            vs[k] = multiply(v,(1/mag(v)));
-            for(int i = k; i < m; i++) { 
-                for(int j = k; j < n; j++) {
-                    double s = 0;
-                    for(int l = k; l < m; l++) {
-                        s+= vs[k][l-k]*A[l][j];
+            for(int i = k; i < m; i++) {
+                v[i] = A[i][k];
+            }
+            v[k] += signum(v[k])*mag(v);
+            System.arraycopy(normalize(v), 0, vs[k], 0, m);
+            for(int j = k; j < n; j++) {
+                double s = 0;
+                for(int l = k; l < m; l++) {
+                    s+= v[l]*A[l][j];
+                }
+                s *= 2;
+                for(int i = k; i < m; i++) {
+                    if(j == k && i > j) {
+                        A[i][j] = 0;
+                    } else {
+                        A[i][j] -= v[i]*s;
                     }
-                    A[i][j] -= 2*vs[k][i-k]*s;
                 }
             }
         }
         for(int k = 0; k < n; k++) {
-            for(int j=k;j<m;j++) {
-                double s = 0;
-                for(int i=k;i<m;i++) {
-                    s+= vs[k][i-k]*b[i];
-                }
-                b[j] -= 2*vs[k][j-k]*s;
+            double s = 0;
+            for(int i=k;i<m;i++) {
+                s += vs[k][i]*b[i];
+            }
+            s *= 2;
+            for(int i = k; i < m; i++) {
+                b[i] -= vs[k][i]*s;
             }
         }
         return UTS(A,b);
     }
     
-    public static double[] HouseholderQR2(double[][] A){
+    public static double[][] HouseholderQR2(double[][] A){
         int m = A.length;
         int n = A[0].length;
         double[][] vs = new double[m][];
         for(int k = 0; k < n; k++) {
-            double[] v = new double[m-k+1];
+            double[] v = new double[m-k];
             for(int i = k; i < m; i++) {
                 v[i-k] = A[i][k];
             }
@@ -698,7 +809,7 @@ public class LA {
                 for(int j = k; j < n; j++)
                      A[i][j] -= 2*x[i-k][j-k];
         }
-        return new double[n];
+        return vs;
     }
     
     public static double[][][] MGS(double[][] A) {
@@ -866,11 +977,91 @@ public class LA {
         return xnew;
     }
     
-    public static double[] steepestDescent(double[][] A, double[] b){
+    public static double[] conjugatGradient(double[][] A, double[] b) {
+        int m = b.length;
+        double tol = 1e-6*mag(b);
+        double[] x = new double[m];
+        double[] r = new double[m];
+        double[] v = new double[m];
+        double[] v_temp = new double[m];
+        System.arraycopy(b, 0, r, 0, m);
+        subtract(r,multiply(A,x));
+        System.arraycopy(r, 0, v, 0, m);
+        double d = dot(r,r);
+        for(int iter = 0; iter < 100; iter++) {
+            double d_prime = dot(v,v);
+            double w = d/d_prime;
+            System.arraycopy(v, 0, v_temp, 0, m);
+            multiply(v_temp,w);
+            add(x,v_temp);
+            subtract(r,multiply(A,v_temp));
+            d_prime = d;
+            d = dot(r,r);
+            if(d < tol) {
+                break;
+            }
+            double phi = d/d_prime;
+            add(multiply(v,phi),r);
+        }
+        return x;
+    }
+    
+    public static double[][][] arnoldi(double[][] A, double[] b, int n) {
+        normalize(b);
+        int m = A.length;
+        double[][] Q = new double[n+1][m];
+        double[][] h = new double[n+1][n];
+        Q[0] = b;
+        for(int k = 0; k < n; k++){
+            double[] v = multiply(A,Q[k]);
+            for(int j = 0; j <= k; j++){
+                h[j][k] = dot(Q[j],v);
+                subtract(v,multiply(Q[j],h[j][k]));
+            }
+            h[k+1][k] = mag(v);
+            if(h[k+1][k] < 1e-12) {
+                break;
+            }
+            Q[k+1] = multiply(v,1/h[k+1][k]);
+        }
+        return new double[][][]{Q,h};
+    }
+    
+    public static double[] GMRES(double[][] A, double[] b) {
         int n = b.length;
-        double[] x = new double[n];
+        int max_iter = 100;
+        double[] x = new double[max_iter];
+        double[] cs = new double[max_iter];
+        double[] sn = new double[max_iter];
+        
         
         return x;
+    }
+    
+    public static void applyGivensRotation(double[] h, double[] cs, double[] sn, int k) {
+        for(int i = 0; i < k; i++) {
+            double temp = cs[i]*h[i]+sn[i]*h[i+1];
+            h[i+1]= -sn[i]*h[i]+cs[i]*h[i+1];
+            h[i] = temp;
+        }
+        
+        double[] out = givensRotation(h[k],h[k+1]);
+        cs[k] = out[0];
+        sn[k] = out[1];
+        
+        h[k] = out[0]*h[k]+out[1]*h[k+1];
+        h[k+1] = 0.0;
+        
+    }
+    
+    public static double[] givensRotation(double v1, double v2) {
+        if(v1 == 0) {
+            return new double[]{0,1};
+        } else {
+            double t = sqrt(v1*v1+v2*v2);
+            double cs = abs(v1)/t;
+            return new double[]{cs,cs*v2/v1};
+        }
     }
     
     /*

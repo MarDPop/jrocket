@@ -107,9 +107,9 @@ public class ODE {
         return out;
     }
     
-    public void updateForces(){
+    public void update(){
         for(Body body : bodies) {
-            body.update(time,dt);
+            body.update(time);
         }
     }
     

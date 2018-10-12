@@ -21,11 +21,11 @@ public class SimpleParachute extends Component{
     private final double OpenCD;
     
     public SimpleParachute(double ClosedArea,double ClosedCD,double OpenArea,double OpenCD,double mass) {
+        super(mass);
         this.ClosedArea = ClosedArea;
         this.OpenArea = OpenArea;
         this.ClosedCD = ClosedCD;
         this.OpenCD = OpenCD;
-        this.mass = mass;
     }
     
     public Force deploy(Environment env) {

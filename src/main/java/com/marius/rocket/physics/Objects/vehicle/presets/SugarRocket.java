@@ -39,8 +39,7 @@ public class SugarRocket extends Rocket {
         upperstage.list.add(vacThruster);
         upperstage.thrusteridx = 1;
         // Shell
-        Component shell = new Component();
-        shell.setMass(2);
+        Component shell = new Component(2);
         SimpleDrag d = new SimpleDrag(0.5, 0.01, env);
         shell.forces.add(d);
         upperstage.list.add(shell);
@@ -65,13 +64,13 @@ public class SugarRocket extends Rocket {
     }
     
     @Override 
-    public void update(double time, double dt) {
+    public void update(double time) {
         if(currentThruster.isSpent() && currentStage > 0) {
             removeStage(currentStage);
             currentStage--;
             currentThruster = (SugarThruster) Stages.get(currentStage).list.get(Stages.get(currentStage).thrusteridx);
         }
-        super.update(time,dt);
+        super.update(time);
     }
     
 }

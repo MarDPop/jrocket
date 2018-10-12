@@ -52,7 +52,7 @@ public class Euler extends ODE {
             bodies[i].getXYZ()[1][0] = x[6*i+3];
             bodies[i].getXYZ()[1][1] = x[6*i+4];
             bodies[i].getXYZ()[1][2] = x[6*i+5];
-            bodies[i].update(time,dt);
+            bodies[i].update(time);
         }
     }
     

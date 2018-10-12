@@ -21,7 +21,7 @@ public class LeapFrog extends ODE {
             bodies[i].getXYZ()[0] = LA.multiply(bodies[i].getXYZ()[1], dt/2);
         }
         for(int i = 0; i < this.bodies.length; i++){
-            bodies[i].update(time,dt);
+            bodies[i].update(time);
             bodies[i].getXYZ()[1] = LA.multiply(bodies[i].getXYZ()[2], dt);
         }
         for(int i = 0; i < this.bodies.length; i++){

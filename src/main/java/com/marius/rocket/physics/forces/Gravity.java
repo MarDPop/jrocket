@@ -45,7 +45,7 @@ public class Gravity extends Force {
     }
     
     @Override 
-    public void update(double time, double dt){
+    public void update(){
         this.m = main.getMass();
         calc();
         if(Globals.outputtoscreen) {

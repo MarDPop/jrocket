@@ -25,14 +25,15 @@ public class SimpleThruster extends Thruster {
     }
     
     @Override
-    public void update(double time, double dt) {
+    public void update(double t) {
         if(this.active) {
-            if (this.mass > emptymass) {
-                this.mass -= this.massflow*dt;
-                return;
+            if (this.mass < emptymass) {
+                this.massflow = 0;
+                this.active = false;
             } 
         }
         thrust.set(new double[]{0,0,0});
+        super.update(t);
     }
     
     public final double setMassflowByISP() {

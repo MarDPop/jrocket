@@ -43,7 +43,7 @@ public class RK2 extends ODE {
             bodies[i].getXYZ()[1][2] += h * bodies[i].getXYZ()[2][2];
         }
         for(int i = 0; i < this.bodies.length; i++){
-            bodies[i].update(time, h);
+            bodies[i].update(time);
             bodies[i].getXYZ()[0][0] = old[i][0] + dt * bodies[i].getXYZ()[1][0];
             bodies[i].getXYZ()[0][1] = old[i][1] + dt * bodies[i].getXYZ()[1][1];
             bodies[i].getXYZ()[0][2] = old[i][2] + dt * bodies[i].getXYZ()[1][2];
@@ -52,7 +52,7 @@ public class RK2 extends ODE {
             bodies[i].getXYZ()[1][2] = old[i][5] + dt * bodies[i].getXYZ()[2][2];
         }
         for (Body bodie : this.bodies) {
-            bodie.update(time, h);
+            bodie.update(time);
         }
         
         return super.step();

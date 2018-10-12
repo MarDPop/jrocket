@@ -39,7 +39,16 @@ public class Sim {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       test5();
+       test6();
+    }
+    
+    private static void test6() {
+        double[][] A = new double[][]{{17,24,1,8,15},{23,5,7,14,16},{4,6,13,20,22},{10,12,19,21,3},{11,18,25,2,9}};
+        double[][] A2 = new double[][]{{4,2,2},{2,4,2},{2,2,4}};
+        double[] b = new double[]{3,4,1};
+        LA.HouseholderSolve(A2,b);
+        System.out.println(Arrays.deepToString(A2)); 
+        System.out.println(Arrays.toString(b)); 
     }
     
     private static void test5() {
@@ -98,7 +107,7 @@ public class Sim {
         
         SimpleRocket rocket_1 = new SimpleRocket(env);
         rocket_1.setXYZ(ksc); 
-        rocket_1.recalcMass();
+        rocket_1.updateMass();
         rocket_1.initUp();
         System.out.println(rocket_1.forces.size());
         rocket_1.g = new Gravity(rocket_1,new Planet[]{earth});
@@ -106,7 +115,7 @@ public class Sim {
         
         final double dt = 0.05;
         rocket_1.calcSphericalFromCartesian();
-        rocket_1.update(0,0);
+        rocket_1.update(0);
         RK2 ode = new RK2(dt);
         ode.bodies = new Body[]{rocket_1};
         ode.setEndTime(120);

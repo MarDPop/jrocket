@@ -32,7 +32,7 @@ public class SugarThruster extends Thruster{
     }
     
     @Override
-    public void update(double time, double dt) {
+    public void update(double t) {
         if(this.active && fuel.isNotEmpty()) {
             if(!this.steady) {
                 thrust.set(new double[]{availablethrust,0,0});
@@ -42,6 +42,7 @@ public class SugarThruster extends Thruster{
             return;
         } 
         thrust.set(new double[]{0,0,0});
+        super.update(t);
     }
     
     public boolean isSpent() {

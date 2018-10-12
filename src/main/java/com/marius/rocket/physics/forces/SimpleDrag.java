@@ -39,7 +39,7 @@ public class SimpleDrag extends Force{
     }
     
     @Override
-    public void update(double time, double dt) {
+    public void update() {
         double[] v = Arrays.copyOf(env.freestream_velocity, 3);
         double v_ = LA.mag(v);
         this.vec = (v_ > 0) ? LA.multiply(v,-CD*env.Q*A/v_) : v;
