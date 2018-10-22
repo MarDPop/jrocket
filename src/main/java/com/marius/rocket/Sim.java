@@ -11,6 +11,7 @@ import com.marius.rocket.Math.LA;
 import static com.marius.rocket.Math.LA.*;
 import com.marius.rocket.Math.Order2euler;
 import com.marius.rocket.Math.RK2;
+import com.marius.rocket.Math.tools.Coordinates;
 import com.marius.rocket.Utils.Recorder;
 import com.marius.rocket.chemistry.Molecules.Hydrogen;
 import com.marius.rocket.chemistry.Molecules.Hydroxy;
@@ -39,7 +40,18 @@ public class Sim {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       test6();
+       test7();
+    }
+    
+    private static void test7() {
+        double[] r  = new double[]{7.866667556962524e6, 1.586685839678611e6,0.159199603426781e6};
+        double[] v  = new double[]{-1.280158840048e3, 7.565966948785e3,0.759128812816e3};
+        double mu = 3.986e14;
+        double[] oe = Coordinates.rv2oe(r, v, mu); // ans: [1e7 0.2 0.1 0 0 0.2]
+        double[][] rv = Coordinates.oe2rv(oe, mu);
+        System.out.println(Arrays.toString(oe));
+        System.out.println(Arrays.deepToString(rv));
+        
     }
     
     private static void test6() {

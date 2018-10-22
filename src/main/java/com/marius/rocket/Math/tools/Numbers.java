@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Numbers {
     
-    public static int permute(int n) {
+    public static int factorial(int n) {
         if (n < 2) {
             return 1;
         }
@@ -37,7 +37,7 @@ public class Numbers {
         while(i-- > (n-k)) {
             n*=i;
         }
-        return n/permute(k);
+        return n/factorial(k);
     }
     
     public static ArrayList<Integer> primeFactors(int number) {
