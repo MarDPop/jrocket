@@ -11,4 +11,11 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <name>Rocket</name>
+    <dependencies>
+        <dependency>
+            <groupId>co.theasi</groupId>
+            <artifactId>plotly_2.11</artifactId>
+            <version>0.2.0</version>
+        </dependency>
+    </dependencies>
 </project>

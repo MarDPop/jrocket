@@ -43,6 +43,10 @@ public class Sim {
        test7();
     }
     
+    private static void gui() {
+        
+    }
+    
     private static void test7() {
         double[] r  = new double[]{7.866667556962524e6, 1.586685839678611e6,0.159199603426781e6};
         double[] v  = new double[]{-1.280158840048e3, 7.565966948785e3,0.759128812816e3};
