@@ -15,12 +15,15 @@ import com.marius.rocket.physics.Physics;
  */
 public class Planet extends Body {
     
+    public static final double AU = 1.495978707e11;
+    
     public final double MU;
     public final double AVGRADIUS;
     protected Atmosphere atm;    
     protected double minorRadius;
     protected double majorRadius;
     protected double rotationalSpeed;
+    protected Body parent;
     
     public Planet(double MU, double Radius){
         super(MU/Physics.GRAVITY);

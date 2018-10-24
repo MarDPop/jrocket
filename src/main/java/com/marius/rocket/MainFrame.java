@@ -27,8 +27,10 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        inputChoice = new javax.swing.ButtonGroup();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        stateChoice = new javax.swing.ButtonGroup();
+        propulsionChoice = new javax.swing.ButtonGroup();
+        odeChoice = new javax.swing.ButtonGroup();
+        tabbedPane = new javax.swing.JTabbedPane();
         statePanel = new javax.swing.JPanel();
         bodyReferenceInput = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
@@ -127,7 +129,92 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel36 = new javax.swing.JLabel();
         minStepSize = new javax.swing.JTextField();
         jLabel37 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        heunPC = new javax.swing.JRadioButton();
+        useUncertainties = new javax.swing.JCheckBox();
+        adamsBashford = new javax.swing.JRadioButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        bodiesList = new javax.swing.JList<>();
+        jLabel38 = new javax.swing.JLabel();
+        outputPanel = new javax.swing.JPanel();
+        runODE = new javax.swing.JButton();
+        heliocentricView = new javax.swing.JRadioButton();
+        eciView = new javax.swing.JRadioButton();
+        vehiclePanel = new javax.swing.JPanel();
+        addStage = new javax.swing.JButton();
+        emptyMass = new javax.swing.JTextField();
+        jLabel39 = new javax.swing.JLabel();
+        massUnit = new javax.swing.JComboBox<>();
+        initialMass = new javax.swing.JTextField();
+        jLabel40 = new javax.swing.JLabel();
+        propellantMass = new javax.swing.JTextField();
+        jLabel41 = new javax.swing.JLabel();
+        specificImpulse = new javax.swing.JTextField();
+        jLabel42 = new javax.swing.JLabel();
+        chemicalPropulsion = new javax.swing.JRadioButton();
+        nuclearPropulsion = new javax.swing.JRadioButton();
+        electricalPropulsion = new javax.swing.JRadioButton();
+        otherPropulsion = new javax.swing.JRadioButton();
+        thrust = new javax.swing.JTextField();
+        thrustUnit = new javax.swing.JComboBox<>();
+        jLabel43 = new javax.swing.JLabel();
+        batteryPower = new javax.swing.JTextField();
+        jLabel44 = new javax.swing.JLabel();
+        batteryEnergy = new javax.swing.JTextField();
+        jLabel45 = new javax.swing.JLabel();
+        solarPanelSize = new javax.swing.JTextField();
+        jLabel46 = new javax.swing.JLabel();
+        solarPanelEfficiency = new javax.swing.JTextField();
+        jLabel47 = new javax.swing.JLabel();
+        solarPower = new javax.swing.JTextField();
+        jLabel48 = new javax.swing.JLabel();
+        solarIrradiance = new javax.swing.JTextField();
+        jLabel49 = new javax.swing.JLabel();
+        useConstantIrradiance = new javax.swing.JCheckBox();
+        nuclearPower = new javax.swing.JTextField();
+        jLabel50 = new javax.swing.JLabel();
+        jLabel51 = new javax.swing.JLabel();
+        nuclearThermalPower = new javax.swing.JTextField();
+        advanced = new javax.swing.JButton();
+        jLabel52 = new javax.swing.JLabel();
+        jLabel53 = new javax.swing.JLabel();
+        jLabel54 = new javax.swing.JLabel();
+        powerUnit = new javax.swing.JComboBox<>();
+        energyUnit = new javax.swing.JComboBox<>();
+        batteryVoltage = new javax.swing.JTextField();
+        jLabel55 = new javax.swing.JLabel();
+        batteryCapacity = new javax.swing.JTextField();
+        jLabel56 = new javax.swing.JLabel();
+        inertiaXX = new javax.swing.JTextField();
+        inertiaYY = new javax.swing.JTextField();
+        inertiaZZ = new javax.swing.JTextField();
+        inertiaXY = new javax.swing.JTextField();
+        inertiaXZ = new javax.swing.JTextField();
+        inertiaYZ = new javax.swing.JTextField();
+        jLabel57 = new javax.swing.JLabel();
+        jLabel58 = new javax.swing.JLabel();
+        jLabel59 = new javax.swing.JLabel();
+        jLabel60 = new javax.swing.JLabel();
+        jLabel61 = new javax.swing.JLabel();
+        jLabel62 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        controlPanel = new javax.swing.JPanel();
+        bConstantPitch = new javax.swing.JTextField();
+        jLabel63 = new javax.swing.JLabel();
+        jLabel64 = new javax.swing.JLabel();
+        aConstantPitch = new javax.swing.JTextField();
+        jLabel65 = new javax.swing.JLabel();
+        betaConstantPitch = new javax.swing.JTextField();
+        jLabel66 = new javax.swing.JLabel();
+        bConstantYaw = new javax.swing.JTextField();
+        jLabel67 = new javax.swing.JLabel();
+        jLabel68 = new javax.swing.JLabel();
+        aConstantYaw = new javax.swing.JTextField();
+        jLabel69 = new javax.swing.JLabel();
+        betaConstantYaw = new javax.swing.JTextField();
+        jLabel70 = new javax.swing.JLabel();
+        sizingPanel = new javax.swing.JPanel();
+        costPanel = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -289,18 +376,18 @@ public class MainFrame extends javax.swing.JFrame {
 
         climbRateUnit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "m/s", "ft/s" }));
 
-        inputChoice.add(choiceOrbital);
+        stateChoice.add(choiceOrbital);
         choiceOrbital.setText("Orbital Elements");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "J2000", "EPIC" }));
 
-        inputChoice.add(choiceCartesian);
+        stateChoice.add(choiceCartesian);
         choiceCartesian.setText("Cartesian State (ECI)");
 
-        inputChoice.add(choiceSpherical);
+        stateChoice.add(choiceSpherical);
         choiceSpherical.setText("Spherical State (ECI)");
 
-        inputChoice.add(choiceGeodesic);
+        stateChoice.add(choiceGeodesic);
         choiceGeodesic.setText("Geodesic Coordinates (ECEF)");
 
         jLabel26.setText("Input Choice");
@@ -635,7 +722,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap(69, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("State", statePanel);
+        tabbedPane.addTab("State", statePanel);
 
         runtime.setText("1000");
 
@@ -643,16 +730,20 @@ public class MainFrame extends javax.swing.JFrame {
 
         useImpactDetection.setText("Impact Detection");
 
+        jLabel33.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel33.setText("Options");
 
         useAerodynamics.setText("Aerodynamics");
 
         use2Body.setText("2 Body Simplification");
 
+        odeChoice.add(rungeKutta45);
         rungeKutta45.setText("Runge Kutta 4,5");
 
+        odeChoice.add(euler2nd);
         euler2nd.setText("Euler 2nd Order");
 
+        odeChoice.add(rungeKutta78);
         rungeKutta78.setText("Runge Kutta 7,8");
 
         relError.setText("1e-3");
@@ -671,6 +762,23 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel37.setText("Min Step Size");
 
+        odeChoice.add(heunPC);
+        heunPC.setText("Heun Adaptive Predictor Corrector");
+
+        useUncertainties.setText("Use Uncertainty Propagation (significant slowdown)");
+
+        odeChoice.add(adamsBashford);
+        adamsBashford.setText("Adams Bashford 4th Order");
+
+        bodiesList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Sun", "Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto", "Ceres", "Haumea", "MakeMake", "Eris", "Moon", "Charon", "Europa", "Ganymede", "Callisto", "Io", "Titan", "Rhea", "Iapetus", "Dione", "Titania", "Oberon", "Ariel", "Umbriel", "Miranda", "Triton" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(bodiesList);
+
+        jLabel38.setText("Bodies");
+
         javax.swing.GroupLayout odePanelLayout = new javax.swing.GroupLayout(odePanel);
         odePanel.setLayout(odePanelLayout);
         odePanelLayout.setHorizontalGroup(
@@ -678,8 +786,10 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(odePanelLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(odePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel38)
+                    .addComponent(useUncertainties)
                     .addComponent(use2Body)
-                    .addComponent(useAerodynamics)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(odePanelLayout.createSequentialGroup()
                         .addGroup(odePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(odePanelLayout.createSequentialGroup()
@@ -688,33 +798,39 @@ public class MainFrame extends javax.swing.JFrame {
                                     .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(139, 139, 139)
                                 .addComponent(euler2nd))
-                            .addGroup(odePanelLayout.createSequentialGroup()
-                                .addGroup(odePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(useImpactDetection)
-                                    .addComponent(jLabel33))
-                                .addGap(82, 82, 82)
-                                .addGroup(odePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel34)
-                                    .addComponent(relError, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(useImpactDetection)
+                            .addComponent(jLabel33)
+                            .addComponent(useAerodynamics))
                         .addGroup(odePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(odePanelLayout.createSequentialGroup()
-                                .addComponent(absError, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(61, 61, 61)
-                                .addComponent(maxStepSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(70, 70, 70)
-                                .addComponent(minStepSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(odePanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(rungeKutta45)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rungeKutta78))
+                                .addComponent(rungeKutta78)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(heunPC)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(adamsBashford))
                             .addGroup(odePanelLayout.createSequentialGroup()
-                                .addComponent(jLabel35)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel36)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel37)))))
-                .addContainerGap(440, Short.MAX_VALUE))
+                                .addGap(22, 22, 22)
+                                .addGroup(odePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel34)
+                                    .addComponent(relError, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(odePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(odePanelLayout.createSequentialGroup()
+                                        .addComponent(absError, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(39, 39, 39)
+                                        .addComponent(maxStepSize, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(32, 32, 32)
+                                        .addComponent(minStepSize, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(odePanelLayout.createSequentialGroup()
+                                        .addComponent(jLabel35)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel36)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel37)))))))
+                .addContainerGap(123, Short.MAX_VALUE))
         );
         odePanelLayout.setVerticalGroup(
             odePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -726,42 +842,560 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(runtime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rungeKutta45)
                     .addComponent(euler2nd)
-                    .addComponent(rungeKutta78))
+                    .addComponent(rungeKutta78)
+                    .addComponent(heunPC)
+                    .addComponent(adamsBashford))
                 .addGap(41, 41, 41)
-                .addGroup(odePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel33)
-                    .addComponent(jLabel34)
-                    .addComponent(jLabel35)
-                    .addComponent(jLabel36)
-                    .addComponent(jLabel37))
+                .addComponent(jLabel33)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(odePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(useImpactDetection)
-                    .addComponent(relError, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(absError, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(maxStepSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(minStepSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(useAerodynamics)
+                .addGroup(odePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(odePanelLayout.createSequentialGroup()
+                        .addComponent(useImpactDetection)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(useAerodynamics))
+                    .addGroup(odePanelLayout.createSequentialGroup()
+                        .addGroup(odePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel34)
+                            .addComponent(jLabel35)
+                            .addComponent(jLabel36)
+                            .addComponent(jLabel37))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(odePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(relError, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(absError, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(maxStepSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(minStepSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(use2Body)
-                .addContainerGap(360, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(useUncertainties)
+                .addGap(26, 26, 26)
+                .addComponent(jLabel38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(157, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("ODE", odePanel);
+        tabbedPane.addTab("ODE", odePanel);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        runODE.setText("Run");
+
+        heliocentricView.setText("Heliocentric View");
+
+        eciView.setText("ECI View");
+
+        javax.swing.GroupLayout outputPanelLayout = new javax.swing.GroupLayout(outputPanel);
+        outputPanel.setLayout(outputPanelLayout);
+        outputPanelLayout.setHorizontalGroup(
+            outputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outputPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(runODE)
+                .addGap(36, 36, 36)
+                .addComponent(eciView)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(heliocentricView)
+                .addContainerGap(718, Short.MAX_VALUE))
+        );
+        outputPanelLayout.setVerticalGroup(
+            outputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outputPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(outputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(runODE)
+                    .addComponent(eciView)
+                    .addComponent(heliocentricView))
+                .addContainerGap(526, Short.MAX_VALUE))
+        );
+
+        tabbedPane.addTab("Output", outputPanel);
+
+        addStage.setText("Add Stage");
+
+        emptyMass.setText("0");
+
+        jLabel39.setText("Empty Mass");
+
+        massUnit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "kg", "lbm", "tonne" }));
+
+        initialMass.setText("0");
+
+        jLabel40.setText("Initial Mass");
+
+        propellantMass.setText("0");
+
+        jLabel41.setText("Propellant Mass");
+
+        specificImpulse.setText("0");
+
+        jLabel42.setText("Specific Impulse (s)");
+
+        propulsionChoice.add(chemicalPropulsion);
+        chemicalPropulsion.setText("Chemical Propulsion");
+
+        propulsionChoice.add(nuclearPropulsion);
+        nuclearPropulsion.setText("Nuclear Propulsion");
+
+        propulsionChoice.add(electricalPropulsion);
+        electricalPropulsion.setText("Electrical Propulsion");
+
+        propulsionChoice.add(otherPropulsion);
+        otherPropulsion.setText("Other Propulsion");
+
+        thrust.setText("0");
+
+        thrustUnit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "N", "kN", "lbf" }));
+
+        jLabel43.setText("Thrust");
+
+        batteryPower.setText("0");
+
+        jLabel44.setText("Battery Power");
+
+        batteryEnergy.setText("0");
+
+        jLabel45.setText("Battery Energy");
+
+        solarPanelSize.setText("0");
+
+        jLabel46.setText("Solar Panel Size");
+
+        solarPanelEfficiency.setText("0");
+        solarPanelEfficiency.setMaximumSize(new java.awt.Dimension(0, 1));
+        solarPanelEfficiency.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                solarPanelEfficiencyActionPerformed(evt);
+            }
+        });
+
+        jLabel47.setText("Solar Panel Efficiency");
+
+        solarPower.setEditable(false);
+        solarPower.setText("0");
+
+        jLabel48.setText("Solar Power");
+
+        solarIrradiance.setText("1366.1");
+
+        jLabel49.setText("Irradiance (W/m2)");
+
+        useConstantIrradiance.setText("Use Constant Irradiance");
+
+        nuclearPower.setText("0");
+
+        jLabel50.setText("Nuclear Power");
+
+        jLabel51.setText("Nuclear Thermal Power");
+
+        nuclearThermalPower.setText("0");
+
+        advanced.setText("Advanced Options");
+
+        jLabel52.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel52.setText("Electrical Power");
+
+        jLabel53.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel53.setText("Propulsion");
+
+        jLabel54.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel54.setText("Mass");
+
+        powerUnit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "W", "kW", "Btu/s", "hp", "erg/s" }));
+
+        energyUnit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "J", "W*h", "MeV", "Btu", "cal" }));
+
+        batteryVoltage.setText("0");
+
+        jLabel55.setText("Battery Voltage (V)");
+
+        batteryCapacity.setText("0");
+
+        jLabel56.setText("Battery Capacity");
+
+        inertiaXX.setColumns(5);
+        inertiaXX.setText("0");
+
+        inertiaYY.setColumns(5);
+        inertiaYY.setText("0");
+
+        inertiaZZ.setColumns(5);
+        inertiaZZ.setText("0");
+
+        inertiaXY.setColumns(5);
+        inertiaXY.setText("0");
+
+        inertiaXZ.setColumns(5);
+        inertiaXZ.setText("0");
+
+        inertiaYZ.setColumns(5);
+        inertiaYZ.setText("0");
+
+        jLabel57.setText("Ixx");
+
+        jLabel58.setText("Iyy");
+
+        jLabel59.setText("Izz");
+
+        jLabel60.setText("Ixy");
+
+        jLabel61.setText("Ixz");
+
+        jLabel62.setText("Iyz");
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A-h", "C" }));
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "m2", "ft2", "in2" }));
+
+        javax.swing.GroupLayout vehiclePanelLayout = new javax.swing.GroupLayout(vehiclePanel);
+        vehiclePanel.setLayout(vehiclePanelLayout);
+        vehiclePanelLayout.setHorizontalGroup(
+            vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(vehiclePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(vehiclePanelLayout.createSequentialGroup()
+                        .addComponent(specificImpulse, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(thrust, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(thrustUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(addStage)
+                    .addGroup(vehiclePanelLayout.createSequentialGroup()
+                        .addComponent(jLabel42)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel43))
+                    .addGroup(vehiclePanelLayout.createSequentialGroup()
+                        .addComponent(chemicalPropulsion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nuclearPropulsion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(electricalPropulsion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(otherPropulsion))
+                    .addComponent(advanced)
+                    .addComponent(jLabel52)
+                    .addComponent(jLabel53)
+                    .addComponent(jLabel54)
+                    .addGroup(vehiclePanelLayout.createSequentialGroup()
+                        .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, vehiclePanelLayout.createSequentialGroup()
+                                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(batteryPower, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel45)
+                                    .addComponent(jLabel44)
+                                    .addGroup(vehiclePanelLayout.createSequentialGroup()
+                                        .addComponent(batteryEnergy, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(energyUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel55)
+                                    .addComponent(jLabel56)
+                                    .addGroup(vehiclePanelLayout.createSequentialGroup()
+                                        .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(batteryCapacity, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                                            .addComponent(batteryVoltage, javax.swing.GroupLayout.Alignment.LEADING))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(vehiclePanelLayout.createSequentialGroup()
+                                        .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(vehiclePanelLayout.createSequentialGroup()
+                                                .addGap(12, 12, 12)
+                                                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel48)
+                                                    .addComponent(solarPower, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLabel46)))
+                                            .addGroup(vehiclePanelLayout.createSequentialGroup()
+                                                .addGap(10, 10, 10)
+                                                .addComponent(solarPanelSize, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(10, 10, 10)
+                                        .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel51)
+                                            .addComponent(jLabel50)
+                                            .addGroup(vehiclePanelLayout.createSequentialGroup()
+                                                .addComponent(nuclearPower, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(powerUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(nuclearThermalPower, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(vehiclePanelLayout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addComponent(jLabel47))
+                                    .addGroup(vehiclePanelLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(useConstantIrradiance)
+                                            .addComponent(jLabel49)
+                                            .addComponent(solarPanelEfficiency, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(solarIrradiance, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, vehiclePanelLayout.createSequentialGroup()
+                                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(initialMass, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel40))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(vehiclePanelLayout.createSequentialGroup()
+                                        .addComponent(emptyMass, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(propellantMass, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(massUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(vehiclePanelLayout.createSequentialGroup()
+                                        .addComponent(jLabel39)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel41)))
+                                .addGap(100, 100, 100)
+                                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(inertiaXX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel57))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(inertiaYY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel58))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(inertiaZZ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel59))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(inertiaXY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel60))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(inertiaXZ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel61))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel62)
+                            .addComponent(inertiaYZ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(286, Short.MAX_VALUE))
+        );
+        vehiclePanelLayout.setVerticalGroup(
+            vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(vehiclePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(addStage)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addComponent(jLabel54)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel39)
+                    .addComponent(jLabel40)
+                    .addComponent(jLabel41)
+                    .addComponent(jLabel57)
+                    .addComponent(jLabel58)
+                    .addComponent(jLabel59)
+                    .addComponent(jLabel60)
+                    .addComponent(jLabel61)
+                    .addComponent(jLabel62))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(emptyMass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(massUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(initialMass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(propellantMass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inertiaYY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inertiaXX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inertiaZZ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inertiaXY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inertiaXZ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inertiaYZ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel53)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(chemicalPropulsion)
+                    .addComponent(nuclearPropulsion)
+                    .addComponent(electricalPropulsion)
+                    .addComponent(otherPropulsion))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel42)
+                    .addComponent(jLabel43))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(specificImpulse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(thrust, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(thrustUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel52)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(vehiclePanelLayout.createSequentialGroup()
+                        .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel44)
+                            .addComponent(jLabel48, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(batteryPower, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(solarPower, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel45)
+                            .addComponent(jLabel46))
+                        .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(vehiclePanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(solarPanelSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(vehiclePanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(batteryEnergy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(energyUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(vehiclePanelLayout.createSequentialGroup()
+                        .addComponent(jLabel50)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(nuclearPower, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(powerUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel51)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nuclearThermalPower, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8)
+                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel47)
+                    .addComponent(jLabel55))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(solarPanelEfficiency, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(batteryVoltage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(4, 4, 4)
+                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(useConstantIrradiance)
+                    .addComponent(jLabel56))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel49)
+                    .addComponent(batteryCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(solarIrradiance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(advanced)
+                .addGap(49, 49, 49))
+        );
+
+        tabbedPane.addTab("Vehicle", vehiclePanel);
+
+        bConstantPitch.setText("0");
+
+        jLabel63.setText("Pitch Equation");
+
+        jLabel64.setText("* t +");
+
+        aConstantPitch.setText("0");
+
+        jLabel65.setText("+");
+
+        betaConstantPitch.setText("0");
+
+        jLabel66.setText("* (theta)");
+
+        bConstantYaw.setText("0");
+
+        jLabel67.setText("Yaw Equation");
+
+        jLabel68.setText("* t +");
+
+        aConstantYaw.setText("0");
+
+        jLabel69.setText("+");
+
+        betaConstantYaw.setText("0");
+
+        jLabel70.setText("* (theta)");
+
+        javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
+        controlPanel.setLayout(controlPanelLayout);
+        controlPanelLayout.setHorizontalGroup(
+            controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(controlPanelLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel67)
+                    .addGroup(controlPanelLayout.createSequentialGroup()
+                        .addComponent(aConstantYaw, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel69)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bConstantYaw, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel68)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(betaConstantYaw, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel70))
+                    .addComponent(jLabel63)
+                    .addGroup(controlPanelLayout.createSequentialGroup()
+                        .addComponent(aConstantPitch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel65)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bConstantPitch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel64)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(betaConstantPitch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel66)))
+                .addContainerGap(732, Short.MAX_VALUE))
+        );
+        controlPanelLayout.setVerticalGroup(
+            controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(controlPanelLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel63)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bConstantPitch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel64)
+                    .addComponent(aConstantPitch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel65)
+                    .addComponent(betaConstantPitch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel66))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel67)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bConstantYaw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel68)
+                    .addComponent(aConstantYaw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel69)
+                    .addComponent(betaConstantYaw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel70))
+                .addContainerGap(451, Short.MAX_VALUE))
+        );
+
+        tabbedPane.addTab("Control", controlPanel);
+
+        javax.swing.GroupLayout sizingPanelLayout = new javax.swing.GroupLayout(sizingPanel);
+        sizingPanel.setLayout(sizingPanelLayout);
+        sizingPanelLayout.setHorizontalGroup(
+            sizingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 987, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        sizingPanelLayout.setVerticalGroup(
+            sizingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 560, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Vehicle", jPanel1);
+        tabbedPane.addTab("Sizing", sizingPanel);
+
+        javax.swing.GroupLayout costPanelLayout = new javax.swing.GroupLayout(costPanel);
+        costPanel.setLayout(costPanelLayout);
+        costPanelLayout.setHorizontalGroup(
+            costPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 987, Short.MAX_VALUE)
+        );
+        costPanelLayout.setVerticalGroup(
+            costPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 560, Short.MAX_VALUE)
+        );
+
+        tabbedPane.addTab("Cost", costPanel);
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -788,14 +1422,14 @@ public class MainFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 992, Short.MAX_VALUE)
+                .addComponent(tabbedPane)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addComponent(tabbedPane)
                 .addContainerGap())
         );
 
@@ -813,6 +1447,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void semiMajorAxisInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_semiMajorAxisInputActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_semiMajorAxisInputActionPerformed
+
+    private void solarPanelEfficiencyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solarPanelEfficiencyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_solarPanelEfficiencyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -851,26 +1489,47 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Sec;
+    private javax.swing.JTextField aConstantPitch;
+    private javax.swing.JTextField aConstantYaw;
     private javax.swing.JTextField absError;
+    private javax.swing.JRadioButton adamsBashford;
+    private javax.swing.JButton addStage;
+    private javax.swing.JButton advanced;
     private javax.swing.JTextField altitudeInput;
     private javax.swing.JComboBox<String> altitudeUnit;
     private javax.swing.JTextField argumentPeriapsisInput;
     private javax.swing.JTextField ascendingNodeInput;
     private javax.swing.JTextField azimuthInput;
     private javax.swing.JTextField azimuthRateInput;
+    private javax.swing.JTextField bConstantPitch;
+    private javax.swing.JTextField bConstantYaw;
+    private javax.swing.JTextField batteryCapacity;
+    private javax.swing.JTextField batteryEnergy;
+    private javax.swing.JTextField batteryPower;
+    private javax.swing.JTextField batteryVoltage;
+    private javax.swing.JTextField betaConstantPitch;
+    private javax.swing.JTextField betaConstantYaw;
+    private javax.swing.JList<String> bodiesList;
     private javax.swing.JComboBox<String> bodyReferenceInput;
     private javax.swing.JComboBox<String> cartesianPositionUnit;
     private javax.swing.JComboBox<String> cartesianSpeedUnit;
+    private javax.swing.JRadioButton chemicalPropulsion;
     private javax.swing.JRadioButton choiceCartesian;
     private javax.swing.JRadioButton choiceGeodesic;
     private javax.swing.JRadioButton choiceOrbital;
     private javax.swing.JRadioButton choiceSpherical;
     private javax.swing.JTextField climbRateInput;
     private javax.swing.JComboBox<String> climbRateUnit;
+    private javax.swing.JPanel controlPanel;
+    private javax.swing.JPanel costPanel;
     private javax.swing.JTextField eastSpeedInput;
     private javax.swing.JTextField eccentricAnomalyInput;
     private javax.swing.JTextField eccentricityInput;
     private javax.swing.JLabel eccentricityLabel;
+    private javax.swing.JRadioButton eciView;
+    private javax.swing.JRadioButton electricalPropulsion;
+    private javax.swing.JTextField emptyMass;
+    private javax.swing.JComboBox<String> energyUnit;
     private javax.swing.JTextField epochDay;
     private javax.swing.JTextField epochHour;
     private javax.swing.JTextField epochInput;
@@ -879,9 +1538,19 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTextField epochSecond;
     private javax.swing.JTextField epochYear;
     private javax.swing.JRadioButton euler2nd;
+    private javax.swing.JRadioButton heliocentricView;
+    private javax.swing.JRadioButton heunPC;
     private javax.swing.JTextField inclinationInput;
-    private javax.swing.ButtonGroup inputChoice;
+    private javax.swing.JTextField inertiaXX;
+    private javax.swing.JTextField inertiaXY;
+    private javax.swing.JTextField inertiaXZ;
+    private javax.swing.JTextField inertiaYY;
+    private javax.swing.JTextField inertiaYZ;
+    private javax.swing.JTextField inertiaZZ;
+    private javax.swing.JTextField initialMass;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -913,10 +1582,43 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
+    private javax.swing.JLabel jLabel56;
+    private javax.swing.JLabel jLabel57;
+    private javax.swing.JLabel jLabel58;
+    private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel60;
+    private javax.swing.JLabel jLabel61;
+    private javax.swing.JLabel jLabel62;
+    private javax.swing.JLabel jLabel63;
+    private javax.swing.JLabel jLabel64;
+    private javax.swing.JLabel jLabel65;
+    private javax.swing.JLabel jLabel66;
+    private javax.swing.JLabel jLabel67;
+    private javax.swing.JLabel jLabel68;
+    private javax.swing.JLabel jLabel69;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel70;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
@@ -924,33 +1626,56 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField latitudeInput;
     private javax.swing.JTextField longitudeInput;
+    private javax.swing.JComboBox<String> massUnit;
     private javax.swing.JTextField maxStepSize;
     private javax.swing.JTextField meanAnomaly;
     private javax.swing.JTextField minStepSize;
     private javax.swing.JTextField northSpeedInput;
+    private javax.swing.JTextField nuclearPower;
+    private javax.swing.JRadioButton nuclearPropulsion;
+    private javax.swing.JTextField nuclearThermalPower;
+    private javax.swing.ButtonGroup odeChoice;
     private javax.swing.JPanel odePanel;
     private javax.swing.JMenuItem orbitSim;
+    private javax.swing.JRadioButton otherPropulsion;
+    private javax.swing.JPanel outputPanel;
     private javax.swing.JTextField polarInput;
     private javax.swing.JTextField polarRateInput;
+    private javax.swing.JComboBox<String> powerUnit;
+    private javax.swing.JTextField propellantMass;
+    private javax.swing.ButtonGroup propulsionChoice;
     private javax.swing.JTextField radialInput;
     private javax.swing.JTextField radialRateInput;
     private javax.swing.JComboBox<String> radiusRateUnit;
     private javax.swing.JComboBox<String> radiusUnit;
     private javax.swing.JTextField relError;
+    private javax.swing.JButton runODE;
     private javax.swing.JRadioButton rungeKutta45;
     private javax.swing.JRadioButton rungeKutta78;
     private javax.swing.JTextField runtime;
     private javax.swing.JTextField semiMajorAxisInput;
     private javax.swing.JComboBox<String> semiMajorAxisUnit;
+    private javax.swing.JPanel sizingPanel;
+    private javax.swing.JTextField solarIrradiance;
+    private javax.swing.JTextField solarPanelEfficiency;
+    private javax.swing.JTextField solarPanelSize;
+    private javax.swing.JTextField solarPower;
+    private javax.swing.JTextField specificImpulse;
+    private javax.swing.ButtonGroup stateChoice;
     private javax.swing.JPanel statePanel;
+    private javax.swing.JTabbedPane tabbedPane;
+    private javax.swing.JTextField thrust;
+    private javax.swing.JComboBox<String> thrustUnit;
     private javax.swing.JTextField trueAnomalyInput;
     private javax.swing.JCheckBox use2Body;
     private javax.swing.JCheckBox useAerodynamics;
+    private javax.swing.JCheckBox useConstantIrradiance;
     private javax.swing.JCheckBox useImpactDetection;
+    private javax.swing.JCheckBox useUncertainties;
+    private javax.swing.JPanel vehiclePanel;
     private javax.swing.JTextField xInput;
     private javax.swing.JTextField xRateInput;
     private javax.swing.JTextField yInput;
