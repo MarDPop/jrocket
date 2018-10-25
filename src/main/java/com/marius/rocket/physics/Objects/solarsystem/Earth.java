@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.marius.rocket.physics.Objects.planets;
+package com.marius.rocket.physics.Objects.solarsystem;
 
 import com.marius.rocket.physics.Objects.atmospheres.AtmosphereStandard;
 import com.marius.rocket.Globals;
@@ -13,7 +13,7 @@ import com.marius.rocket.Math.LA;
  *
  * @author n5823a
  */
-public class Earth extends Planet {
+public class Earth extends SolarsystemBody {
     //Remember distinction between ECEF and ECI 
     // J2000 is a common ECI and GCRF is the ecliptic version 
     public static final double SIDEREAL_TIME = 86164.1;
@@ -23,7 +23,7 @@ public class Earth extends Planet {
     
 
     public Earth(){
-        super(3.986004418e14, 6371000);
+        super(3.986004418e14, 6371000,SolarsystemBody.CLASS_PLANET);
         this.atm = new AtmosphereStandard(this);
         this.rotationalSpeed = STANDARD_ROTATION_RATE;
         setAngularVelocity(new double[]{0,0,1}, this.rotationalSpeed );

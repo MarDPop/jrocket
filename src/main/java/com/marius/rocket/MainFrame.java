@@ -5,17 +5,26 @@
  */
 package com.marius.rocket;
 
+import com.marius.rocket.physics.Objects.Body;
+import com.marius.rocket.physics.Objects.solarsystem.SolarsystemBody;
+import java.util.ArrayList;
+
 /**
  *
  * @author mpopescu
  */
 public class MainFrame extends javax.swing.JFrame {
-
+    ArrayList<String> stateIndexMap = new ArrayList<>();
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
+        
+        stateIndexMap.add("Earth");
+        stateIndexMap.add("Sun");
+        stateIndexMap.add("Moon");
+        stateIndexMap.add("Mars");
     }
 
     /**
@@ -34,7 +43,7 @@ public class MainFrame extends javax.swing.JFrame {
         statePanel = new javax.swing.JPanel();
         bodyReferenceInput = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        semiMajorAxisInput = new javax.swing.JTextField();
+        javax.swing.JTextField semiMajorAxisInput = new javax.swing.JTextField();
         semiMajorAxisUnit = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         inclinationInput = new javax.swing.JTextField();
@@ -1226,24 +1235,21 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(jLabel44)
                             .addComponent(jLabel48, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(batteryPower, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(solarPower, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(solarPower, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(batteryPower, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel45)
                             .addComponent(jLabel46))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(vehiclePanelLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(solarPanelSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(vehiclePanelLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(batteryEnergy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(energyUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(solarPanelSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(vehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(batteryEnergy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(energyUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(vehiclePanelLayout.createSequentialGroup()
                         .addComponent(jLabel50)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1452,6 +1458,19 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_solarPanelEfficiencyActionPerformed
 
+    private void calcOrbitalElements() {
+        double[] r = new double[3];
+        double[] v = new double[3];
+        r[0] = Double.parseDouble(xInput.getText());
+        r[1] = Double.parseDouble(yInput.getText());
+        r[2] = Double.parseDouble(zInput.getText());
+        v[0] = Double.parseDouble(xRateInput.getText());
+        v[1] = Double.parseDouble(yRateInput.getText());
+        v[2] = Double.parseDouble(zRateInput.getText());
+        int BodyRef = bodyReferenceInput.getSelectedIndex();
+        SolarsystemBody body = GuiHelper.BODIES.get(stateIndexMap.get(BodyRef));
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -1656,7 +1675,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButton rungeKutta45;
     private javax.swing.JRadioButton rungeKutta78;
     private javax.swing.JTextField runtime;
-    private javax.swing.JTextField semiMajorAxisInput;
     private javax.swing.JComboBox<String> semiMajorAxisUnit;
     private javax.swing.JPanel sizingPanel;
     private javax.swing.JTextField solarIrradiance;

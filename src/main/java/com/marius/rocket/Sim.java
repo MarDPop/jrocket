@@ -2,10 +2,11 @@
 // --------------------------
 package com.marius.rocket;
 
-import com.marius.rocket.physics.Objects.planets.Earth;
+import com.marius.rocket.Utils.equilibrium.Equilibrium;
+import com.marius.rocket.physics.Objects.solarsystem.Earth;
 import com.marius.rocket.physics.Objects.Environment;
 import com.marius.rocket.physics.Objects.Body;
-import com.marius.rocket.physics.Objects.planets.Planet;
+import com.marius.rocket.physics.Objects.solarsystem.SolarsystemBody;
 import com.marius.rocket.Math.Euler;
 import com.marius.rocket.Math.LA;
 import static com.marius.rocket.Math.LA.*;
@@ -126,7 +127,7 @@ public class Sim {
         rocket_1.updateMass();
         rocket_1.initUp();
         System.out.println(rocket_1.forces.size());
-        rocket_1.g = new Gravity(rocket_1,new Planet[]{earth});
+        rocket_1.g = new Gravity(rocket_1,new SolarsystemBody[]{earth});
         rocket_1.forces.add(rocket_1.g);
         
         final double dt = 0.05;

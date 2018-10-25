@@ -9,7 +9,7 @@ import com.marius.rocket.Globals;
 import com.marius.rocket.Math.LA;
 import com.marius.rocket.physics.Objects.Body;
 import com.marius.rocket.physics.Physics;
-import com.marius.rocket.physics.Objects.planets.Planet;
+import com.marius.rocket.physics.Objects.solarsystem.SolarsystemBody;
 import java.util.Arrays;
 
 /**
@@ -20,9 +20,9 @@ public class Gravity extends Force {
     private final double mu;
     private double m;
     public final Body main;
-    public final Planet[] list; // was formerly body, please note
+    public final SolarsystemBody[] list; // was formerly body, please note
     
-    public Gravity(Body main, Planet[] list) {
+    public Gravity(Body main, SolarsystemBody[] list) {
             this.ref = main;
             this.main = main;
             this.mu = main.getMass()*Physics.GRAVITY;
@@ -35,7 +35,7 @@ public class Gravity extends Force {
     public double[] calc() {
         double[] pos = Arrays.copyOf(main.getXYZ()[0],3);
         this.vec = new double[3];
-        for(Planet body : list) {
+        for(SolarsystemBody body : list) {
             double[] R = Arrays.copyOf(body.getXYZ()[0],3);
             LA.subtract(R,pos);
             double cons = body.MU/(Math.pow(LA.mag(R),3)); //most accurate to use MU

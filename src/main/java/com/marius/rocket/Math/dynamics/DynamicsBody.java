@@ -5,7 +5,7 @@
  */
 package com.marius.rocket.Math.dynamics;
 
-import com.marius.rocket.physics.Objects.planets.Planet;
+import com.marius.rocket.physics.Objects.solarsystem.SolarsystemBody;
 import com.marius.rocket.physics.Objects.vehicle.Vehicle;
 
 /**
@@ -15,10 +15,10 @@ import com.marius.rocket.physics.Objects.vehicle.Vehicle;
 public class DynamicsBody extends Dynamics {
     
     Vehicle main;
-    Planet[] System;
+    SolarsystemBody[] System;
     boolean hit = false;
     
-    public DynamicsBody(Vehicle main, Planet[] System) {
+    public DynamicsBody(Vehicle main, SolarsystemBody[] System) {
         super(main.state.length);
         this.main = main;
         this.System = System;

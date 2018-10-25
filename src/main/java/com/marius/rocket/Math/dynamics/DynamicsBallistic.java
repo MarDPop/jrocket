@@ -6,7 +6,7 @@
 package com.marius.rocket.Math.dynamics;
 
 import com.marius.rocket.physics.Objects.atmospheres.AtmosphereBasic;
-import com.marius.rocket.physics.Objects.planets.Earth;
+import com.marius.rocket.physics.Objects.solarsystem.Earth;
 
 /**
  *

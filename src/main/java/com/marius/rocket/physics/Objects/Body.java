@@ -7,6 +7,7 @@ package com.marius.rocket.physics.Objects;
 
 import com.marius.rocket.physics.forces.Force;
 import com.marius.rocket.Math.LA;
+import com.marius.rocket.physics.Physics;
 import com.marius.rocket.physics.forces.Gravity;
 import java.util.ArrayList;
 
@@ -16,10 +17,12 @@ import java.util.ArrayList;
  */
 public class Body extends Frame {
     
+    public double MU;
     protected double mass; 
     protected double mass_dot;
     protected double charge;
     protected double charge_dot;
+    protected double[] mageneticMoment;
     
     public Gravity g; 
     public ArrayList<Force> forces = new ArrayList<>();
@@ -37,6 +40,7 @@ public class Body extends Frame {
     
     public Body(double mass) {
         this.mass = mass;
+        this.MU = Physics.GRAVITY*mass;
     }
     
     public double getMass(){

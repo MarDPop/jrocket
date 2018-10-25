@@ -5,7 +5,7 @@
  */
 package com.marius.rocket.physics.Objects.vehicle.components.thrusters;
 
-import com.marius.rocket.Equilibrium;
+import com.marius.rocket.Utils.equilibrium.Equilibrium;
 import com.marius.rocket.Math.LA;
 import com.marius.rocket.chemistry.Molecules.Hydroxy;
 import com.marius.rocket.chemistry.Molecules.Molecule;

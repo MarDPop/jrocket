@@ -6,7 +6,7 @@
 package com.marius.rocket.physics.Objects.atmospheres;
 
 import com.marius.rocket.chemistry.Molecules.Molecule;
-import com.marius.rocket.physics.Objects.planets.Planet;
+import com.marius.rocket.physics.Objects.solarsystem.SolarsystemBody;
 
 /**
  *
@@ -31,12 +31,12 @@ public abstract class Atmosphere {
     protected double thermal_diffusivity;
     protected double cp;
     protected double cv;
-    protected Planet planet;
+    protected SolarsystemBody planet;
     protected Molecule[] species;
     
     abstract void calc();
     
-    public Planet getPlanet() {
+    public SolarsystemBody getPlanet() {
         return planet;
     }
     

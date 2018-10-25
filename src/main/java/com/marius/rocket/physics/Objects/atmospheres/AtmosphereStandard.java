@@ -5,7 +5,7 @@
  */
 package com.marius.rocket.physics.Objects.atmospheres;
 
-import com.marius.rocket.physics.Objects.planets.Earth;
+import com.marius.rocket.physics.Objects.solarsystem.Earth;
 import com.marius.rocket.physics.Objects.Fluid;
 import com.marius.rocket.physics.Objects.atmospheres.Atmosphere;
 import java.io.FileInputStream;

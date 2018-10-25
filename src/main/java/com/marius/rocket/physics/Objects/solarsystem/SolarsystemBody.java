@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.marius.rocket.physics.Objects.planets;
+package com.marius.rocket.physics.Objects.solarsystem;
 
 import com.marius.rocket.physics.Objects.Body;
 import com.marius.rocket.physics.Objects.atmospheres.Atmosphere;
@@ -13,22 +13,34 @@ import com.marius.rocket.physics.Physics;
  *
  * @author n5823a
  */
-public class Planet extends Body {
-    
+public class SolarsystemBody extends Body {
+
     public static final double AU = 1.495978707e11;
     
-    public final double MU;
-    public final double AVGRADIUS;
-    protected Atmosphere atm;    
+    
+    public static final int CLASS_SUN = 0;
+    public static final int CLASS_PLANET = 1;
+    public static final int CLASS_DWARFPLANET = 2;
+    public static final int CLASS_MOON = 3;
+    public static final int CLASS_ASTEROID = 4;
+    public static final int CLASS_COMET = 5;
+    public static final int CLASS_MANMADE = 6;
+    
+    protected Atmosphere atm = null; 
+    
+    public final double AVGRADIUS;   
     protected double minorRadius;
     protected double majorRadius;
     protected double rotationalSpeed;
+    
+    public final int classification;    
     protected Body parent;
     
-    public Planet(double MU, double Radius){
+    public SolarsystemBody(double MU, double Radius, int classification){
         super(MU/Physics.GRAVITY);
         this.MU = MU;
         this.AVGRADIUS = Radius;
+        this.classification = classification;
     }
     
     public final void setAtm(Atmosphere atm) {

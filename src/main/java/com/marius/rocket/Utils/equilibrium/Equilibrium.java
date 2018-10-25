@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.marius.rocket;
+package com.marius.rocket.Utils.equilibrium;
 
 import com.marius.rocket.Math.LA;
 import com.marius.rocket.chemistry.Atoms.Atom;
