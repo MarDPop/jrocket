@@ -27,6 +27,9 @@ public class DynamicsBody extends Dynamics {
     @Override
     public double[] calc(double[] x, double t) {
         main.setState(x);
+        for(SolarsystemBody s: System) {
+            s.update(t);
+        }
         main.update(t);
         return main.state_dot;
     }

@@ -143,7 +143,8 @@ public class Body extends Frame {
         this.calcSphericalFromCartesian();
         if(!this.onrails) {
             double[] sum = new double[3];
-            forces.forEach((force) -> {
+            // check this
+            forces.parallelStream().forEach((force) -> {
                 force.update();
                 if(force.internal){
                     LA.add(sum,force.get()); 
