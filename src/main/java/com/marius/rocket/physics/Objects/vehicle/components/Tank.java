@@ -38,6 +38,10 @@ public class Tank extends Component {
         this.flowrate = x;
     }
     
+    public double getFlowrate() {
+        return this.flowrate;
+    }
+    
     @Override
     public double getMass() {
         return this.mass;

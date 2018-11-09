@@ -11,4 +11,7 @@ package com.marius.rocket.physics.Objects.vehicle.resources;
  */
 public class SugarFuel extends Resource {
     
+    public SugarFuel(){
+        super("SugarFuel");
+    }
 }

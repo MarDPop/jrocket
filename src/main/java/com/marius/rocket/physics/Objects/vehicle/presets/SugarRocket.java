@@ -29,7 +29,7 @@ public class SugarRocket extends Rocket {
         // First stage
         Stage upperstage = new Stage();
         //Tank
-        Resource sugarfuel = new Resource(2);
+        Resource sugarfuel = new Resource("sugar",2);
         Tank vacTank = new Tank(0.1);
         vacTank.setResource(sugarfuel);
         upperstage.list.add(vacTank);
@@ -46,7 +46,7 @@ public class SugarRocket extends Rocket {
         // Second stage
         Stage lowerstage = new Stage();
         //Tank
-        Resource sugarfuel2 = new Resource(5);
+        Resource sugarfuel2 = new Resource("sugar",5);
         Tank slTank = new Tank(0.2);
         slTank.setResource(sugarfuel2);
         lowerstage.list.add(slTank);
