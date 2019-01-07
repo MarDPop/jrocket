@@ -5,70 +5,70 @@
  */
 package com.meicompany.grid.util;
 
+import com.meicompany.realtime.Helper;
+
 /**
  *
  * @author mpopescu
  */
-public class Node {
+public class NodeSphere {
     //of center
-    public final double x;
-    public final double y;
+    public final double longitude;
+    public final double latitude;
     public final double size;
     
     private double value;
     
-    public Node parent = null;
-    public Node[] children = null;
+    public NodeSphere parent = null;
+    public NodeSphere[] children = null;
     
     public static final double UPPER_LEFT = 1;
     public static final double UPPER_RIGHT = 2;
     public static final double LOWER_LEFT = -1;
     public static final double LOWER_RIGHT = -2;
     
-    public Node(double x, double y, double size) {
-        this.x = x;
-        this.y = y;
+    public NodeSphere(double longitude, double latitude, double size) {
+        this.longitude = longitude;
+        this.latitude = latitude;
         this.size = size;
     }
     
-    public Node(Node parent, int corner) {
+    public NodeSphere(NodeSphere parent, int corner) {
         // 2 = upper right, 1 = upper left, -1 = lower left, -2 = lower right
         // 0 = upper right, 1 = upper left, 2 = lower left, 3 = lower right
         this.parent = parent;
         this.size = parent.size/2;
         this.value = parent.getValue();
         if (corner % 2 == 0) {
-            this.x = parent.x + this.size;
+            this.longitude = parent.longitude + this.size;
         } else {
-            this.x = parent.x  - this.size;
+            this.longitude = parent.longitude  - this.size;
         }
         if (corner > 0) {
-            this.y = parent.y + this.size;
+            this.latitude = parent.latitude + this.size;
         } else {
-            this.y = parent.y - this.size;
+            this.latitude = parent.latitude - this.size;
         }
     }
     
     public void divide() {
-        this.children = new Node[4];
+        this.children = new NodeSphere[4];
         // 0 = upper right, 1 = upper left, 2 = lower left, 3 = lower right
         // children are in classical quadrant definition
-        this.children[0] = new Node(this,2);
-        this.children[1] = new Node(this,1);
-        this.children[2] = new Node(this,-1);
-        this.children[3] = new Node(this,-2);
+        this.children[0] = new NodeSphere(this,2);
+        this.children[1] = new NodeSphere(this,1);
+        this.children[2] = new NodeSphere(this,-1);
+        this.children[3] = new NodeSphere(this,-2);
     }
     
-    public double distance(double x, double y) {
-        double dx = x-this.x;
-        double dy = y-this.y;
-        return dx*dx+dy*dy;
+    public double distance(double longitude, double latitude) {
+        return Helper.flatEarthDistance(longitude, latitude, this.longitude, this.latitude);
     }
     
     public void setValue(double value) {
         this.value = value;
         if (children != null) {
-            for(Node child : children) {
+            for(NodeSphere child : children) {
                 child.setValue(value);
             }
         }
@@ -79,19 +79,19 @@ public class Node {
         return value;
     }
     
-    public double getValue(double x, double y){
+    public double getValue(double longitude, double latitude){
         if(children == null){
             if(parent == null) {
                 return value;
             } else {
-                double sumDen = parent.distance(x,y);
+                double sumDen = parent.distance(longitude,latitude);
                 if (sumDen < 1e-20) {
                     return parent.getValue();
                 }
                 sumDen = 1/sumDen;
                 double sumNum = sumDen*parent.getValue();
                 for(int i = 0; i < 4; i++) {
-                    double d = parent.children[i].distance(x,y);
+                    double d = parent.children[i].distance(longitude,latitude);
                     if(d < 1) {
                         return parent.children[i].getValue();
                     } else {
@@ -104,17 +104,17 @@ public class Node {
             }
         } else {
             // 0 = upper right, 1 = upper left, 2 = lower left, 3 = lower right
-            if(x < this.x) {
-                if(y < this.y) {
-                    return children[2].getValue(x, y);
+            if(longitude < this.longitude) {
+                if(latitude < this.latitude) {
+                    return children[2].getValue(longitude, latitude);
                 } else {
-                    return children[1].getValue(x, y);
+                    return children[1].getValue(longitude, latitude);
                 }
             } else {
-                if(y < this.y) {
-                    return children[3].getValue(x, y);
+                if(latitude < this.latitude) {
+                    return children[3].getValue(longitude, latitude);
                 } else {
-                    return children[0].getValue(x, y);
+                    return children[0].getValue(longitude, latitude);
                 }
             }
         }

@@ -22,7 +22,7 @@ import org.json.JSONObject;
  */
 public class WorldNode {
     
-    final public Node[][] nodes;
+    final public NodeFlat[][] nodes;
     final double angle;
     final int equator;
     
@@ -30,17 +30,17 @@ public class WorldNode {
     private final double PI2 = Math.PI/2;
     
     public WorldNode(int m) {
-        this.nodes = new Node[2*m][m];
+        this.nodes = new NodeFlat[2*m][m];
         this.angle = Math.PI/m;
         this.equator = (int)Math.ceil(m/2);
         for(int i = 0; i < nodes.length; i++){
             for(int j = 0; j < nodes[0].length; j++) {
-                nodes[i][j] = new Node(angle/2+i*angle-Math.PI,angle/2+j*angle-PI2,angle);
+                nodes[i][j] = new NodeFlat(angle/2+i*angle-Math.PI,angle/2+j*angle-PI2,angle);
             }
         }
     }
     
-    public Node getNodeAt(double longitude, double latitude) {
+    public NodeFlat getNodeAt(double longitude, double latitude) {
         int i = (int) ((longitude+Math.PI)/angle);
         int j = (int) ((latitude+PI2)/angle);
         return nodes[i][j];
@@ -53,7 +53,7 @@ public class WorldNode {
     public ArrayList<double[]> nodeGrid() {
         this.lowestLevel = 0;
         ArrayList<double[]> points = new ArrayList<>();
-        for(Node[] row : nodes) {
+        for(NodeFlat[] row : nodes) {
             dive(points,row);
         }
         return points;
@@ -81,9 +81,9 @@ public class WorldNode {
         return this.angle/(Math.pow(2, lowestLevel));
     }
     
-    private void dive(ArrayList<double[]> points, Node[] list) {
+    private void dive(ArrayList<double[]> points, NodeFlat[] list) {
         this.lowestLevel++;
-        for(Node child : list) {
+        for(NodeFlat child : list) {
             if(child.children == null) {
                 points.add(new double[]{child.x,child.y,child.getValue(),child.size});
             } else {

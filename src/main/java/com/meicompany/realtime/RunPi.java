@@ -25,7 +25,7 @@ public class RunPi {
         double[][] state = traj.getState(1);
         long start = System.nanoTime();
         PiCalc pi = new PiCalc(state[0],state[1],1);
-        pi.getCentroids(5);
+        pi.getCentroids(15);
         NodeMap map = pi.map();
         long finish = System.nanoTime();
         map.printCsv();

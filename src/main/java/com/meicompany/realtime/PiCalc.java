@@ -5,7 +5,7 @@
  */
 package com.meicompany.realtime;
 
-import com.meicompany.grid.util.Node;
+import com.meicompany.grid.util.NodeFlat;
 import com.meicompany.grid.util.NodeMap;
 import static com.meicompany.realtime.Helper.*;
 import static java.lang.Math.*;
@@ -23,10 +23,11 @@ public class PiCalc {
     final double twopi = Math.PI*2;
     
     // Parameters
-    boolean pseudofragments = true;
+    final boolean pseudofragments = true;
     final int numberFragments;
-    int numberTurns;
-    int numberCentroids;
+    final int numberTurns;
+    
+    private int numberCentroids;
     
     // Initial
     private final double[] x0;
@@ -62,7 +63,7 @@ public class PiCalc {
         for(int i = 0; i < numberFragments; i++) {
             fragments.add(new Fragment());
         }
-        this.numberTurns = 7;
+        this.numberTurns = 6;
         this.impacts = new double[numberFragments*numberTurns][4]; // [x, y , z, time];
         this.impacts2D = new double[numberFragments*numberTurns][2];
     }
@@ -145,6 +146,8 @@ public class PiCalc {
         System.out.println("Running Kmeans");
         this.centroids = KMeans.cluster(impacts2D,nCentroids);
         this.numberCentroids = centroids.length;
+        
+        // Precompute 2d distribution details
         centroidStatXtra = new double[numberCentroids][3];
         for(int i = 0; i < numberCentroids; i++) {
             centroidStatXtra[i][0] = Math.sqrt(centroids[i][6]*centroids[i][7]);
@@ -238,20 +241,20 @@ public class PiCalc {
         double d = 3*Math.sqrt(maxSigma)+Math.sqrt(xMax*xMax+yMax*yMax);
         d = Math.ceil(d/1000)*1000;
         NodeMap map = new NodeMap(xC,yC,20,20,d/20);
-        for(Node[] row : map.nodes){
-            for(Node col : row) {
+        for(NodeFlat[] row : map.nodes){
+            for(NodeFlat col : row) {
                 testNode(col,1e-12);
             }
         }
         return map;
     }
     
-    private void testNode(Node n, double tol) {
+    private void testNode(NodeFlat n, double tol) {
         double prob = calcAtXY2d(n.x,n.y);
         n.setValue(prob);
         if (prob > tol) {
             n.divide();
-            for(Node c : n.children) {
+            for(NodeFlat c : n.children) {
                 testNode(c,tol*5);
             }
         }

@@ -2,8 +2,8 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment/>
-<entry key="org.netbeans.modules.profiler.v2.features.MethodsFeature_SelectedMethodsMode_SELECTION_FLAG">com.meicompany.realtime.Fragment,bc,(D)D com.meicompany.realtime.Fragment,explosionVelocity,()D com.meicompany.realtime.FragmentOdeQuickStep,stepSize,()V com.meicompany.realtime.FragmentOdeQuickStep,run,()[D com.meicompany.realtime.FragmentOdeQuickStep,calcA,()V com.meicompany.realtime.KMeans,cluster,([[DI)[[D com.meicompany.realtime.Fragment,setImpact,([D)V com.meicompany.realtime.FragmentOdeQuickStep,multiply,([DD)[D com.meicompany.realtime.FragmentOdeQuickStep,add,([D[D)[D </entry>
+<entry key="org.netbeans.modules.profiler.v2.features.MethodsFeature_SelectedMethodsMode_SELECTION_FLAG">com.meicompany.realtime.FragmentOdeQuickStep,calcA,()V com.meicompany.realtime.KMeans,cluster,([[DI)[[D com.meicompany.realtime.Fragment,setImpact,([D)V com.meicompany.realtime.FragmentOde,run,()[D </entry>
 <entry key="ACTIVATED_FEATURES">#org.netbeans.modules.profiler.v2.features.MethodsFeature@</entry>
-<entry key="org.netbeans.modules.profiler.v2.features.MethodsFeature_SETTINGS_FLAG">true</entry>
 <entry key="org.netbeans.modules.profiler.v2.features.MethodsFeature_MODE_FLAG">SelectedMethodsMode</entry>
+<entry key="org.netbeans.modules.profiler.v2.features.MethodsFeature_SETTINGS_FLAG">true</entry>
 </properties>
