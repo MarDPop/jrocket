@@ -128,7 +128,7 @@ public class PiCalc {
                 dv[0] += v[0];
                 dv[1] += v[1];
                 dv[2] += v[2];
-                FragmentOde ode = new FragmentOdeQuickStep(x,dv,frag,0);
+                FragmentOde ode = new FragmentOdeQuickerStep(x,dv,frag,0);
                 ode.setA(g0);
                 ode.setTempOffset(dTemp);
                 frag.setImpact(ode.run());
