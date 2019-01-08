@@ -33,7 +33,7 @@ public class OdeAtmosphere {
         speedSound = null;
     }
     
-    public OdeAtmosphere(String filename, double tempOffset) {
+    public OdeAtmosphere(String filename, double tempOffset, double windStrengthMultiplier) {
         String line = "";
         String cvsSplitBy = ",";
 
@@ -59,10 +59,28 @@ public class OdeAtmosphere {
             double delta = row[2]/temperatures[i];
             densities[i] = row[1]/2000*(delta);
             speedSound[i] = row[6]/Math.sqrt(delta);
-            delta = row[3];
+            delta = row[3]*windStrengthMultiplier;
             double windDirection = row[4];
             winds[i][0] = delta*cos(windDirection);
             winds[i][1] = delta*sin(windDirection);
+        }
+    }
+    
+    public void setOffsetTemp(double tempOffset){
+        this.tempOffset = tempOffset;
+        for(int i = 0; i < alt.size(); i++) {
+            Double[] row = alt.get(i);
+            temperatures[i] = row[2] + tempOffset;
+            double delta = row[2]/temperatures[i];
+            densities[i] = row[1]/2000*(delta);
+            speedSound[i] = row[6]/Math.sqrt(delta);
+        }
+    }
+    
+    public void changeWindStrength(double[] addWind){
+        for(int i = 0; i < alt.size(); i++) {
+            winds[i][0] += addWind[0];
+            winds[i][1] += addWind[1];
         }
     }
     

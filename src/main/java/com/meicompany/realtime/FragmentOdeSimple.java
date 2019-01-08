@@ -24,10 +24,6 @@ public class FragmentOdeSimple extends FragmentOde {
         super(x,v,frag,time);
     }
     
-    public FragmentOdeSimple(Fragment frag) {
-        super(frag);
-    }
-    
     @Override
     public void calcA() {
         double R2 = x[0]*x[0]+x[1]*x[1]+x[2]*x[2];

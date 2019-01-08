@@ -26,7 +26,6 @@ public class FragmentOdeQuickStep extends FragmentOde {
     
     private final double[] densities;
     private final double[] soundSpeed;
-    private final double windStrengthMultiplier;
     private final double[][] winds;
     
     private final double[] wind = new double[3];
@@ -47,15 +46,10 @@ public class FragmentOdeQuickStep extends FragmentOde {
     public FragmentOdeQuickStep(double[] x, double[] v, Fragment frag, double time) {
         super(x,v,frag,time);
         tempOffset = 0;
-        OdeAtmosphere atm = new OdeAtmosphere("src/main/resources/altitudes2.csv",tempOffset);
+        OdeAtmosphere atm = new OdeAtmosphere("src/main/resources/altitudes2.csv",tempOffset,1);
         this.densities = atm.densities;
         this.soundSpeed = atm.speedSound;
-        this.windStrengthMultiplier = 1;
         this.winds = atm.winds;
-        for(double[] w : winds) {
-            w[0] *= this.windStrengthMultiplier;
-            w[1] *= this.windStrengthMultiplier;
-        }
         this.dt = 2;
         this.maxTimestep = 10;
         this.minTimestep = 5e-6;
@@ -77,6 +71,9 @@ public class FragmentOdeQuickStep extends FragmentOde {
     @Override 
     public double[] run() {
         for(int iter = 0; iter < ITER_MAX; iter++) {
+            System.arraycopy(aprev, 0, aprev2, 0, 3);
+            System.arraycopy(a, 0, aprev, 0, 3);
+            System.arraycopy(x, 0, xold, 0, 3);
             calcA();
             stepSize();
             for (int i = 0; i < 3; i++) {
@@ -87,9 +84,6 @@ public class FragmentOdeQuickStep extends FragmentOde {
             if (h < 0) {
                 return groundImpact();
             } 
-            System.arraycopy(aprev, 0, aprev2, 0, 3);
-            System.arraycopy(a, 0, aprev, 0, 3);
-            System.arraycopy(x, 0, xold, 0, 3);
             time += dt;
         }
         return new double[]{0, 0, 0, 0};

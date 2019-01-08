@@ -25,7 +25,6 @@ public class FragmentOde2ndOrder extends FragmentOde {
     
     private final double[] densities;
     private final double[] temperatures;
-    private double windStrengthMultiplier;
     
     final double[] r_ = new double[3];
     final double[] e_ = new double[3];
@@ -47,15 +46,10 @@ public class FragmentOde2ndOrder extends FragmentOde {
     public FragmentOde2ndOrder(double[] x, double[] v, Fragment frag, double time) {
         super(x,v,frag,time);
         tempOffset = 0;
-        OdeAtmosphere atm = new OdeAtmosphere("src/main/resources/altitudes2.csv",tempOffset);
+        OdeAtmosphere atm = new OdeAtmosphere("src/main/resources/altitudes2.csv",tempOffset,1);
         this.densities = atm.densities;
         this.temperatures = atm.temperatures;
-        this.windStrengthMultiplier = 1;
         this.winds = atm.winds;
-        for(double[] w : winds) {
-            w[0] *= this.windStrengthMultiplier;
-            w[1] *= this.windStrengthMultiplier;
-        }
         this.dt = 2;
         this.maxTimestep = 10;
         this.minTimestep = 1e-6;
@@ -180,7 +174,7 @@ public class FragmentOde2ndOrder extends FragmentOde {
         System.arraycopy(v, 0, v0, 0, 3);
         System.arraycopy(a, 0, a0, 0, 3);
         
-        while(stepIteration++ < 10) {
+        while(++stepIteration < 10) {
             small_dt = dt/2;
             // full step on velocity first
             double[] v_test  = Helper.add(v0, Helper.multiply(a0, dt));

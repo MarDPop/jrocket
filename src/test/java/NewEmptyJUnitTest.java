@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import java.util.Random;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -44,21 +45,46 @@ public class NewEmptyJUnitTest {
     // public void hello() {}
     @Test
     public void profileMe() {
-        double tol = 0.0001;
-        double sum = 1.2;
+
+        double sum;
+        int number = 100000000;
+        Random rand = new Random();
+        
         long start = System.nanoTime();
-        for(int i = 0; i < 1e5;i++){
-            double delta  = Math.pow(tol/sum, 1/8);
+        sum = 0;
+        for(int i = 0; i < number;i++){
+            for(int j = 2; j >= 0;j--){
+                sum += j*i;
+            }
         }
         long finish = System.nanoTime();
-        System.out.println((finish-start)/1e6+" ms run time");
+        System.out.println((finish-start)/1e6+" ms run time " +sum);
+        
         start = System.nanoTime();
-        for(int i = 0; i < 1e5;i++){
-            double delta  = Math.sqrt(tol/sum);
-            delta = Math.sqrt(delta);
-            delta = Math.sqrt(delta);
+        sum = 0;
+        for(int i = 0; i < number;i++){
+            for(int j = 0; j < 3;j++){
+                sum += j*i;
+            }
         }
         finish = System.nanoTime();
-        System.out.println((finish-start)/1e6+" ms run time");
+        System.out.println((finish-start)/1e6+" ms run time "+sum);
+        
+        start = System.nanoTime();
+        sum = 0;
+        for(int i = 0; i < number;i++){
+            sum = Math.random();
+        }
+        finish = System.nanoTime();
+        System.out.println((finish-start)/1e6+" ms run time "+sum);
+        
+        start = System.nanoTime();
+        sum = 0;
+        for(int i = 0; i < number;i++){
+            sum = rand.nextFloat();
+        }
+        finish = System.nanoTime();
+        System.out.println((finish-start)/1e6+" ms run time "+sum);
+        
     }
 }

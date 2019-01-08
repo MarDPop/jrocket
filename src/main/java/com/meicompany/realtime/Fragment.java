@@ -25,6 +25,8 @@ public final class Fragment {
     
     private final double[] machTable = new double[]{0.3, 0.5, 0.8, 0.9, 1, 1.4, 2, 4, 5, 10};
     private final double[] BCs = new double[]{1.0000000,0.971428592,0.886956541,0.85955058,0.711627922,0.528497421,0.488038288,0.525773207,0.512562825,0.506622527};
+    private final double[] dBdM = new double[] {-0.14285704,-0.281573503,-0.27405961,-1.47922658,-0.457826253,-0.067431888,0.01886746,-0.013210382,-0.00118806};
+
     private final double[] sigma_l2d = new double[] {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.8};
     
     private double[] impact ;
@@ -54,13 +56,9 @@ public final class Fragment {
             if (mach < 0.3) {
                 return BC;
             } else {
-                int count = 1;
-                while(machTable[count] < mach) {
-                   count = count + 1; 
-                }
-                int c1 = count-1;
-                double delta = (mach - machTable[c1])/(machTable[count]-machTable[c1]);
-                return BCs[c1] + delta*(BCs[count]-BCs[c1]);
+                int count = 10; //BCs.length
+                while(machTable[--count] > mach);
+                return BCs[count] + (mach - machTable[count])*dBdM[count];
             }
         }
     }

@@ -16,11 +16,9 @@ import java.util.Random;
  *
  * @author mpopescu
  */
-public class PiCalc {
-    
-    private final ArrayList<Fragment> fragments;
-    
-    final double twopi = Math.PI*2;
+public class PiCalc2 {
+    private final OdeAtmosphere atm;
+    private final ArrayList<FragmentWithOde> fragments;
     
     // Parameters
     final boolean pseudofragments = true;
@@ -54,14 +52,15 @@ public class PiCalc {
     private final double[][] impacts2D;
     private double[][] centroids;
     
-    public PiCalc(double[] x0, double[] v0, double time) {
+    public PiCalc2(double[] x0, double[] v0, double time) {
+        this.atm = new OdeAtmosphere("src/main/resources/altitudes2.csv",0,1);
         this.x0 = x0;
         this.v0 = v0;
         this.time = time;
         this.numberFragments = 120;
         this.fragments = new ArrayList<>(numberFragments);
         for(int i = 0; i < numberFragments; i++) {
-            fragments.add(new Fragment());
+            fragments.add(new FragmentWithOde(atm));
         }
         this.numberTurns = 6;
         this.impacts = new double[numberFragments*numberTurns][4]; // [x, y , z, time];
@@ -80,6 +79,7 @@ public class PiCalc {
     public double[][] getCentroids(int nCentroids) {
         // Get Random Generator
         Random rand = new Random();
+        
         // Position Variables 
         double speed0 = norm(v0);
         double R = norm(x0);
@@ -131,28 +131,15 @@ public class PiCalc {
             x[2] = x0[2] + r*rand.nextGaussian();
             
             // Other Variability per turn
-            double dTemp = sigma_temperature*rand.nextGaussian();
             
+            double dTemp = sigma_temperature*rand.nextGaussian();
+
             fragments.parallelStream().forEach((frag) -> {
-                // Explosion Angles
-                double angle1 = rand.nextFloat()*twopi;
-                double angle2 = rand.nextFloat()*twopi;
-                //double[] dv = new double[]{frag.explosionVelocity()*cos(angle1)*cos(angle2), frag.explosionVelocity()*cos(angle1)*sin(angle2), frag.explosionVelocity()*sin(angle1)};
-                // Add explosion to velocity
-                double[] dv = new double[3];
-                dv[0] = frag.explosionVelocity()*cos(angle1);
-                dv[1] = dv[0]*sin(angle2)+v[1];
-                dv[2] = dv[0]*tan(angle1)+v[2];
-                dv[0] = dv[0]*cos(angle2)+v[0];
-                // Integrate Fragment
-                FragmentOde ode = new FragmentOdeQuickerStep(x,dv,frag,0);
-                ode.setA(g0);
-                ode.setTempOffset(dTemp);
-                frag.setImpact(ode.run());
+                frag.run();
             });
             
-            for(Fragment frag : fragments) {
-                System.arraycopy(frag.getImpact(), 0, impacts[count], 0, 3);
+            for(FragmentWithOde frag : fragments) {
+                System.arraycopy(frag.getX(), 0, impacts[count], 0, 3);
                 count++;
             }
         }

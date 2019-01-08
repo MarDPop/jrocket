@@ -26,7 +26,6 @@ public class FragmentOdeQuickerStep extends FragmentOde {
     
     private final double[] densities;
     private final double[] soundSpeed;
-    private final double windStrengthMultiplier;
     private final double[][] winds;
     
     private final double[] wind = new double[3];
@@ -42,19 +41,14 @@ public class FragmentOdeQuickerStep extends FragmentOde {
     public FragmentOdeQuickerStep(double[] x, double[] v, Fragment frag, double time) {
         super(x,v,frag,time);
         tempOffset = 0;
-        OdeAtmosphere atm = new OdeAtmosphere("src/main/resources/altitudes2.csv",tempOffset);
+        OdeAtmosphere atm = new OdeAtmosphere("src/main/resources/altitudes2.csv",tempOffset,1);
         this.densities = atm.densities;
         this.soundSpeed = atm.speedSound;
-        this.windStrengthMultiplier = 1;
         this.winds = atm.winds;
-        for(double[] w : winds) {
-            w[0] *= this.windStrengthMultiplier;
-            w[1] *= this.windStrengthMultiplier;
-        }
         this.dt = 2;
         this.maxTimestep = 10;
         this.minTimestep = 1e-5;
-        this.tol = 1e-4;
+        this.tol = 4e-4;
         // Atm defaults
         this.temp_low = 287+tempOffset;
         this.temp_high = 216.7+tempOffset;
@@ -70,6 +64,8 @@ public class FragmentOdeQuickerStep extends FragmentOde {
     @Override 
     public double[] run() {
         for(int iter = 0; iter < ITER_MAX; iter++) {
+            System.arraycopy(a, 0, aprev, 0, 3);
+            System.arraycopy(x, 0, xold, 0, 3);
             calcA();
             stepSize();
             for (int i = 0; i < 3; i++) {
@@ -79,8 +75,6 @@ public class FragmentOdeQuickerStep extends FragmentOde {
             if (h < 0) {
                 return groundImpact();
             } 
-            System.arraycopy(a, 0, aprev, 0, 3);
-            System.arraycopy(x, 0, xold, 0, 3);
             time += dt;
         }
         return new double[]{0, 0, 0, 0};
@@ -168,14 +162,6 @@ public class FragmentOdeQuickerStep extends FragmentOde {
 
     @Override
     public void stepSize() {
-        /*
-        double sum = 0;
-        for (int i = 0; i < 3; i++) {
-            da[i] = a[i]-aprev[i];
-            sum += Math.abs(da[i]);
-        }
-        */
-        
         dt = Math.sqrt(tol/(Math.abs(a[0]-aprev[0])+Math.abs(a[1]-aprev[1])+Math.abs(a[2]-aprev[2])));
         if (dt > maxTimestep) {
             dt = maxTimestep;

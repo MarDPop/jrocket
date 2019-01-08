@@ -37,16 +37,14 @@ public class FragmentOde {
     public static final int ITER_MAX = 50000;
     public static final double EARTH_MU = 3.986004418e14;
     
+    public FragmentOde(){}
+    
     public FragmentOde(double[] x, double[] v, Fragment frag, double time) {
         System.arraycopy(x, 0, this.x, 0, 3);
         System.arraycopy(v, 0, this.v, 0, 3);
         this.frag = frag;
         this.time = time;
         this.tol = 0.5;
-    }
-    
-    public FragmentOde(Fragment frag) {
-        this.frag = frag;
     }
     
     public void setXV(double[] x, double[] v, double time) {
@@ -82,6 +80,10 @@ public class FragmentOde {
         a[0] = g*x[0];
         a[1] = g*x[1];
         a[2] = g*x[2];
+    }
+    
+    public void setFrag(Fragment frag){
+        this.frag = frag;
     }
     
     public void setA(double[] a) {

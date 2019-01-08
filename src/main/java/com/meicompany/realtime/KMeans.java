@@ -21,7 +21,7 @@ public class KMeans {
         for(int i = 0; i < nTotal; i++){
             System.arraycopy(initial[i], 0, centroids[i], 0, 2); 
         }
-        Helper.printCsv(initial,"initial.csv");
+        //Helper.printCsv(initial,"initial.csv");
         for(int iter = 0; iter < 200; iter++) {
             for(double[] centroid : centroids) {
                 for(int j = 2; j < 9;j++) {
@@ -110,7 +110,7 @@ public class KMeans {
             c1[7] += dy2;
             c1[8] += dxy;
             // get Standard deviation
-            for(int j = 5; j < 9; j++) {
+            for(int j = 5; j < 9; ++j) {
                 c1[j] /= c1[4];
             }
         }
@@ -118,8 +118,7 @@ public class KMeans {
         centroids = new double[temp.size()][9];
         nTotal = 0;
         for(double[] centroid : temp) {
-            System.arraycopy(centroid, 0, centroids[nTotal], 0, 9);
-            nTotal++;
+            System.arraycopy(centroid, 0, centroids[nTotal++], 0, 9);
         }
         Helper.printCsv(centroids,"centroids.csv");
         return centroids;
@@ -150,7 +149,7 @@ public class KMeans {
         }
         
         double tol = Math.abs(s[4]-s[5])+Math.abs(s[6]-s[7]);
-        tol = tol/10000;
+        tol /= 2000;
         
         return cluster(data, initial,tol);
     }
