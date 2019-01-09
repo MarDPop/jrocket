@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.meicompany.realtime;
+package com.meicompany.realtime.fragment;
 
-import static com.meicompany.realtime.FragmentOde.norm;
+import com.meicompany.realtime.OdeAtmosphere;
+import static com.meicompany.realtime.fragment.FragmentOde.norm;
 import static java.lang.Math.atan2;
 import static java.lang.Math.cos;
 import static java.lang.Math.exp;

@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.meicompany.realtime;
+package com.meicompany.realtime.fragment;
 
+import com.meicompany.realtime.OdeAtmosphere;
 import static java.lang.Math.atan2;
 import static java.lang.Math.cos;
 import static java.lang.Math.exp;
@@ -91,8 +92,8 @@ public final class FragmentWithOde {
         // Time Defaults
         this.dt = 2;
         this.maxTimestep = 10;
-        this.minTimestep = 1e-5;
-        this.tol = 4e-4;
+        this.minTimestep = BC*1e-6;
+        this.tol = 3e-4;
         // Atm defaults
         this.temp_low = 287;
         this.temp_high = 216.7;
@@ -153,7 +154,13 @@ public final class FragmentWithOde {
         this.explosionVelocity = Math.pow(15,rand.nextFloat()*2);
     }
     
-    public double[] run() {
+    public void run(double[] x0, double[] v0, double[] a0, double time) {
+        this.time = time;
+        System.arraycopy(x0, 0, this.x, 0, 3);
+        System.arraycopy(v0, 0, this.v, 0, 3);
+        System.arraycopy(a0, 0, this.a, 0, 3);
+        
+        // Explosion
         double angle1 = rand.nextFloat()*TWOPI;
         double angle2 = rand.nextFloat()*TWOPI;
         //double[] dv = new double[]{frag.explosionVelocity()*cos(angle1)*cos(angle2), frag.explosionVelocity()*cos(angle1)*sin(angle2), frag.explosionVelocity()*sin(angle1)};
@@ -163,7 +170,7 @@ public final class FragmentWithOde {
         v[2] += dv*tan(angle1);
         v[0] += dv*cos(angle2);
         
-        for(int iter = 0; iter < 1e6; iter++) {
+        for(int iter = 0; iter < 100000; iter++) {
             System.arraycopy(a, 0, aprev, 0, 3);
             System.arraycopy(x, 0, xold, 0, 3);
             calcA();
@@ -173,11 +180,10 @@ public final class FragmentWithOde {
                 v[i] += (dt/2)*(3*a[i] - aprev[i]);
             }
             if (h < 0) {
-                return groundImpact();
+                break;
             } 
-            time += dt;
+            this.time += dt;
         }
-        return new double[]{0, 0, 0, 0};
     }
     
     
@@ -270,25 +276,22 @@ public final class FragmentWithOde {
         }
     }
     
-    private double[] groundImpact() {
+    private void groundImpact() {
         x[0] -= xold[0];
         x[1] -= xold[1];
         x[2] -= xold[2];
         double delta = h/norm(x); // fair approx
-        xold[0] += delta*x[0];
-        xold[1] += delta*x[1];
-        xold[2] += delta*x[2];
-        return new double[] {xold[0],xold[1],xold[2],time+dt*delta} ;
-    }
-    
-    public void reset(double[] x, double[] v, double time) {
-        this.time = time;
-        System.arraycopy(x, 0, this.x, 0, 3);
-        System.arraycopy(v, 0, this.v, 0, 3);
+        x[0] = xold[0] + delta*x[0];
+        x[1] = xold[1] + delta*x[1];
+        x[2] = xold[2] + delta*x[2];
     }
     
     public double[] getX() {
         return x;
+    }
+    
+    public double[] impact() {
+        return new double[]{x[0],x[1],x[2],time};
     }
     
     private static double norm(double[] v) {

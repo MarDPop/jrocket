@@ -5,6 +5,8 @@
  */
 package com.meicompany.realtime;
 
+import com.meicompany.realtime.clustering.KMeans;
+import com.meicompany.realtime.fragment.FragmentWithOde;
 import com.meicompany.grid.util.NodeFlat;
 import com.meicompany.grid.util.NodeMap;
 import static com.meicompany.realtime.Helper.*;
@@ -131,15 +133,15 @@ public class PiCalc2 {
             x[2] = x0[2] + r*rand.nextGaussian();
             
             // Other Variability per turn
-            
             double dTemp = sigma_temperature*rand.nextGaussian();
-
+            this.atm.setOffsetTemp(dTemp);
+            
             fragments.parallelStream().forEach((frag) -> {
-                frag.run();
+                frag.run(x,v,g0,time);
             });
             
             for(FragmentWithOde frag : fragments) {
-                System.arraycopy(frag.getX(), 0, impacts[count], 0, 3);
+                System.arraycopy(frag.impact(), 0, impacts[count], 0, 3);
                 count++;
             }
         }

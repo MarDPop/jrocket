@@ -5,6 +5,10 @@
  */
 package com.meicompany.realtime;
 
+import com.meicompany.realtime.clustering.KMeans;
+import com.meicompany.realtime.fragment.FragmentOdeQuickerStep;
+import com.meicompany.realtime.fragment.FragmentOde;
+import com.meicompany.realtime.fragment.Fragment;
 import com.meicompany.grid.util.NodeFlat;
 import com.meicompany.grid.util.NodeMap;
 import static com.meicompany.realtime.Helper.*;

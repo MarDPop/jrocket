@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.meicompany.realtime;
+package com.meicompany.realtime.fragment;
 
 import static java.lang.Math.random;
 import java.util.Random;
