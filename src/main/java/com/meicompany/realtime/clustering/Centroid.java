@@ -12,12 +12,12 @@ import java.util.ArrayList;
  * @author mpopescu
  */
 public class Centroid {
-    double[] location;
-    double[] locationTemp;
+    protected double[] location;
+    protected double[] locationTemp;
     
     ArrayList<Integer> ids;
-    int n;
-    double[] stats;
+    protected int n;
+    protected double[] stats;
     
     public Centroid(){}
     
@@ -29,6 +29,10 @@ public class Centroid {
     }
     
     public void setLocation(double[] location) {
-        this.location = location;
+        System.arraycopy(location, 0, this.location, 0, location.length);  ;
+    }
+    
+    public int getNumber() {
+        return n;
     }
 }

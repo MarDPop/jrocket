@@ -43,16 +43,11 @@ public class PiCalc2 {
     
     private double[][] centroidStatXtra;
     
-    /* Not used */
-    //private double sigma_wind;
-    /* moved to fragment */
-    //private double sigma_explosion;
-    //private double[] sigma_l2d = new double[] {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.8};
-    
     //Impacts
     private final double[][] impacts;
     private final double[][] impacts2D;
     private double[][] centroids;
+    private ArrayList<PiRun> runs;
     
     public PiCalc2(double[] x0, double[] v0, double time) {
         this.atm = new OdeAtmosphere("src/main/resources/altitudes2.csv",0,1);
@@ -69,14 +64,7 @@ public class PiCalc2 {
         this.impacts2D = new double[numberFragments*numberTurns][2];
     }
     
-    /*
-    public void setFragments(ArrayList<Fragment> fragments) {
-        this.fragments = fragments;
-        this.numberFragments = fragments.size();
-        impacts = new double[numberFragments*numberTurns][4];
-        this.pseudofragments = false;
-    }
-    */
+
     
     public double[][] getCentroids(int nCentroids) {
         // Get Random Generator
