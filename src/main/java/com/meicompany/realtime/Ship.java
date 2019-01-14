@@ -70,6 +70,7 @@ public class Ship {
 
     /**
      * @param heading the heading to set
+     * @param speed
      */
     public void setVector(double heading, double speed) {
         this.heading = heading;
@@ -84,7 +85,9 @@ public class Ship {
         return speed;
     }
 
-    
+    /**
+     * @param dt the change in time
+     */
     public void move(double dt) {
         double distance = speed*dt;
         double r = Helper.seaLevel(latitude);

@@ -14,14 +14,18 @@ import com.meicompany.realtime.clustering.Centroid;
 public class PiRun {
     final double time;
     final Centroid[] centroids;
-    int weight;
+    private int weight;
     
     public PiRun(double time, Centroid[] centroids) {
         this.time = time;
         this.centroids = centroids;
         weight = 0;
-        for(int i = 0; i < centroids.length; i++) {
-            weight += centroids[i].getNumber();
+        for (Centroid centroid : centroids) {
+            weight += centroid.getNumber();
         }
+    }
+    
+    public int weight() {
+        return this.weight;
     }
 }

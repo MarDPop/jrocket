@@ -58,11 +58,11 @@ public class Trajectory {
     
     public String trajBulkImport = null;
     
-    ArrayList<Double[]> position = new ArrayList<>();
+    private ArrayList<Double[]> position = new ArrayList<>();
     
-    ArrayList<Double[]> velocity = new ArrayList<>(); 
+    private ArrayList<Double[]> velocity = new ArrayList<>(); 
         
-    ArrayList<Double> times = new ArrayList<>();
+    private ArrayList<Double> times = new ArrayList<>();
     
     public int coordinateFrame; // Default ECEF
     
