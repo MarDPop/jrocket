@@ -97,9 +97,8 @@ public class NodeMap {
             lowestLevel = depth;
         }
         for(NodeFlat child : list) {
-            if(child.children == null) {
-                points.add(new double[]{child.x,child.y,child.getValue(),child.size});
-            } else {
+            points.add(new double[]{child.x,child.y,child.getValue(),child.size});
+            if(child.children != null) {      
                 dive(points,child.children,depth);
             }
         }

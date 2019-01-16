@@ -17,7 +17,7 @@ public class KMeans {
     
     public static double[][] cluster(double[][] data, double[][] initial, double tol) {
         int nTotal = initial.length;
-        Helper.printCsv(data,"data.csv");
+        //Helper.printCsv(data,"data.csv");
         double[][] centroids = new double[nTotal][9];
         for(int i = 0; i < nTotal; i++){
             System.arraycopy(initial[i], 0, centroids[i], 0, 2); 
@@ -121,7 +121,7 @@ public class KMeans {
         for(double[] centroid : temp) {
             System.arraycopy(centroid, 0, centroids[nTotal++], 0, 9);
         }
-        Helper.printCsv(centroids,"centroids.csv");
+        //Helper.printCsv(centroids,"centroids.csv");
         return centroids;
     }
     

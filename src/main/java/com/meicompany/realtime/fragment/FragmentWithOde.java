@@ -249,7 +249,7 @@ public final class FragmentWithOde {
                 }
             }
         }
-        
+
         double[] v_free = new double[3];
         v_free[0] = -v[0] - x[1]*7.29211505392569e-05 + wind[0];
         v_free[1] = -v[1] + x[0]*7.29211505392569e-05 + wind[1];

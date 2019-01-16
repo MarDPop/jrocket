@@ -272,6 +272,9 @@ public class PiCalc {
     
     private void testNode(NodeFlat n, double tol) {
         double prob = calcAtXY2d(n.x,n.y);
+        if (prob < 1e-100) {
+            prob = 0;
+        }
         n.setValue(prob);
         if (prob > tol) {
             n.divide();

@@ -17,8 +17,7 @@ for i = 1:m
 end
 
 figure
-contourf(xq,yq,z3,[1e-11 2.5e-11 5e-11 1e-10 2e-10 4e-10 8e-10 1.6e-9 3.2e-9 6.4e-9 1.28e-9 2.56e-9 ])
-pause;
+contourf(xq,yq,z3,[1e-12 5e-12 1e-11 2.5e-11 5e-11 1e-10 2e-10 4e-10 8e-10 1.6e-9 3.2e-9 6.4e-9 1.28e-9 2.56e-9 ])
 
 % figure
 % scatter(long,lat);
@@ -29,7 +28,7 @@ M = csvread('data.csv');
 long = M(:,1);
 lat = M(:,2);
 scatter(long,lat,'r');
-M = csvread('centroids.csv');
+M = csvread('initial.csv');
 long = M(:,1);
 lat = M(:,2);
 scatter(long,lat,'b');

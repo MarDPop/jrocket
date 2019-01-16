@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.Math.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -284,6 +285,46 @@ public final class Helper {
         } catch (IOException ex) {
             Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static void printCsv(ArrayList<double[][]> runs, String file){
+        try (FileWriter fw = new FileWriter(file); PrintWriter out = new PrintWriter(fw)) {
+            for(double[][] data : runs) {
+                for (double[] data1 : data) {
+                    for (double data2 : data1) {
+                        out.print(data2);
+                        out.print(",");
+                    }
+                    out.println();
+                }
+            }
+            out.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void printCsv2(ArrayList<double[]> runs, String file){
+        try (FileWriter fw = new FileWriter(file); PrintWriter out = new PrintWriter(fw)) {
+            for (double[] data1 : runs) {
+                for (double data2 : data1) {
+                    out.print(data2);
+                    out.print(",");
+                }
+                out.println();
+            }
+            out.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static double[][] copy(double[][] arr){
+        double[][] out = new double[arr.length][arr[0].length];
+        for(int i = 0; i < arr.length; i++){
+            System.arraycopy(arr[i], 0, out[i], 0, arr[i].length);
+        }
+        return out;
     }
     
 }

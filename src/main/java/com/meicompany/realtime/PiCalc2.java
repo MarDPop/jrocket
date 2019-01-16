@@ -32,8 +32,8 @@ public class PiCalc2 {
     private int numberCentroids;
     
     // Initial
-    private final double[] x0;
-    private final double[] v0;
+    private final double[] x0 = new double[3];
+    private final double[] v0 = new double[3];
     private double time;
     
     // Variance
@@ -51,13 +51,13 @@ public class PiCalc2 {
     private double[][] centroids;
     private HashMap<Double,CentroidPi[]> runs = new HashMap<Double,CentroidPi[]>();
     private double weight;
+    private ArrayList<double[][]> testImpacts = new ArrayList<>();
+    private ArrayList<double[]> testTraj = new ArrayList<>();
     
     
     public PiCalc2(double[] x0, double[] v0, double time) {
         this.atm = new OdeAtmosphere("src/main/resources/altitudes2.csv",0,1);
-        this.x0 = x0;
-        this.v0 = v0;
-        this.time = time;
+        setState(x0,v0, time);
         this.numberFragments = 120;
         this.fragments = new ArrayList<>(numberFragments);
         for(int i = 0; i < numberFragments; i++) {
@@ -68,10 +68,11 @@ public class PiCalc2 {
         this.impacts2D = new double[numberFragments*numberTurns][2];
     }
     
-    public void setState(double[] x0, double[] v0, double time) {
+    public final void setState(double[] x0, double[] v0, double time) {
         System.arraycopy(x0, 0, this.x0, 0, 3);
         System.arraycopy(v0, 0, this.v0, 0, 3);
         this.time = time;
+        testTraj.add(Helper.impactECEF2XY(x0)); 
     }
     
     
@@ -85,13 +86,14 @@ public class PiCalc2 {
         double[] r_ = divide(x0, R);
         double lat_ecef = asin(r_[2]);
         double long_ecef = atan2(r_[1],r_[0]);
+        
         // Local Coordinate Frame Vectors (East, North, [Up is already done])
         double ct = cos(long_ecef);
         double st = sin(long_ecef);
         double cp = cos(lat_ecef);
         double sp = sin(lat_ecef);
         double[] e_ = new double[] {-st, ct, 0};
-        double[] n_ = new double[] {sp*ct, sp*st, cp};
+        double[] n_ = new double[] {-sp*ct, -sp*st, cp};
         // Flying Values
         double speed_vertical = dot(v0,r_);
         double speed_north = dot(v0,n_);
@@ -146,6 +148,7 @@ public class PiCalc2 {
         for(int i = 0; i < impacts.length; i++) {
             impacts2D[i] = Helper.impact2xy(impacts[i]); //impactLatLong
         }
+        testImpacts.add(Helper.copy(impacts2D));
         System.out.println("Running Kmeans");
         this.centroids = KMeans.cluster(impacts2D,nCentroids);
         this.numberCentroids = centroids.length;
@@ -157,6 +160,7 @@ public class PiCalc2 {
             centroidStatXtra[i][1] = centroids[i][8]/centroidStatXtra[i][0];
             centroidStatXtra[i][2] = Math.sqrt(1-centroidStatXtra[i][1]*centroidStatXtra[i][1]);
         }
+        Helper.printCsv(impacts2D,"data.csv");
     }
     
     public void collectRun() {
@@ -271,6 +275,8 @@ public class PiCalc2 {
             }
         }
         BoundingBox box = new BoundingBox(stats);
+        Helper.printCsv(testImpacts,"data.csv");
+        Helper.printCsv2(testTraj,"initial.csv");
         return map;
     }
     
@@ -315,18 +321,22 @@ public class PiCalc2 {
     }
     
     private void testNodeMultiple(NodeFlat n, double tol) {
-        double sum = 0;
+        double prob = 0;
         for(CentroidPi[] list : runs.values()){
             for(CentroidPi c : list) {
-                sum += c.calcAt(n.x, n.y);
+                prob += c.calcAt(n.x, n.y);
             }
         }
-        sum /= weight;
-        n.setValue(sum);
-        if (sum > tol) {
+        if (prob < 1e-50) {
+            prob = 0;
+        } else {
+            prob /= weight;
+        }
+        n.setValue(prob);
+        if (prob > tol) {
             n.divide();
             for(NodeFlat c : n.children) {
-                testNode(c,tol*5);
+                testNodeMultiple(c,tol*5);
             }
         }
     }

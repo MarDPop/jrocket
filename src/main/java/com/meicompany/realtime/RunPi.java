@@ -47,6 +47,7 @@ public class RunPi {
             pi.setState(state[0],state[1], time);
             pi.run(12);
             pi.collectRun();
+            time += 5;
         }
         return pi.mapAll();
     }
