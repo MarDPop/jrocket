@@ -7,6 +7,10 @@ package com.meicompany.realtime;
 
 import com.meicompany.grid.util.NodeMap;
 import com.meicompany.trajectory.Trajectory;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.JSONObject;
 
 
@@ -27,7 +31,12 @@ public class RunPi {
         NodeMap map = testMultiple(traj);
         long finish = System.nanoTime();
         map.printCsv();
-        JSONObject jmap = map.toJson();
+        JSONObject jmap = map.toJson(true);
+        try (FileWriter file = new FileWriter("map.json")) {
+                jmap.write(file);
+            } catch (IOException ex) {
+                Logger.getLogger(RunPi.class.getName()).log(Level.SEVERE, null, ex);
+        }
         System.out.println((finish-start)/1e6+" ms run time");
     }
     

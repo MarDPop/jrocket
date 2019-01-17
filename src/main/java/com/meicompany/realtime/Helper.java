@@ -166,12 +166,24 @@ public final class Helper {
         return 111412.84*cos(latitude) - 93.5*cos(3*latitude) + 0.118*cos(5*latitude);
     }
     
+    public static double[] ll2xy(double[] ll){
+        double[] out = new double[2];
+        out[0] = (6.383485515566318e+06*cos(ll[0]) - 5.357155384473197e+03*cos(3*ll[0]) + 6.760901982543714*cos(5*ll[0]))*ll[1];
+        out[1] = (6.367447280965017e+06*ll[0] - 1.603766164350688e+04*sin(2*ll[0]) + 16.830635231967932*sin(4*ll[0]) - 0.021963382146682*sin(6*ll[0]));
+        return out;
+    }
+    
+    public static double[] xy2ll(double[] xy) {
+        double[] out = new double[2];
+        out[0] = out[1]/6371000;
+        out[1] = out[0]/(6.383485515566318e+06*cos(out[0]) - 5.357155384473197e+03*cos(3*out[0]) + 6.760901982543714*cos(5*out[0]));
+        return out;
+    }
+    
     public static double[] impact2xy(double[] impact) {
         double[] ll = ecef2geo(impact);
-        double[] out = new double[2];
-        out[0] = (ll[1]-impact[3]*EARTH_ROT)*lengthDegreeLong(ll[0])*DEG2RAD;
-        out[1] = ll[0]*lengthDegreeLat(ll[0])*DEG2RAD;
-        return out;
+        ll[1] -= impact[3]*EARTH_ROT;
+        return ll2xy(ll);
     }
     
     public static double[] impactECEF2XY(double[] ecef) {

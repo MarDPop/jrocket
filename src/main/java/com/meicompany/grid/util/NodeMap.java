@@ -117,18 +117,25 @@ public class NodeMap {
         return out;
     }
     
-    public JSONObject toJson() {
+    public JSONObject toJson(boolean convert) {
         JSONObject jo = new JSONObject();
         Collection<JSONObject> arr = new ArrayList<>();
         ArrayList<double[]> points = nodeGrid();
         points.forEach((point) -> {
             JSONObject p = new JSONObject();
-            p.put("x",point[0]);
-            p.put("y",point[1]);
+            if(convert){
+                double[] c = Helper.xy2ll(point);
+                p.put("latitude",c[0]);
+                p.put("longitude",c[1]);
+            } else {
+                p.put("x",point[0]);
+                p.put("y",point[1]);
+            }
             p.put("value",point[2]);
             arr.add(p);
         });
         jo.put("Points", new JSONArray(arr));
         return jo;
     }
+    
 }

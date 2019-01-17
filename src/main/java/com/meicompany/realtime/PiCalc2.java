@@ -252,7 +252,7 @@ public class PiCalc2 {
         
         xMax -= xMin;
         yMax -= yMin;
-        double d = 3*Math.sqrt(maxSigma)+Math.sqrt(xMax*xMax+yMax*yMax);
+        double d = 5*Math.sqrt(maxSigma)+Math.sqrt(xMax*xMax+yMax*yMax);
         d = Math.ceil(d/1000)*1000;
         NodeMap map = new NodeMap(xC,yC,20,20,d/20);
         for(NodeFlat[] row : map.nodes){
@@ -266,7 +266,7 @@ public class PiCalc2 {
     public NodeMap mapAll() {
         System.out.println("Generating Pi Map");
         double[] stats = getCentroidStats();
-        double d = Math.sqrt(stats[2] + stats[3]);
+        double d = 3*Math.sqrt(stats[2] + stats[3]);
         int delta = 20;
         NodeMap map = new NodeMap(stats[0],stats[1],delta,delta,d/delta);
         for(NodeFlat[] row : map.nodes){
@@ -275,8 +275,9 @@ public class PiCalc2 {
             }
         }
         BoundingBox box = new BoundingBox(stats);
+        Helper.printCsv(box.pointsXY,"initial.csv");
         Helper.printCsv(testImpacts,"data.csv");
-        Helper.printCsv2(testTraj,"initial.csv");
+        //Helper.printCsv2(testTraj,"initial.csv");
         return map;
     }
     

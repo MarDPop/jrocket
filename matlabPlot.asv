@@ -18,8 +18,8 @@ hold on
 contourf(xq,yq,z3,10.^(linspace(-13.5,-10.5,25)));
 plot([long(2) long(1)], [lat(2) lat(1)],'r');
 plot([long(1) long(3)], [lat(1) lat(3)],'r');
-plot([long(3) long(4)], [lat(3) lat(4)],'r');
-plot([long(4) long(2)], [lat(4) lat(2)],'r');
+plot([long(3) long(2)], [lat(3) lat(2)],'r');
+plot([long(1) long(4)], [lat(1) lat(4)],'r');
 % figure
 % scatter(long,lat);
 
