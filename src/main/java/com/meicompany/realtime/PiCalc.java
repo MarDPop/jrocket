@@ -6,8 +6,8 @@
 package com.meicompany.realtime;
 
 import com.meicompany.realtime.clustering.KMeans;
-import com.meicompany.realtime.fragment.FragmentOdeQuickerStep;
-import com.meicompany.realtime.fragment.FragmentOde;
+import com.meicompany.realtime.ode.FragmentOdeQuickerStep;
+import com.meicompany.realtime.ode.FragmentOde;
 import com.meicompany.realtime.fragment.Fragment;
 import com.meicompany.grid.util.NodeFlat;
 import com.meicompany.grid.util.NodeMap;

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.meicompany.realtime.fragment;
+package com.meicompany.realtime.vehicle;
 
 /**
  *
  * @author mpopescu
  */
-public class Vehicle {
+public class Aerodynamics {
     
 }
