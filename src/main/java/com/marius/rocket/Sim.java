@@ -41,11 +41,12 @@ public class Sim {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       test7();
+       test8();
     }
     
-    private static void gui() {
-        
+    private static void test8() {
+        double[][] A = new double[][]{{17,24,1,8,15},{23,5,7,14,16},{4,6,13,20,22},{10,12,19,21,3},{11,18,25,2,9}};
+        double[] eig = LA.QReig(A);
     }
     
     private static void test7() {

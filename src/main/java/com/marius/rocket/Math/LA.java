@@ -579,10 +579,6 @@ public class LA {
         //lower triangular solver by forward substitution
         int n = b.length;
         double[][] L = eye(n);
-        int[] p = new int[n];
-        for (int i = 0; i < n; i++) {
-            p[i]=i;
-        }
         for(int k = 0; k > n-1;k++){
             for(int j = k+1; j < n;j++){
                 L[j][k] = U[j][k]/U[k][k];

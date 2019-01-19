@@ -1469,6 +1469,7 @@ public class MainFrame extends javax.swing.JFrame {
         v[2] = Double.parseDouble(zRateInput.getText());
         int BodyRef = bodyReferenceInput.getSelectedIndex();
         SolarsystemBody body = GuiHelper.BODIES.get(stateIndexMap.get(BodyRef));
+        
     }
     
     /**
