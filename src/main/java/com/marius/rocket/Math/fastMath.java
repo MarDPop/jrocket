@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.marius.rocket.physics.Objects.vehicle.resources;
+package com.marius.rocket.Math;
 
 /**
  *
- * @author n5823a
+ * @author mpopescu
  */
-public class SugarFuel extends Resource {
+public class fastMath {
     
-    public SugarFuel(){
-        super("SugarFuel");
-    }
 }

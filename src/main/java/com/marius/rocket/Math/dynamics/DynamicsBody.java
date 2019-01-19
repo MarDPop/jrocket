@@ -19,7 +19,7 @@ public class DynamicsBody extends Dynamics {
     boolean hit = false;
     
     public DynamicsBody(Vehicle main, SolarsystemBody[] System) {
-        super(main.state.length);
+        super(main.nStates);
         this.main = main;
         this.System = System;
     }
@@ -27,8 +27,11 @@ public class DynamicsBody extends Dynamics {
     @Override
     public double[] calc(double[] x, double t) {
         main.setState(x);
+        for(SolarsystemBody s: System) {
+            s.update(t);
+        }
         main.update(t);
-        return main.state_dot;
+        return main.getStateRate();
     }
     
     @Override

@@ -21,6 +21,11 @@ import java.util.logging.Logger;
  */
 public class Vehicle extends Body {
     
+    protected double massRate;
+    protected Resource[] resourceRate;
+    
+    public int nStates = 7;
+    
     protected ArrayList<Subsystem> subsystems = new ArrayList<>();
     public HashMap<Resource,HashMap<Integer,Integer>> totalResources = new HashMap<>();
     public ArrayList<Component> ComponentList = new ArrayList<>();
@@ -28,6 +33,35 @@ public class Vehicle extends Body {
 
     public Vehicle() {
         super(0);
+    }
+    
+    @Override
+    public void setState(double[] state) {
+        super.setState(state);
+        this.mass = state[6];
+        int i = 7;
+        for(Resource r : resourceRate) {
+            r.setAmount(state[i]);
+            i++;
+        }
+    }
+    
+    @Override
+    public double[] getStateRate() {
+        double[] out = new double[nStates];
+        out[0] = xyz[1][0];
+        out[1] = xyz[1][1];
+        out[2] = xyz[1][2];
+        out[3] = xyz[2][0];
+        out[4] = xyz[2][1];
+        out[5] = xyz[2][2];
+        out[6] = massRate;
+        int i = 7;
+        for(Resource r : resourceRate) {
+            out[i] = r.getAmount();
+            i++;
+        }
+        return out;
     }
     
     public void addSubsystem(Subsystem in) {
@@ -45,8 +79,8 @@ public class Vehicle extends Body {
             Component c = ComponentList.get(k);
             c.forces.forEach(this.forces::add);
             //Resources
-            for(int i = 0; i < c.resources.size(); i++) {
-                Resource resource =  c.resources.get(i);
+            for(int i = 0; i < c.resources.length; i++) {
+                Resource resource =  c.resources[i];
                 boolean found = false;
                 for(Resource key : totalResources.keySet()) {
                     if(resource.getClass().equals( key.getClass())) {
@@ -69,6 +103,7 @@ public class Vehicle extends Body {
                 }
             }
         }
+        nStates = 7+totalResources.keySet().size();
     }
     
     @Override
@@ -76,8 +111,8 @@ public class Vehicle extends Body {
         this.mass = 0;
         this.COG = new double[3];
         this.Inertia = new double[3][3];
-        ComponentList.forEach((c) -> {
-            this.mass+=c.getMass();
+        ComponentList.parallelStream().forEach((c) -> {
+            this.mass += c.getMass();
             double[] x = c.getCOG();
             double mR2 = c.getMass()*LA.dot(x,x);
             for(int i = 0; i < 2; i++) {
@@ -99,7 +134,7 @@ public class Vehicle extends Body {
         totalResources.entrySet().forEach((pair)->{
             double sum = 0;
             for(HashMap.Entry<Integer,Integer> k : pair.getValue().entrySet()) {
-                sum += ComponentList.get(k.getKey()).resources.get(k.getValue()).getAmount();
+                sum += ComponentList.get(k.getKey()).resources[k.getValue()].getAmount();
             }
             pair.getKey().setAmount(sum);
         });
@@ -108,7 +143,9 @@ public class Vehicle extends Body {
     @Override
     public void update(double t) {
         this.environment.update();
-        this.ComponentList.forEach((c)->c.update(t));
+        this.ComponentList.parallelStream().forEach((c)-> {
+            c.update(t);
+        });
         super.update(t);
     }
     

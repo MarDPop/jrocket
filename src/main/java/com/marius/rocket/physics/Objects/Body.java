@@ -19,9 +19,7 @@ public class Body extends Frame {
     
     public double MU;
     protected double mass; 
-    protected double mass_dot;
     protected double charge;
-    protected double charge_dot;
     protected double[] mageneticMoment;
     
     public Gravity g; 
@@ -35,8 +33,8 @@ public class Body extends Frame {
     protected Shape shape = null;
     public boolean onrails = false;
     
-    public double[] state = new double[8];
-    public double[] state_dot = new double[8];
+    //public double[] state = new double[8];
+    //public double[] state_dot = new double[8];
     
     public Body(double mass) {
         this.mass = mass;
@@ -95,31 +93,24 @@ public class Body extends Frame {
         return shape;
     }
     
-    public void setState(double[] x) {
-        System.arraycopy(x, 0, this.state, 0, 7);
-        linkState();
-    }
-    
-    public void linkState() {
+    public void setState(double[] state) {
         xyz[0][0] = state[0];
         xyz[0][1] = state[1];
         xyz[0][2] = state[2];
         xyz[1][0] = state[3];
         xyz[1][1] = state[4];
         xyz[1][2] = state[5];
-        mass = state[6];
-        charge = state[7];
     }
     
-    public void linkStateDot() {
-        state_dot[0] = xyz[1][0];
-        state_dot[1] = xyz[1][1];
-        state_dot[2] = xyz[1][2];
-        state_dot[3] = xyz[2][0];
-        state_dot[4] = xyz[2][1];
-        state_dot[5] = xyz[2][2];
-        state_dot[6] = mass_dot;
-        state_dot[7] = charge_dot;
+    public double[] getStateRate() {
+        double[] out = new double[6];
+        out[0] = xyz[1][0];
+        out[1] = xyz[1][1];
+        out[2] = xyz[1][2];
+        out[3] = xyz[2][0];
+        out[4] = xyz[2][1];
+        out[5] = xyz[2][2];
+        return out;
     }
     
     // Probably not necessary
@@ -143,7 +134,8 @@ public class Body extends Frame {
         this.calcSphericalFromCartesian();
         if(!this.onrails) {
             double[] sum = new double[3];
-            forces.forEach((force) -> {
+            // check this
+            forces.parallelStream().forEach((force) -> {
                 force.update();
                 if(force.internal){
                     LA.add(sum,force.get()); 
@@ -155,7 +147,6 @@ public class Body extends Frame {
             this.xyz[2][1] += this.orientation[0][1]*sum[0]+this.orientation[1][1]*sum[1]+this.orientation[2][1]*sum[2];
             this.xyz[2][2] += this.orientation[0][2]*sum[0]+this.orientation[1][2]*sum[1]+this.orientation[2][2]*sum[2];
             LA.multiply(this.xyz[2], 1/updateMass());
-            linkStateDot();
         } else {
             rails(time);
         }
