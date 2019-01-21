@@ -12,7 +12,7 @@ package com.meicompany.realtime.ode;
 public abstract class GeneralOde {
     protected final Dynamics dynamics;
     
-    protected final double[] x0;
+    protected final double[] x;
     protected final double[] x_dot;
     
     protected double time;
@@ -22,7 +22,7 @@ public abstract class GeneralOde {
     protected double tol;
     
     public GeneralOde(Dynamics dynamics, double[] x, double time_start, double time_final) {
-        this.x0 = x;
+        this.x = x;
         this.time = time_start;
         this.time_final = time_final;
         this.x_dot = new double[x.length];
