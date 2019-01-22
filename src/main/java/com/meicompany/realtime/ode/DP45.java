@@ -11,7 +11,7 @@ import com.meicompany.realtime.Helper;
  *
  * @author mpopescu
  */
-public class RK45 extends GeneralOde {
+public class DP45 extends GeneralOde {
     //https://en.wikipedia.org/wiki/Bogacki–Shampine_method
     final double[] xa;
     final double[] xb;
@@ -25,7 +25,7 @@ public class RK45 extends GeneralOde {
     final double[] e;
     final int n;
     
-    public RK45(Dynamics dynamics, double[] x, double time_start, double time_final) {
+    public DP45(Dynamics dynamics, double[] x, double time_start, double time_final) {
         super(dynamics,x,time_start,time_final);
         n = x.length;
         xa = new double[n];
@@ -84,6 +84,7 @@ public class RK45 extends GeneralOde {
             } else {
                 System.arraycopy(xa, 0, x, 0, n);
                 System.arraycopy(k7, 0, k1, 0, n);
+                time +=dt;
                 break;
             }
         }

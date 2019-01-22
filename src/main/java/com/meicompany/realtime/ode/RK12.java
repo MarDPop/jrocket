@@ -57,6 +57,7 @@ public class RK12 extends GeneralOde {
             } else {
                 System.arraycopy(xa, 0, x, 0, n);
                 System.arraycopy(k3, 0, k1, 0, n);
+                time +=dt;
                 break;
             }
         }
