@@ -5,8 +5,6 @@
  */
 package com.meicompany.realtime.ode;
 
-import com.meicompany.realtime.Helper;
-
 /**
  *
  * @author mpopescu
@@ -59,9 +57,11 @@ public class RK78 extends GeneralOde {
             for(int i = 1; i < 13; i++){
                 double h = dt*C[i];
                 for(int j = 0; j < i; j++) {
-                    double coef = dt*A[i][j];
-                    for(int k = 0; k < n; k++) {
-                        sol1[k] = x[k] + fevals[j][k]*coef;
+                    if (A[i][j] != 0) {
+                        double coef = dt*A[i][j];
+                        for(int k = 0; k < n; k++) {
+                            sol1[k] = x[k] + fevals[j][k]*coef;
+                        }
                     }
                 }
                 System.arraycopy(dynamics.calc(sol1, time+h), 0, fevals[i], 0, n);
