@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Atom>
+    <symbol>H</symbol>
+    <name>Hydrogen</name>
+    <atomicMass>1.007825</atomicMass>
+    <configuration>1s1</configuration>
+    <isotope nucleons='1'>
+        <symbol>H</symbol>
+        <protons>1</protons>
+        <neutrons>0</neutrons>
+        <atomicMass>1.007825</atomicMass>
+        <dimensions>
+            <atomicRadius unit='pico'>53</atomicRadius>
+            <covalentRadius unit='pico'>31</covalentRadius>
+            <vanderwaalsRadius unit='pico'>120</vanderwaalsRadius>
+        </dimensions>
+        <structure>
+            <crystal>Simple Hexagonal</crystal>
+        </structure>
+        <electronics>
+            <electronegativity scale='Paulin'>2.2</electronegativity>
+            <ionizationEnergies>
+                <energy num='1' unit='eV'>13.5984</energy>
+            </ionizationEnergies>
+            <electronAffinity>
+                <energy num='1'unit='eV'>0.75497</energy>
+            </electronAffinity>
+        </electronics>
+        <magneticProperties>
+            
+        </magneticProperties>
+        <nuclearProperties>
+            <halflife>0</halflife>
+            <spin>1/2</spin>
+            <parity>1</parity>
+        </nuclearProperties>
+        
+        <abundance>99.985</abundance>
+        
+    </isotope>
+    <isotope nucleons='2'>
+        <symbol>D</symbol>
+        <protons>1</protons>
+        <neutrons>1</neutrons>
+        <atomicMass>2.0141017778</atomicMass>
+        <dimensions>
+            <atomicRadius unit='pico'>53</atomicRadius>
+            <covalentRadius unit='pico'>31</covalentRadius>
+            <vanderwaalsRadius unit='pico'>120</vanderwaalsRadius>
+        </dimensions>
+        <structure>
+            <crystal>Simple Hexagonal</crystal>
+        </structure>
+        <electronics>
+            <electronegativity scale='Paulin'>2.2</electronegativity>
+            <ionizationEnergies>
+                <energy num='1' unit='eV'>13.603</energy>
+            </ionizationEnergies>
+            <electronAffinity>
+                <energy num='1'unit='eV'>0.73</energy>
+            </electronAffinity>
+        </electronics>
+        <magneticProperties>
+            
+        </magneticProperties>
+        <nuclearProperties>
+            <halflife>0</halflife>
+            <spin>1/2</spin>
+            <parity>1</parity>
+        </nuclearProperties>
+        <abundance>0.0156</abundance>
+    </isotope>
+    <isotope nucleons='3'>
+        <symbol>T</symbol>
+        <protons>1</protons>
+        <neutrons>2</neutrons>
+        <atomicMass>3.01604927767</atomicMass>
+        <atomicRadius unit='pico'>53</atomicRadius>
+        <electricProperties>
+            <electronegativity scale='Paulin'>2.2</electronegativity>
+            <ionizationEnergies>
+                <energy num='1' unit='eV'>13.603</energy>
+            </ionizationEnergies>
+            <electronAffinity>
+                <energy num='1'unit='eV'>0.73</energy>
+            </electronAffinity>
+        </electricProperties>
+        <magneticProperties>
+            
+        </magneticProperties>
+        <nuclearProperties>
+            <halflife unit='y'>12.32</halflife>
+            <spin>1/2</spin>
+            <parity>1</parity>
+            <decay>
+                <type>beta</type>
+                <probability>1</probability>
+                <energy unit='keV'>18.591</energy>
+                <daughter>
+                    <atomicNumber>2</atomicNumber>
+                    <isotype>3</isotype>
+                </daughter>
+            </decay>
+        </nuclearProperties>
+        <abundance>0</abundance>>
+    </isotope>
+</Atom>
